@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cpld &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ifwi" href="ifwi.html" />
+    <link rel="prev" title="bmc" href="bmc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cpld</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sign-cpld-recovery-staging-capsule">Sign CPLD recovery/staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sign-in-python-console-and-script">Sign in python console and script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign-in-command-line">Sign in command line</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.Convert"><code class="docutils literal notranslate"><span class="pre">Convert</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.Convert.bytearray_to_hex_string"><code class="docutils literal notranslate"><span class="pre">Convert.bytearray_to_hex_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.Convert.bytearray_to_integer"><code class="docutils literal notranslate"><span class="pre">Convert.bytearray_to_integer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.Convert.hex_string_to_bytes"><code class="docutils literal notranslate"><span class="pre">Convert.hex_string_to_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.Convert.integer_to_bytes"><code class="docutils literal notranslate"><span class="pre">Convert.integer_to_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.Convert.swap32"><code class="docutils literal notranslate"><span class="pre">Convert.swap32()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.PFRBitstream"><code class="docutils literal notranslate"><span class="pre">PFRBitstream</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.append"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.get_raw_byte_array"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_raw_byte_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.get_raw_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_raw_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.get_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.initialize"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.initialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.read"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.set_raw_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.set_raw_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.set_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.set_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.size"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.update"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.validate"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFRBitstream.write"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.PFR_CPLD"><code class="docutils literal notranslate"><span class="pre">PFR_CPLD</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.PFR_CPLD.build_update_capsule"><code class="docutils literal notranslate"><span class="pre">PFR_CPLD.build_update_capsule()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.UpdateCapsule"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.UpdateCapsule.get_unsigned_cap"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.get_unsigned_cap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.UpdateCapsule.rebuild_capsule"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.rebuild_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.UpdateCapsule.with_new_cskid"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_cskid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.UpdateCapsule.with_new_keys"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpld.UpdateCapsule.with_new_svn"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_svn()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld.reverse_bits"><code class="docutils literal notranslate"><span class="pre">reverse_bits()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">cpld</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/cpld.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cpld">
+<span id="cpld"></span><h1>cpld<a class="headerlink" href="#module-cpld" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>Python script to update CPLD unisgned capsule and sign it</p>
+</dd>
+</dl>
+<p>cpld module includes function to sign cpld capsule using intelprot.sign module.
+The unsigned recovery capsule is the pfr_cfm1_auto.rpd generated from Quartus.
+Then use both RK and CSK private keys to sign it.</p>
+<section id="sign-cpld-recovery-staging-capsule">
+<h2>Sign CPLD recovery/staging capsule<a class="headerlink" href="#sign-cpld-recovery-staging-capsule" title="Permalink to this heading"></a></h2>
+<section id="sign-in-python-console-and-script">
+<h3>Sign in python console and script<a class="headerlink" href="#sign-in-python-console-and-script" title="Permalink to this heading"></a></h3>
+<p>code block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;from intelprot import cpld</span>
+<span class="go">&gt;&gt;&gt;mycpld = cpld.CPLD(unsigned_cap, rk_prv, csk_prv, csk_id)</span>
+<span class="go">&gt;&gt;&gt;mycpld.sign()</span>
+</pre></div>
+</div>
+</section>
+<section id="sign-in-command-line">
+<h3>Sign in command line<a class="headerlink" href="#sign-in-command-line" title="Permalink to this heading"></a></h3>
+<p>python (or python3 for Linux) should be in system executable path.
+save the keys and unsigned capsule in work folder.
+It requires Python 3.6 or later Python</p>
+<p>command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">cpld</span> <span class="o">-</span><span class="n">h</span>   <span class="c1"># help</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">cpld</span> <span class="o">-</span><span class="n">u</span> <span class="o">&lt;</span><span class="n">unsigned_capsule</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">rk</span> <span class="o">&lt;</span><span class="n">root</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">csk</span> <span class="o">&lt;</span><span class="n">csk</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">cskid</span> <span class="o">&lt;</span><span class="n">csk</span> <span class="nb">id</span><span class="p">,</span> <span class="n">optional</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">output</span><span class="p">,</span> <span class="n">optional</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cpld.main" title="cpld.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(args)</p></td>
+<td><p>pfr cpld capsule in command line</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="cpld.ConfigDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">ConfigDict</span></span><a class="headerlink" href="#cpld.ConfigDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></p>
+<p>define an ordered dictionary</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cpld.Convert">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">Convert</span></span><a class="headerlink" href="#cpld.Convert" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>format conversion utility methods</dt><dd><ul class="simple">
+<li><p>little endian byte order is always assumed.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.Convert.bytearray_to_hex_string">
+<span class="sig-name descname"><span class="pre">bytearray_to_hex_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_of_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.Convert.bytearray_to_hex_string" title="Permalink to this definition"></a></dt>
+<dd><p>bytearray_to_hex_string(bytearray([0xA,0xB,0xC,0xD])), “0xD0C0B0A”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.Convert.bytearray_to_integer">
+<span class="sig-name descname"><span class="pre">bytearray_to_integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_of_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.Convert.bytearray_to_integer" title="Permalink to this definition"></a></dt>
+<dd><p>byte bytearray to integer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.Convert.hex_string_to_bytes">
+<span class="sig-name descname"><span class="pre">hex_string_to_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hex_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_of_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.Convert.hex_string_to_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>convert hexstring to bytes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.Convert.integer_to_bytes">
+<span class="sig-name descname"><span class="pre">integer_to_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.Convert.integer_to_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>integer to bytes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.Convert.swap32">
+<span class="sig-name descname"><span class="pre">swap32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.Convert.swap32" title="Permalink to this definition"></a></dt>
+<dd><p>swap double words</p>
+<p>0x12345678 –&gt; 0x78563412</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cpld.PFRBitstream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">PFRBitstream</span></span><a class="headerlink" href="#cpld.PFRBitstream" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is a class that represents an arbitrary bit-stream used in PFR collateral.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.append" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.get_raw_byte_array">
+<span class="sig-name descname"><span class="pre">get_raw_byte_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.get_raw_byte_array" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.get_raw_value">
+<span class="sig-name descname"><span class="pre">get_raw_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.get_raw_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.get_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize an PFRBitstream instance so that it can pass validate().
+This function is not meant to be run after read().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.read" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.set_raw_value">
+<span class="sig-name descname"><span class="pre">set_raw_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.set_raw_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endianness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'little'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.set_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.validate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFRBitstream.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFRBitstream.write" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cpld.PFR_CPLD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">PFR_CPLD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pfr_cfm1_rpd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFR_CPLD" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for PFR cpld image operation and build and sign update capsule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pfr_cfm1_rpd</strong> – pfr_cfm1_rpd file in compile output</p></li>
+<li><p><strong>platform</strong> – reference platform name : [‘wht’, ‘egs’, ‘bhs’] or [‘whitley’, ‘eaglestream’, ‘birchstream’]
+remove space and convert to lower case, ‘Birch Stream’ is acceptable as “birchstream”</p></li>
+<li><p><strong>svn</strong> – SVN number used in update capsule, default is 0</p></li>
+<li><p><strong>csk_id</strong> – CSK ID, it is needed csk_id to do signature, default is 0</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.PFR_CPLD.build_update_capsule">
+<span class="sig-name descname"><span class="pre">build_update_capsule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.PFR_CPLD.build_update_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>build signed update capsule based on pfr_cfm1_rpd file</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">UpdateCapsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signed_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for process of signed cpld update capsule, including:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>replace with customer generate key to sign</p></li>
+<li><p>build new update capsule with another CSK_ID</p></li>
+<li><p>build new update capsule with another SVN</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signed_image</strong> – signed cpld update capsule file name</p></li>
+<li><p><strong>platform</strong> – reference platform name</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule.get_unsigned_cap">
+<span class="sig-name descname"><span class="pre">get_unsigned_cap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule.get_unsigned_cap" title="Permalink to this definition"></a></dt>
+<dd><p>process a signed image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule.rebuild_capsule">
+<span class="sig-name descname"><span class="pre">rebuild_capsule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule.rebuild_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>rebuild capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule.with_new_cskid">
+<span class="sig-name descname"><span class="pre">with_new_cskid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_csk_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule.with_new_cskid" title="Permalink to this definition"></a></dt>
+<dd><p>generate new update capsule with new CSK ID</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule.with_new_keys">
+<span class="sig-name descname"><span class="pre">with_new_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule.with_new_keys" title="Permalink to this definition"></a></dt>
+<dd><p>generate new update capsule with new keys</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cpld.UpdateCapsule.with_new_svn">
+<span class="sig-name descname"><span class="pre">with_new_svn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_svn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.UpdateCapsule.with_new_svn" title="Permalink to this definition"></a></dt>
+<dd><p>generate new update capsule with new SVN</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cpld.main">
+<span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.main" title="Permalink to this definition"></a></dt>
+<dd><p>pfr cpld capsule in command line</p>
+<p>build new update capsule from pfr_cfm1_auto.rpd file, or modify existing capsule with new SVN, new csk id or sign with new keys</p>
+<p>Usage in Command Prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">cpld</span> <span class="o">-</span><span class="n">h</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">cpld</span> <span class="n">build_capsule</span>  <span class="o">-</span><span class="n">h</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">cpld</span> <span class="n">modify_capsule</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cpld.reverse_bits">
+<span class="sig-prename descclassname"><span class="pre">cpld.</span></span><span class="sig-name descname"><span class="pre">reverse_bits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cpld.reverse_bits" title="Permalink to this definition"></a></dt>
+<dd><p>Reverse bits of a byte reversed byte[7:0] -&gt; byte[0:7]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params<span class="colon">:</span></dt>
+<dd class="field-odd"><p>byte from 0x00 - 0xFF</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>reversed bits value of byte</p>
+</dd>
+</dl>
+<p>takes a single byte and returns a that byte reversed byte[7:0] -&gt; byte[0:7]</p>
+<p>a = int.from_bytes(byte, “big”) # convert to integer
+n = int(‘{:08b}’.format(a)[::-1], 2)
+r = n.to_bytes(1, ‘big’)</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bmc.html" class="btn btn-neutral float-left" title="bmc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ifwi.html" class="btn btn-neutral float-right" title="ifwi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+{
+    "00h" : {
+        "name" : "CPLD RoT Static Identifier",
+        "desc" : "Constant value of DEh",
+        "value" : "--",
+        "value_decode" : {
+           "0xDE": "CPLD RoT Static Identifier"
+        }
+    },
+    "01h" : {
+        "name" : "CPLD RoT Release Version",
+        "desc" : "Release Version of CPLD RoT design, read-only for external agents.",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "02h" : {
+        "name" : "CPLD RoT SVN",
+        "desc" : "Release Version of CPLD RoT design, read-only for external agents.",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "03h" : {
+        "name" : "Platform State",
+        "desc" : "Platform state, the following states should be enumerated",
+        "value" : "--",
+        "value_decode" : {
+            "0x01" : "CPLD Nios II processor waiting to start",
+            "0x02" : "CPLD Nios II processor started",
+            "0x03" : "Enter T-1",
+            "0x04" : "T-1 Reserved",
+            "0x05" : "T-1 Reserved",
+            "0x06" : "BMC flash authentication",
+            "0x07" : "PCH/CPU flash authentication",
+            "0x08" : "Lockdown due to authentication failures",
+            "0x09" : "Enter T0",
+            "0x0A" : "T0 BMC booted",
+            "0x0B" : "T0 ME booted",
+            "0x0C" : "T0 ACM booted",
+            "0x0D" : "T0 BIOS booted",
+            "0x0E" : "T0 boot completed",
+            "0x0F" : "T0 Reserved",
+            "0x10" : "PCH/CPU firmware update",
+            "0x11" : "BMC firmware update",
+            "0x12" : "CPLD update (in CPLD Active Image)",
+            "0x13" : "CPLD update (in CPLD ROM)",
+            "0x14" : "PCH/CPU firmware volume update",
+            "0x15" : "PCH/CPU firmware volume update completed",
+            "0x40" : "T-1 firmware recovery due to authentication failure",
+            "0x41" : "T-1 forced active firmware recovery",
+            "0x42" : "WDT timeout recovery",
+            "0x43" : "CPLD recovery (in CPLD ROM)",
+            "0x44" : "Lockdown due to PIT L1",
+            "0x45" : "PIT L2 firmware sealed",
+            "0x46" : "Lockdown due to PIT L2 PCH/CPU firmware hash mismatch",
+            "0x47" : "Lockdown due to PIT L2 BMC firmware hash mismatch"
+        }
+    },
+    "04h" : {
+        "name" : "Recovery count",
+        "desc" : "Numbers of FW Recovery actions since last AC on, read-only for external agents",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "05h" : {
+        "name" : "Last Recovery reason",
+        "desc" : "Value indicating last FW Recovery reason following states should be enumerated:",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "No Recovery",
+            "0x01" : "PCH/CPU Active failure",
+            "0x02" : "PCH/CPU Recovery failure",
+            "0x03" : "ME launch failure",
+            "0x04" : "ACM launch failure",
+            "0x05" : "IBB launch failure",
+            "0x06" : "OBB launch failure",
+            "0x07" : "BMC Active failure",
+            "0x08" : "BMC Recovery Failure",
+            "0x09" : "BMC launch failure",
+            "0x0A" : "CPLD WDT expired forced active fw recovery"
+        }
+    },
+    "06h" : {
+        "name" : "Panic event count",
+        "desc" : "Number of Panic events (T0 -> T-1 transitions) since last AC-on, read-only for external agents",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "07h" : {
+        "name" : "Last Panic reason",
+        "desc" : "Value indicating last Panic reason, read-only for external agents",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "No Panic Event",
+            "0x01" : "PCH update intent",
+            "0x02" : "BMC update intent",
+            "0x03" : "BMC reset detected",
+            "0x04" : "BMC WDT expired",
+            "0x05" : "ME WDT expired",
+            "0x06" : "ACM WDT expired",
+            "0x07" : "IBB WDT expired",
+            "0x08" : "OBB WDT expired",
+            "0x09" : "ACM/IBB/OBB signaled authentication failure",
+            "0x0A" : "Attestation Failure"
+        }
+    },
+    "08h" : {
+        "name" : "Major error code",
+        "desc" : "Value indicating major error code observed on the system. read-only for external agents",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "No Error",
+            "0x01" : "BMC authentication failure",
+            "0x02" : "PCH/CPU authentication failure",
+            "0x03" : "in-band and oob update failure (BMC or PCH or CPLD)",
+            "0x04" : "Reserved",
+            "0x05" : "Attestation measurement mismatch-Attestaion failure",
+            "0x06" : "Attestation Challenge timeout",
+            "0x07" : "SPDM Protocol Error",
+            "0x09-0xFF" : "Reserved"
+        }
+    },
+    "09h" : {
+        "name" : "Minor error code",
+        "desc" : "Value indicating minor error code observed on the system. Read-only for external agents",
+        "value" : "--",
+        "value_decode" : {
+            "0x01-0x02" : {
+                "0x00" : "No Error",
+                "0x01" : "Active region authentication failure",
+                "0x02" : "Recovery region authentication failure",
+                "0x03" : "Active & Recovery regions authentication failure",
+                "0x04" : "Active, Recovery & Staging regions authentication failure – Authentication failure all regions",
+                "0x05" : "AFM Active region authentication failure",
+                "0x06" : "AFM Recovery region authentication failure",
+                "0x07" : "AFM Active & Recovery regions authentication failure",
+                "0x08" : "AFM Active, Recovery & Staging regions authentication failure"
+            },
+            "0x03" : {
+                "0x00" : "No Error",
+                "0x01" : "Invalid update intent",
+                "0x02" : "Update capsule has invalid SVN",
+                "0x03" : "Update capsule failed authentication",
+                "0x04" : "Exceeded maximum failed update attempts",
+                "0x05" : "Active firmware update is not allowed because the recovery region failed authentication in T-1",
+                "0x06" : "FW update capsule failed authentication before being promoted to recovery region",
+                "0x07" : "AFM update not allowed",
+                "0x08" : "Unknown AFM",
+                "0x09–0x0F" : "Reserved",
+                "0x10" : "Unknown FV type",
+                "0x11" : "Authentication failed after seamless update"
+            }
+        }
+    },
+    "0Ah" : {
+        "name" : "UFM/Provisioning Status",
+        "desc" : "Status register mask for UFM provisioning and access commands; read-only for external agents.",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "Command Busy",
+            "Bit[1]" : "Command Done",
+            "Bit[2]" : "Command Error",
+            "Bit[3]" : "Reserved",
+            "Bit[4]" : "UFM locked",
+            "Bit[5]" : "UFM provisioned (Root Key + region offsets)",
+            "Bit[6]" : "PIT L1 is enforced",
+            "Bit[7]" : "PIT L2 has been completed successfully"
+        }
+    },
+    "0Bh" : {
+        "name" : "UFM/Provisioning Command",
+        "desc" : "Command register for UFM provisioning/access commands; read/write allowed from CPU/BMC. All non-read commands are dropped (with Command Error bit set in the status register) after UFM is locked.",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "Erase current (not-locked) provisioning",
+            "0x01" : "Provision Root Key",
+            "0x02" : "Provision PIT ID",
+            "0x05" : "Provision PCH/CPU offsets (Active/PFM, Recovery, Staging)",
+            "0x06" : "Provision BMC offsets (Active/PFM, Recovery, Staging)",
+            "0x07" : "End of Provisioning / Lock UFM",
+            "0x08" : "Read Root Key",
+            "0x09-0x0B" : "Reserved",
+            "0x0C" : "Read PCH/CPU offsets",
+            "0x0D" : "Read BMC offsets",
+            "0x0E" : "Reconfig CPLD",
+            "0x0F" : "Reserved",
+            "0x10" : "Enable PIT level1 protection",
+            "0x11" : "Enable PIT level2 protection",
+            "0x12" : "Enable Device Attestation Requests",
+            "0x13" : "Read DeviceID public key",
+            "0x14" : "Disable Device Attestation Requests",
+            "0x15-0xFF" : "Reserved"
+        }
+    },
+    "0Ch" : {
+        "name" : "UFM Command Trigger",
+        "desc" : "Trigger register for the command set in the previous offset.",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "execute command specified at 'UFM/Provisioning Command' register",
+            "Bit[1]" : "flushWriteFIFO",
+            "Bit[2]" : "flush Read FIFO"
+        }
+    },
+    "10h" : {
+        "name" : "ACM Checkpoint",
+        "desc" : "Status of ACM, write from CPU allowed only until ACM signals end of execution, write from CPU reallowed on CPU reset",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "Success Done",
+            "0x01" : "Execution block started",
+            "0x03" : "Authentication failed",
+            "0x07" : "Execution block paused",
+            "0x08" : "Execution block resumed",
+            "0x09" : "Execution block completed"
+        }
+    },
+    "11h" : {
+        "name" : "BIOS Checkpoint",
+        "desc" : "Status of BIOS IBB/OBB, write from CPU allowed only until OBB signals end of execution, write from CPU re-allowed on CPU reset",
+        "value" : "--",
+        "value_decode" : {
+            "0x00" : "Success Done",
+            "0x01" : "Execution block started",
+            "0x03" : "Authentication failed",
+            "0x07" : "Execution block paused",
+            "0x08" : "Execution block resumed",
+            "0x09" : "Execution block completed"
+        }
+    },
+    "12h" : {
+        "name" : "PCH/CPU update intent",
+        "desc" : "Update intent from the CPU FW, read/write allowed from CPU",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "PCH active",
+            "Bit[1]" : "PCH recovery",
+            "Bit[2]" : "CPLD active",
+            "Bit[3]" : "BMC active",
+            "Bit[4]" : "BMC recovery",
+            "Bit[5]" : "CPLD recovery",
+            "Bit[6]" : "Update dynamic",
+            "Bit[7]" : "Update at reset"
+        }
+    },
+    "13h" : {
+        "name" : "BMC update intent",
+        "desc" : "Update intent from BMC FW, read/write allowed from BMC",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "PCH active",
+            "Bit[1]" : "PCH recovery",
+            "Bit[2]" : "CPLD active",
+            "Bit[3]" : "BMC active",
+            "Bit[4]" : "BMC recovery",
+            "Bit[5]" : "CPLD recovery",
+            "Bit[6]" : "Update dynamic",
+            "Bit[7]" : "Update at reset"
+        }
+    },
+    "14h" : {
+        "name" : "PCH/CPU PFM Active SVN",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "15h" : {
+        "name" : "PCH/CPU PFM Active Major Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : ""
+    },
+    "16h" : {
+        "name" : "PCH/CPU PFM Active Minor Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "17h" : {
+        "name" : "BMC PFR Active SVN",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "18h" : {
+        "name" : "BMC PFM Active Major Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "19h" : {
+        "name" : "BMC PFM Active Minor Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Ah" : {
+        "name" : "PCH/CPU PFR Recovery SVN",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Bh" : {
+        "name" : "PCH/CPU PFM Recovery Major Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Ch" : {
+        "name" : "PCH/CPU PFM Recovery Minor Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Dh" : {
+        "name" : "BMC PFR Recovery SVN",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Eh" : {
+        "name" : "BMC PFM Recovery Major Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "1Fh" : {
+        "name" : "BMC PFM Recovery Minor Version",
+        "desc" : "Set by CPLD RoT, read-only for CPU/BMC",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "20h-5Fh" : {
+        "name" : "CPLD RoT Hash",
+        "desc" : "Reserved 64 Bytes for hash value of CPLD RoT HW + FW",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "60h" : {
+        "name" : "BMC Checkpoint (PFR 3.0)",
+        "desc" : "Status of BMC, write from BMC allowed only until BMC signals boot complete, write from BMC reallowed on BMC reset",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "61h" : {
+        "name" : "PCH/CPU Update Intent 2",
+        "desc" : "Update intent from PCH/CPU FW, read/write allowed from PCH/CPU",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "Seamless update intent"
+        }
+    },
+    "62h" : {
+        "name" : "BMC Update Intent 2",
+        "desc" : "Update intent from BMC FW, read/write allowed from BMC, no access other Agents like PCH/CPU.",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[0]" : "Seamless update intent",
+            "Bit[1]" : "AFM active",
+            "Bit[2]" : "AFM recovery",
+            "Bit[3]" : "1-Complete;0-Single",
+            "Bit[4]" : "CPU CPLD update",
+            "Bit[5]" : "SCM CPLD update",
+            "Bit[6]" : "Debug CPLD update"
+        }
+    },
+    "63h" : {
+        "name" : "UFM and MM[9] SBMus ownership register",
+        "desc" : "Ownership request details",
+        "value" : "--",
+        "value_decode" : {
+            "Bit[1:0]" : "UFM_ownership ID",
+            "Bit[1:0]-00" : "Indicates that UFM ownership is free",
+            "Bit[1:0]-01" : "Indicates that UFM ownership is with PCH/Host CPU0",
+            "Bit[1:0]-11" : "Indicates that UFM ownership is with BMC",
+            "Bit[2]" : "Reserved",
+            "Bit[3]" : "Ownership ID fields selection for NIOS",
+            "Bit[3]-0" : "Indicates that NIOS is requesting to write to UFM ownership ID fields.",
+            "Bit[3]-1" : "Indicates that NIOS is requesting to write to MM9 ownership ID fields.",
+            "Bit[4]" : "Ownership ID fields selection for BMC",
+            "Bit[4]-0" : "Indicates that BMC is requesting to write to UFM ownership ID fields.",
+            "Bit[4]-1" : "Indicates that BMC is requesting to write to MM9 ownership ID fields.",
+            "Bit[6:5]" : "MM9 ownership ID",
+            "Bit[6:5]-00" : "Indicates that MM9 ownership is free",
+            "Bit[6:5]-01" : "Indicates that MM9 ownership is with CPLD",
+            "Bit[6:5]-11" : "Indicates that MM9 ownership is with BMC",
+            "Bit[7]" : "Reserved"
+        }
+    },
+    "64h" : {
+        "name" : "MB_MCTP_PCH_PACKET_AVAIL_AND_RX_PACKET_ERROR",
+        "desc" : "MCTP PCH Packet availability and RX packet error",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "65h" : {
+        "name" : "MB_MCTP_BMC_PACKET_AVAIL_AND_RX_PACKET_ERROR",
+        "desc" : "MCTP BMC Packet availability and RX packet error",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "66h" : {
+        "name" : "MB_MCTP_PCIE_PACKET_AVAIL_AND_RX_PACKET_ERROR",
+        "desc" : "MCTP PCIE Packet availability and RX packet error",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "67h" : {
+        "name" : "PCH/Host byte count",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "68h" : {
+        "name" : "BMC byte count",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "69h" : {
+        "name" : "PCIE byte count",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "71h" : {
+        "name" : "RX FIFO packet read for PCH",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "72h" : {
+        "name" : "RX FIFO packet read for BMC",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "73h" : {
+        "name" : "RX FIFO packet read for PCIE",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "74h" : {
+        "name" : "Active AFM SVN info",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "75h" : {
+        "name" : "Active AFM Major version",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "76h" : {
+        "name" : "Active AFM Minor version",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "77h" : {
+        "name" : "Recovery AFM SVN info",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : ""
+    },
+    "78h" : {
+        "name" : "Recovery AFM Major version",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "79h" : {
+        "name" : "Recovery AFM Minor version",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : "--"
+    },
+    "7Ah" : {
+        "name" : "Attestation Provisioning Status",
+        "desc" : "",
+        "value" : "--",
+        "value_decode" : {
+          "0x00": "attestation not provisioned",
+          "0x01": "attestation provisioned"
+        }
+    }
+}

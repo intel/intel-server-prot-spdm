@@ -1,0 +1,39 @@
+mctp\_spdm
+=====================
+
+.. automodule:: mctp_spdm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      extract_mctp_data
+      log_list
+      split_multi_random
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MCTP_CPLD
+      MCTP_SOCKET
+   
+   
+
+   
+   
+   
+
+
+

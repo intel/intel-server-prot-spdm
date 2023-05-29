@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aardvark.smb_avark &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="testprot" href="../testprot.html" />
+    <link rel="prev" title="mctp_spdm" href="../mctp_spdm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">aardvark.smb_avark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#aardvark.smb_avark.detect"><code class="docutils literal notranslate"><span class="pre">detect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark"><code class="docutils literal notranslate"><span class="pre">mctp_avark</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.check_if_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark.check_if_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark.send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark.send_recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark.send_recv()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.check_if_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.check_if_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_2.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_ctrl_req_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.check_if_mctp_ctrl_req_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.check_if_mctp_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aardvark.smb_avark.mctp_avark_bridge.send_recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.send_recv()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">aardvark.smb_avark</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/modules/aardvark/smb_avark.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-aardvark.smb_avark">
+<span id="aardvark-smb-avark"></span><h1>aardvark.smb_avark<a class="headerlink" href="#module-aardvark.smb_avark" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>i2c driver wrapper to send and receive traffic to CPLD using aadvark tool</p>
+</dd>
+</dl>
+<p>Aardvark is I2C/SPI host adapter, refer <a class="reference external" href="https://www.totalphase.com/products/aardvark-i2cspi/">https://www.totalphase.com/products/aardvark-i2cspi/</a></p>
+<p>CPLD slave address is 0x70</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="aardvark.smb_avark.detect">
+<span class="sig-prename descclassname"><span class="pre">aardvark.smb_avark.</span></span><span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.detect" title="Permalink to this definition"></a></dt>
+<dd><p>detect aardvark device</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aardvark.smb_avark.</span></span><span class="sig-name descname"><span class="pre">mctp_avark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_addr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for aardvark configuration as PCIe End Point device on SMBus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device_addr</strong> – destination address</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.check_if_spdm_packet">
+<span class="sig-name descname"><span class="pre">check_if_spdm_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.check_if_spdm_packet" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is spdm mctp packet over smbus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lst</strong> – list of received data bytes by aavark tool</p>
+</dd>
+<dt class="field-even">Return True<span class="colon">:</span></dt>
+<dd class="field-even"><p>if it is SPDM payload, otherwise, return False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.close" title="Permalink to this definition"></a></dt>
+<dd><p>close Aardvark tool driver</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.free">
+<span class="sig-name descname"><span class="pre">free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.free" title="Permalink to this definition"></a></dt>
+<dd><p>free i2c bus</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bitrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.open" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.recv" title="Permalink to this definition"></a></dt>
+<dd><p>slave read data from Aardvark tool from CPLD SPDM SMBus interface</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.send" title="Permalink to this definition"></a></dt>
+<dd><p>send data bytes from Aardvark tool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_send</strong> – data send out in bytearray</p>
+</dd>
+</dl>
+<p>append PEC byte:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">crccalc</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
+<span class="n">In</span> <span class="n">Aardvark</span><span class="p">:</span> <span class="n">Master</span> <span class="o">-</span> <span class="n">addr</span> <span class="mh">0x70</span>
+<span class="n">SPDM_VERSION</span> <span class="n">message</span> <span class="nb">bytes</span><span class="p">:</span> <span class="mi">0</span><span class="n">F</span> <span class="mi">0</span><span class="n">E</span> <span class="mi">0</span><span class="n">B</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">C8</span> <span class="mi">05</span> <span class="mi">10</span> <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">10</span> <span class="mi">14</span>
+<span class="n">Calculate</span> <span class="n">PEC</span> <span class="n">code</span> <span class="k">as</span><span class="p">:</span> <span class="s2">&quot;E0 0F 0E 0B 00 00 00 C8 05 10 04 00 00 00 01 00 10&quot;</span> <span class="o">--&gt;</span> <span class="mh">0x14</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark.send_recv">
+<span class="sig-name descname"><span class="pre">send_recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark.send_recv" title="Permalink to this definition"></a></dt>
+<dd><p>AFM: DeviceAddr=0x02, UUID=0x0001</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aardvark.smb_avark.</span></span><span class="sig-name descname"><span class="pre">mctp_avark_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_addr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for aardvark configuration as PCIe End Point device on SMBus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device_addr</strong> – destination address</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.check_if_spdm_packet">
+<span class="sig-name descname"><span class="pre">check_if_spdm_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.check_if_spdm_packet" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is spdm mctp packet over smbus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lst</strong> – list of received data bytes by aavark tool</p>
+</dd>
+<dt class="field-even">Return True<span class="colon">:</span></dt>
+<dd class="field-even"><p>if it is SPDM payload, otherwise, return False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.close" title="Permalink to this definition"></a></dt>
+<dd><p>close Aardvark tool driver</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.free">
+<span class="sig-name descname"><span class="pre">free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.free" title="Permalink to this definition"></a></dt>
+<dd><p>free i2c bus</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bitrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.open" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.recv" title="Permalink to this definition"></a></dt>
+<dd><p>slave read data from Aardvark tool from CPLD SPDM SMBus interface</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_2.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_2.send" title="Permalink to this definition"></a></dt>
+<dd><p>send data bytes from Aardvark tool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_send</strong> – data send out in bytearray</p>
+</dd>
+</dl>
+<p>append PEC byte:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">crccalc</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
+<span class="n">In</span> <span class="n">Aardvark</span><span class="p">:</span> <span class="n">Master</span> <span class="o">-</span> <span class="n">addr</span> <span class="mh">0x70</span>
+<span class="n">SPDM_VERSION</span> <span class="n">message</span> <span class="nb">bytes</span><span class="p">:</span> <span class="mi">0</span><span class="n">F</span> <span class="mi">0</span><span class="n">E</span> <span class="mi">0</span><span class="n">B</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">C8</span> <span class="mi">05</span> <span class="mi">10</span> <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">10</span> <span class="mi">14</span>
+<span class="n">Calculate</span> <span class="n">PEC</span> <span class="n">code</span> <span class="k">as</span><span class="p">:</span> <span class="s2">&quot;E0 0F 0E 0B 00 00 00 C8 05 10 04 00 00 00 01 00 10&quot;</span> <span class="o">--&gt;</span> <span class="mh">0x14</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aardvark.smb_avark.</span></span><span class="sig-name descname"><span class="pre">mctp_avark_bridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">55</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvTimeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>class for aardvark configuration as MCTP-bridge after BMC</dt><dd><p>for PCIe End Point device on SMBus
+select destination slave address; (0x37(7bit)&lt;&lt;1) - use 0x6E</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device_addr</strong> – destination address</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_ctrl_req_packet">
+<span class="sig-name descname"><span class="pre">check_if_mctp_ctrl_req_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_ctrl_req_packet" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is mctp control packet over smbus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lst</strong> – list of received data bytes by aavark tool</p>
+</dd>
+<dt class="field-even">Return True<span class="colon">:</span></dt>
+<dd class="field-even"><p>if it is MCTP control packet, otherwise, return False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_spdm_packet">
+<span class="sig-name descname"><span class="pre">check_if_mctp_spdm_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_spdm_packet" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is mctp spdm packet over smbus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lst</strong> – list of received data bytes by aavark tool</p>
+</dd>
+<dt class="field-even">Return True<span class="colon">:</span></dt>
+<dd class="field-even"><p>if it is MCTP control packet, otherwise, return False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.close" title="Permalink to this definition"></a></dt>
+<dd><p>close Aardvark tool driver</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.free">
+<span class="sig-name descname"><span class="pre">free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.free" title="Permalink to this definition"></a></dt>
+<dd><p>free i2c bus</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bitrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.open" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.recv" title="Permalink to this definition"></a></dt>
+<dd><p>slave read data from Aardvark tool from BMC MCTP_Brdige SMBus interface</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.send" title="Permalink to this definition"></a></dt>
+<dd><p>send data bytes from Aardvark tool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_send</strong> – data send out in bytearray</p>
+</dd>
+</dl>
+<p>append PEC byte:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">crccalc</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
+<span class="n">In</span> <span class="n">Aardvark</span><span class="p">:</span> <span class="n">Master</span> <span class="o">-</span> <span class="n">addr</span> <span class="mh">0x70</span>
+<span class="n">SPDM_VERSION</span> <span class="n">message</span> <span class="nb">bytes</span><span class="p">:</span> <span class="mi">0</span><span class="n">F</span> <span class="mi">0</span><span class="n">E</span> <span class="mi">0</span><span class="n">B</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">C8</span> <span class="mi">05</span> <span class="mi">10</span> <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">10</span> <span class="mi">14</span>
+<span class="n">Calculate</span> <span class="n">PEC</span> <span class="n">code</span> <span class="k">as</span><span class="p">:</span> <span class="s2">&quot;E0 0F 0E 0B 00 00 00 C8 05 10 04 00 00 00 01 00 10&quot;</span> <span class="o">--&gt;</span> <span class="mh">0x14</span>
+
+<span class="mi">0</span><span class="sa">f</span><span class="s1">&#39;, &#39;</span><span class="mi">09</span><span class="s1">&#39;, &#39;</span><span class="mi">13</span><span class="s1">&#39;, &#39;</span><span class="mi">01</span><span class="s1">&#39;, &#39;</span><span class="mi">00</span><span class="s1">&#39;, &#39;</span><span class="mi">08</span><span class="s1">&#39;, &#39;</span><span class="n">c8</span><span class="s1">&#39;, &#39;</span><span class="mi">00</span><span class="s1">&#39;, &#39;</span><span class="mi">81</span><span class="s1">&#39;, &#39;</span><span class="mi">04</span><span class="s1">&#39;, &#39;</span><span class="mi">00</span><span class="s1">&#39;, &#39;</span><span class="mi">3</span><span class="sa">f</span><span class="s1">&#39;</span>
+
+<span class="n">response</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span> <span class="o">--&gt;</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="mi">0</span>
+         <span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">bc</span><span class="p">:</span><span class="mi">0</span><span class="n">e</span><span class="o">&gt;</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">01</span> <span class="mi">00</span> <span class="mi">08</span> <span class="n">c8</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="mi">0</span> <span class="o">&lt;</span><span class="n">crc</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aardvark.smb_avark.mctp_avark_bridge.send_recv">
+<span class="sig-name descname"><span class="pre">send_recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_send</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aardvark.smb_avark.mctp_avark_bridge.send_recv" title="Permalink to this definition"></a></dt>
+<dd><p>AFM: DeviceAddr=0x02, UUID=0x0001</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../mctp_spdm.html" class="btn btn-neutral float-left" title="mctp_spdm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../testprot.html" class="btn btn-neutral float-right" title="testprot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

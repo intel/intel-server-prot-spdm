@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mctp_spdm &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="aardvark.smb_avark" href="aardvark/smb_avark.html" />
+    <link rel="prev" title="spdm" href="spdm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mctp_spdm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#openspdm-mctp-over-tcp-ip">OPENSPDM: MCTP-over-TCP/IP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpld-mctp-over-smbus">CPLD: MCTP over SMBus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.MCTP_BMC_Bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_BMC_Bridge.get_openspdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.get_openspdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_BMC_Bridge.show"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_BMC_Bridge.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD.get_openspdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.get_openspdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD.get_spdm_emu_data_bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.get_spdm_emu_data_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD.is_multi_mctp"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.is_multi_mctp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD.show"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_CPLD.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.check_pkt"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.check_pkt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.get_smbus_data"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_smbus_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.get_smbus_data_bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_smbus_data_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.get_spdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_spdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.is_end"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.is_hello"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_hello()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.is_spdm"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_spdm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.show"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.extract_mctp_data"><code class="docutils literal notranslate"><span class="pre">extract_mctp_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.log_list"><code class="docutils literal notranslate"><span class="pre">log_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.split_multi_random"><code class="docutils literal notranslate"><span class="pre">split_multi_random()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mctp_spdm.split_multi_random_1"><code class="docutils literal notranslate"><span class="pre">split_multi_random_1()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">mctp_spdm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/mctp_spdm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mctp_spdm">
+<span id="mctp-spdm"></span><h1>mctp_spdm<a class="headerlink" href="#module-mctp_spdm" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>all operation of adapter between MCTP-over-TCP/IP to MCTP-over-SMBus</p>
+</dd>
+</dl>
+<section id="openspdm-mctp-over-tcp-ip">
+<h2>OPENSPDM: MCTP-over-TCP/IP<a class="headerlink" href="#openspdm-mctp-over-tcp-ip" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OPENSPDM item</p></th>
+<th class="head"><p>Length (bytes)</p></th>
+<th class="head"><p>Value and Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Transmit command</p></td>
+<td><p>4</p></td>
+<td><p>Start: 0x0000DEAD
+Stop:  0x0000FFFE
+Data:  0x00000001</p></td>
+</tr>
+<tr class="row-odd"><td><p>Transport Type</p></td>
+<td><p>4</p></td>
+<td><p>0x00000001</p></td>
+</tr>
+<tr class="row-even"><td><p>Buffer Size</p></td>
+<td><p>4</p></td>
+<td><p>size of payload in bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data Bytes</p></td>
+<td><p>L (variable)</p></td>
+<td><p>MCTP packet as shown in below figure</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/mctp_type5_spdm.jpg"><img alt="mctp packet with SPDM payload" src="../_images/mctp_type5_spdm.jpg" style="width: 686.4000000000001px; height: 272.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">MCTP packet for SPDM</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="cpld-mctp-over-smbus">
+<h2>CPLD: MCTP over SMBus<a class="headerlink" href="#cpld-mctp-over-smbus" title="Permalink to this heading"></a></h2>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/mctp-over-smbus.jpg"><img alt="mctp packet over smbus" src="../_images/mctp-over-smbus.jpg" style="width: 700.8000000000001px; height: 291.2px;" /></a>
+<figcaption>
+<p><span class="caption-text">MCTP over SMBus</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET_VERSION</span><span class="p">:</span>
+<span class="n">CPLD</span><span class="p">:</span>      <span class="mi">0</span><span class="n">F</span> <span class="mi">0</span><span class="n">A</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">C8</span> <span class="mi">05</span> <span class="mi">10</span> <span class="mi">84</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">B0</span>
+<span class="n">OPENSPDM</span><span class="p">:</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">05</span> <span class="mi">05</span> <span class="mi">10</span> <span class="mi">84</span> <span class="mi">00</span> <span class="mi">00</span>
+</pre></div>
+</div>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mctp_spdm.extract_mctp_data" title="mctp_spdm.extract_mctp_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_mctp_data</span></code></a>(raw_data)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mctp_spdm.log_list" title="mctp_spdm.log_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_list</span></code></a>(log_handle, input_data, item_perline)</p></td>
+<td><p>log long list as multiple lines</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mctp_spdm.split_multi_random" title="mctp_spdm.split_multi_random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_multi_random</span></code></a>(payload_size)</p></td>
+<td><p>Split a payload size as multiple random number</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mctp_spdm.MCTP_CPLD" title="mctp_spdm.MCTP_CPLD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MCTP_CPLD</span></code></a>(input_data)</p></td>
+<td><p>MCTP CPLD data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mctp_spdm.MCTP_SOCKET" title="mctp_spdm.MCTP_SOCKET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MCTP_SOCKET</span></code></a>(input_data)</p></td>
+<td><p>class for MCTP over TCP/IP from openspdm</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_BMC_Bridge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">MCTP_BMC_Bridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_BMC_Bridge" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>MCTP BMC Bridge data</p>
+<p>MCTPCtrlMsgCmd(0x05): “Get Message Type Support”
+–Receiving: [15, 8, 19, 1, 9, 22, 200, 0, 129, 5, 113]
+–Wrote-resp:[15, 12, 111, 1, 22, 9, 192, 0, 1, 5, 0, 2, 0, 5, 136]
+recv: –[0xf, 0x8, 0x13, 0x1, 0x9, 0x16, 0xc8, 0x0, 0x81, 0x5, 0x71]
+resp: –[0xf, 0xc, 0x6f, 0x1, 0x16, 0x9, 0xc0, 0x0, 0x1, 0x5, 0x0, 0x2, 0x0, 0x5, 0x88]</p>
+<p>num_bytes = 13, addr = 0x37, – MCTP_Bridge: data_recv (in hex) = 0f 0a 13 01 09 16 c8 05 10 84 00 00 44
+mctp_data: True
+~~!!~~Receiving SPDM message: [15, 10, 19, 1, 9, 22, 200, 5, 16, 132, 0, 0, 68]
+num_bytes = 13, addr = 0x37, – MCTP_Bridge: data_recv (in hex) = 0f 0a 13 01 09 16 c8 05 10 84 00 00 44
+mctp_data: True
+~~!!~~Receiving SPDM message: [15, 10, 19, 1, 9, 22, 200, 5, 16, 132, 0, 0, 68]
+num_bytes = 13, addr = 0x37, – MCTP_Bridge: data_recv (in hex) = 0f 0a 13 01 09 16 c8 05 10 84 00 00 44
+mctp_data: True
+~~!!~~Receiving SPDM message: [15, 10, 19, 1, 9, 22, 200, 5, 16, 132, 0, 0, 68]</p>
+<p>:param input_data : input data in bytearray format</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_BMC_Bridge.get_openspdm_data">
+<span class="sig-name descname"><span class="pre">get_openspdm_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_BMC_Bridge.get_openspdm_data" title="Permalink to this definition"></a></dt>
+<dd><p>openspdm adapter for generation of openspdm data for openspdm communication</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_BMC_Bridge.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_BMC_Bridge.show" title="Permalink to this definition"></a></dt>
+<dd><p>show data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_BMC_Bridge.show_spdm_msg">
+<span class="sig-name descname"><span class="pre">show_spdm_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_BMC_Bridge.show_spdm_msg" title="Permalink to this definition"></a></dt>
+<dd><p>show spdm message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">MCTP_CPLD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>MCTP CPLD data</p>
+<p>:param input_data : input data in bytearray format</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD.get_openspdm_data">
+<span class="sig-name descname"><span class="pre">get_openspdm_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD.get_openspdm_data" title="Permalink to this definition"></a></dt>
+<dd><p>openspdm adapter for generation of openspdm data for openspdm communication</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD.get_spdm_emu_data_bridge">
+<span class="sig-name descname"><span class="pre">get_spdm_emu_data_bridge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD.get_spdm_emu_data_bridge" title="Permalink to this definition"></a></dt>
+<dd><p>merge multiple MCTP SMBus pkts as one and send it to spdm-emu</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD.is_multi_mctp">
+<span class="sig-name descname"><span class="pre">is_multi_mctp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD.is_multi_mctp" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is multiple MCTP pkts over SMBus</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD.show" title="Permalink to this definition"></a></dt>
+<dd><p>show data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_CPLD.show_spdm_msg">
+<span class="sig-name descname"><span class="pre">show_spdm_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_CPLD.show_spdm_msg" title="Permalink to this definition"></a></dt>
+<dd><p>show spdm message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">MCTP_SOCKET</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for MCTP over TCP/IP from openspdm</p>
+<p>openspdm traffic is MCTP over socket format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_data</strong> – input data in bytes format</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.check_pkt">
+<span class="sig-name descname"><span class="pre">check_pkt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.check_pkt" title="Permalink to this definition"></a></dt>
+<dd><p>return True if it is a packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.get_smbus_data">
+<span class="sig-name descname"><span class="pre">get_smbus_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.get_smbus_data" title="Permalink to this definition"></a></dt>
+<dd><p>get data bytes send to smbus</p>
+<p>This is adpter of generation MCTP over smbus data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.get_smbus_data_bridge">
+<span class="sig-name descname"><span class="pre">get_smbus_data_bridge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.get_smbus_data_bridge" title="Permalink to this definition"></a></dt>
+<dd><p>get data bytes send to smbus MCTP bridge</p>
+<p>This is adpter of generation MCTP over smbus data with MCTP header</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.get_spdm_data">
+<span class="sig-name descname"><span class="pre">get_spdm_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.get_spdm_data" title="Permalink to this definition"></a></dt>
+<dd><p>get SPDM data</p>
+<p>if it is spdm packet, return spdm data
+oterwise, return None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.is_end">
+<span class="sig-name descname"><span class="pre">is_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.is_end" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is end packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.is_hello">
+<span class="sig-name descname"><span class="pre">is_hello</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.is_hello" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is openspdm Hello packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.is_spdm">
+<span class="sig-name descname"><span class="pre">is_spdm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.is_spdm" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is SPDM packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.show" title="Permalink to this definition"></a></dt>
+<dd><p>display MCTP_SOCKET data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mctp_spdm.MCTP_SOCKET.show_spdm_msg">
+<span class="sig-name descname"><span class="pre">show_spdm_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.MCTP_SOCKET.show_spdm_msg" title="Permalink to this definition"></a></dt>
+<dd><p>show SPDM message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mctp_spdm.extract_mctp_data">
+<span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">extract_mctp_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.extract_mctp_data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mctp_spdm.log_list">
+<span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">log_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_handle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_perline</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.log_list" title="Permalink to this definition"></a></dt>
+<dd><p>log long list as multiple lines</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_handle</strong> – handle of log file</p></li>
+<li><p><strong>input_data</strong> – input data</p></li>
+<li><p><strong>item_perline</strong> – item number per line</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mctp_spdm.split_multi_random">
+<span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">split_multi_random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload_size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.split_multi_random" title="Permalink to this definition"></a></dt>
+<dd><p>Split a payload size as multiple random number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>payload_size</strong> – payload size in bytes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>lst of random bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mctp_spdm.split_multi_random_1">
+<span class="sig-prename descclassname"><span class="pre">mctp_spdm.</span></span><span class="sig-name descname"><span class="pre">split_multi_random_1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mctp_spdm.split_multi_random_1" title="Permalink to this definition"></a></dt>
+<dd><p>Split a payload size as multiple segments</p>
+<p>Follow MCTP Base Spec. – Incorrect transmission unit
+An implementation may terminate message assembly if it receives a “middle” packet
+(SOM = 0b and EOM = 0b) where the MCTP packet payload size does not match the MCTP packet
+payload size for the start packet (SOM = 1b and EOM bit = 0b).
+This is considered an error condition.
+{SOM = 1, EOM = 0}: First packet
+{SOM = 0, EOM = 0}: Middle packet (equal to first packet size)
+{SOM = 0, EOM = 0}: Middle packet (equal to first packet size)
+{SOM = 0, EOM = 1}: Last packet</p>
+<p>No more than 4 pkts in a MCTP message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>payload_size</strong> – payload size in bytes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>lst of random bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="spdm.html" class="btn btn-neutral float-left" title="spdm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="aardvark/smb_avark.html" class="btn btn-neutral float-right" title="aardvark.smb_avark" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

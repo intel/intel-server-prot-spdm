@@ -1,0 +1,37 @@
+bmc
+===
+
+.. automodule:: bmc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_afm_capsule
+      main
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PFR_BMC
+      Redfish_Update
+      pfr_bmc_image
+   
+   
+
+   
+   
+   
+
+
+

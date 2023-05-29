@@ -1,0 +1,48 @@
+.. intelprot documentation master file, created by
+   sphinx-quickstart on Wed Apr 28 14:59:37 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to intel server prot tool package documentation!
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Installation
+=============
+
+Install intelprot package from whl file::
+
+    pip install intelprot-<x.x.x>-py3-none-any.whl
+    # force reinstall or ignore installed package and reinstall
+    pip install --upgrade --force-reinstall <package>
+    pip install --ignore-installed <package>
+
+
+Modules
+========
+
+.. moduleauthor:: Scott Huang <scott.huang@intel.com>
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Contents:
+
+   modules/bmc
+   modules/cpld
+   modules/ifwi
+   modules/sign
+   modules/capsule
+   modules/keys
+   modules/pfm
+   modules/utility
+   modules/verify
+   modules/spdm
+   modules/mctp_spdm
+   modules/aardvark/smb_avark
+   modules/testprot
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

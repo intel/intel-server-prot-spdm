@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>keys &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pfm" href="pfm.html" />
+    <link rel="prev" title="capsule" href="capsule.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">keys</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#keys.OpenSpdm_Keys"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keys.OpenSpdm_Keys.create_Certchain_EcP384"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.create_Certchain_EcP384()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.OpenSpdm_Keys.create_afm_manifest"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.create_afm_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.OpenSpdm_Keys.gen_openssl_cnf"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.gen_openssl_cnf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.OpenSpdm_Keys.verify_openssl_version"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.verify_openssl_version()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.PrivateKey"><code class="docutils literal notranslate"><span class="pre">PrivateKey</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.from_hexstr"><code class="docutils literal notranslate"><span class="pre">PrivateKey.from_hexstr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.get_hashbuffer"><code class="docutils literal notranslate"><span class="pre">PrivateKey.get_hashbuffer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.get_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">PrivateKey.get_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.read_from_pem"><code class="docutils literal notranslate"><span class="pre">PrivateKey.read_from_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.save_to_pem"><code class="docutils literal notranslate"><span class="pre">PrivateKey.save_to_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.show"><code class="docutils literal notranslate"><span class="pre">PrivateKey.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PrivateKey.verify_pair"><code class="docutils literal notranslate"><span class="pre">PrivateKey.verify_pair()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.PublicKey"><code class="docutils literal notranslate"><span class="pre">PublicKey</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.from_x_curve"><code class="docutils literal notranslate"><span class="pre">PublicKey.from_x_curve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.get_hashbuffer"><code class="docutils literal notranslate"><span class="pre">PublicKey.get_hashbuffer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.get_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">PublicKey.get_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.read_from_pem"><code class="docutils literal notranslate"><span class="pre">PublicKey.read_from_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.save_to_pem"><code class="docutils literal notranslate"><span class="pre">PublicKey.save_to_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keys.PublicKey.show"><code class="docutils literal notranslate"><span class="pre">PublicKey.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_RS_signdata"><code class="docutils literal notranslate"><span class="pre">get_RS_signdata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_curve"><code class="docutils literal notranslate"><span class="pre">get_curve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_curve_baselen"><code class="docutils literal notranslate"><span class="pre">get_curve_baselen()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_eckey_type"><code class="docutils literal notranslate"><span class="pre">get_eckey_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_hash_from_XY"><code class="docutils literal notranslate"><span class="pre">get_hash_from_XY()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_pfr_version"><code class="docutils literal notranslate"><span class="pre">get_pfr_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.get_rk_hashbuffer"><code class="docutils literal notranslate"><span class="pre">get_rk_hashbuffer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.sign_data"><code class="docutils literal notranslate"><span class="pre">sign_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.signature_RS"><code class="docutils literal notranslate"><span class="pre">signature_RS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.verify_ec_keypair"><code class="docutils literal notranslate"><span class="pre">verify_ec_keypair()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.verify_signature"><code class="docutils literal notranslate"><span class="pre">verify_signature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys.verify_signature_from_prvkey"><code class="docutils literal notranslate"><span class="pre">verify_signature_from_prvkey()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">keys</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/keys.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-keys">
+<span id="keys"></span><h1>keys<a class="headerlink" href="#module-keys" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>This module includes all operations that are related to pfr keys, singing, verification opertaions, including:</p>
+<ul class="simple">
+<li><p>PrivateKey class</p></li>
+<li><p>PublicKey class</p></li>
+<li><p>Calculation of a public key hash</p></li>
+<li><p>Calculation of Public key X,Y</p></li>
+<li><p>Get public key hash from private key</p></li>
+<li><p>Sign a data using private key</p></li>
+<li><p>Get signature R,S</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.get_RS_signdata" title="keys.get_RS_signdata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_RS_signdata</span></code></a>(pvt_key_pem, data)</p></td>
+<td><p>Calculate signature component R and S from sign data and private key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#keys.get_curve" title="keys.get_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_curve</span></code></a>(key_pem)</p></td>
+<td><p>get curve name of a key in pem format</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.get_curve_baselen" title="keys.get_curve_baselen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_curve_baselen</span></code></a>(key_pem)</p></td>
+<td><p>get curve name and baselen of a key in pem format</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#keys.get_hash_from_XY" title="keys.get_hash_from_XY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash_from_XY</span></code></a>(X, Y)</p></td>
+<td><p>calculate public key hash from its component X and Y</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.sign_data" title="keys.sign_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sign_data</span></code></a>(pvt_key_pem, data)</p></td>
+<td><p>sign data and return signature</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#keys.signature_RS" title="keys.signature_RS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">signature_RS</span></code></a>(signature)</p></td>
+<td><p>extract R, S from a signature binary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.verify_ec_keypair" title="keys.verify_ec_keypair"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_ec_keypair</span></code></a>(pub_key_pem, prv_key_pem)</p></td>
+<td><p>verify EC key is a pair</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#keys.verify_signature" title="keys.verify_signature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_signature</span></code></a>(pub_key_pem, R, S, data)</p></td>
+<td><p>Verify signature with Signature Component R, S, private key PEM and signed data, assert with verification key, vk.verify(sig, data, hashlib.sha256, sigdecode=sigdecode_der)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.verify_signature_from_prvkey" title="keys.verify_signature_from_prvkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_signature_from_prvkey</span></code></a>(prv_key_pem, R, ...)</p></td>
+<td><p>Verify signature with Signature Component R, S, private key PEM and signed data, assert with verification key, vk.verify(sig, data, hashlib.sha256, sigdecode=sigdecode_der)</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#keys.PrivateKey" title="keys.PrivateKey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PrivateKey</span></code></a>()</p></td>
+<td><p>class handle PFR private key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#keys.PublicKey" title="keys.PublicKey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PublicKey</span></code></a>()</p></td>
+<td><p>class handling PFR public key operations</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="keys.OpenSpdm_Keys">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">OpenSpdm_Keys</span></span><a class="headerlink" href="#keys.OpenSpdm_Keys" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>generate openspdm keys and create template</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.OpenSpdm_Keys.create_Certchain_EcP384">
+<span class="sig-name descname"><span class="pre">create_Certchain_EcP384</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EcP384'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.OpenSpdm_Keys.create_Certchain_EcP384" title="Permalink to this definition"></a></dt>
+<dd><p>generate new key and self-sign Certchain for OpenSpdm
+save all files in a folder. Default is EcP384 under work directory, user can copy whole folder to
+openspdm_build directory, C:shuang4Workopenspdm-masterBuildDEBUG_VS2019X64EcP384</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dir</strong> – directory name to save all generated files, optional, default is ‘EcP384’ under work directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.OpenSpdm_Keys.create_afm_manifest">
+<span class="sig-name descname"><span class="pre">create_afm_manifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.OpenSpdm_Keys.create_afm_manifest" title="Permalink to this definition"></a></dt>
+<dd><p>create afm_manifest_openspdm.json to build afm capsule using capsule module</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.OpenSpdm_Keys.gen_openssl_cnf">
+<span class="sig-name descname"><span class="pre">gen_openssl_cnf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.OpenSpdm_Keys.gen_openssl_cnf" title="Permalink to this definition"></a></dt>
+<dd><p>generate a openssl.cnf file with text defined in self.openssl_cnf
+remove leading blank space</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.OpenSpdm_Keys.verify_openssl_version">
+<span class="sig-name descname"><span class="pre">verify_openssl_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.OpenSpdm_Keys.verify_openssl_version" title="Permalink to this definition"></a></dt>
+<dd><p>verify openssl is in system path and not use old version</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keys.PrivateKey">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">PrivateKey</span></span><a class="headerlink" href="#keys.PrivateKey" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class handle PFR private key</p>
+<p>Use class generator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">read_from_pem</span><span class="p">()</span>
+<span class="o">*</span><span class="n">from_hexstr</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.from_hexstr">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_hexstr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prvkey_hex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curve=NIST384p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hashfunc=&lt;built-in</span> <span class="pre">function</span> <span class="pre">openssl_sha384&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.from_hexstr" title="Permalink to this definition"></a></dt>
+<dd><p>Generate ECDSA private key from its integer converted from hex string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prvkey_hex</strong> – hex string representing a ECDSA private key integer</p></li>
+<li><p><strong>curve</strong> – curve object in ecdsa, default is NIST384p</p></li>
+<li><p><strong>hashfunc</strong> – hash function, default is SHA384</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.get_hashbuffer">
+<span class="sig-name descname"><span class="pre">get_hashbuffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.get_hashbuffer" title="Permalink to this definition"></a></dt>
+<dd><p>get publick key hashbuffer</p>
+<p>Calculate 48 bytes or 32 bytes Public Key hash buffer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.get_pubkey_xy">
+<span class="sig-name descname"><span class="pre">get_pubkey_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.get_pubkey_xy" title="Permalink to this definition"></a></dt>
+<dd><p>get public key X, Y in bytes format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.read_from_pem">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_from_pem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.read_from_pem" title="Permalink to this definition"></a></dt>
+<dd><p>read from pem key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – key file in PEM format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.save_to_pem">
+<span class="sig-name descname"><span class="pre">save_to_pem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.save_to_pem" title="Permalink to this definition"></a></dt>
+<dd><p>save to PEM format key file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – file name of PEM format key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.show" title="Permalink to this definition"></a></dt>
+<dd><p>display private key parameters</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PrivateKey.verify_pair">
+<span class="sig-name descname"><span class="pre">verify_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pubkey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PrivateKey.verify_pair" title="Permalink to this definition"></a></dt>
+<dd><p>check if it is a pair of private key with a given public key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pubkey</strong> – public key in PEM format</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keys.PublicKey">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">PublicKey</span></span><a class="headerlink" href="#keys.PublicKey" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class handling PFR public key operations</p>
+<p>Use class generator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">read_from_pem</span><span class="p">()</span>
+<span class="o">*</span><span class="n">from_x_curve</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.from_x_curve">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_x_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NIST384p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.from_x_curve" title="Permalink to this definition"></a></dt>
+<dd><p>generate ECDSA public key from X value and its curve</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> – hex string of ECDSA public key component X</p></li>
+<li><p><strong>curve</strong> – curve in ecsdsa, default is NIST384p</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.get_hashbuffer">
+<span class="sig-name descname"><span class="pre">get_hashbuffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.get_hashbuffer" title="Permalink to this definition"></a></dt>
+<dd><p>get hashbuffer</p>
+<p>Calculate public key hash buffer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.get_pubkey_xy">
+<span class="sig-name descname"><span class="pre">get_pubkey_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.get_pubkey_xy" title="Permalink to this definition"></a></dt>
+<dd><p>get public key X, Y in bytes format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.read_from_pem">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_from_pem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.read_from_pem" title="Permalink to this definition"></a></dt>
+<dd><p>read from pem key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – file name of key in PEM format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.save_to_pem">
+<span class="sig-name descname"><span class="pre">save_to_pem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.save_to_pem" title="Permalink to this definition"></a></dt>
+<dd><p>save the instance to a PEM format key file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – key file name in PEM format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keys.PublicKey.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#keys.PublicKey.show" title="Permalink to this definition"></a></dt>
+<dd><p>display pubkey parameters</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_RS_signdata">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_RS_signdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pvt_key_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_RS_signdata" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate signature component R and S from sign data and private key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pvt_key_pem</strong> – private key in pem format</p></li>
+<li><p><strong>data</strong> – data to be signed in bytes format</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(R, S) components in Bytes format</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of Bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_curve">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_curve" title="Permalink to this definition"></a></dt>
+<dd><p>get curve name of a key in pem format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – key in PEM format</p>
+</dd>
+<dt class="field-even">Return curve.name<span class="colon">:</span></dt>
+<dd class="field-even"><p>‘NIST384p’ or ‘NIST256p’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_curve_baselen">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_curve_baselen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_curve_baselen" title="Permalink to this definition"></a></dt>
+<dd><p>get curve name and baselen of a key in pem format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – key in PEM format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(curve.baselen, curve.name)
+curve.baselen: 48, 32
+curve.name: ‘NIST384p’ or ‘NIST256p’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_eckey_type">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_eckey_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_eckey_type" title="Permalink to this definition"></a></dt>
+<dd><p>get EC key type public or private from PEM format key</p>
+<blockquote>
+<div><p>return “public”, “private”, or ‘invalid’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key_pem</strong> – EC key in PEM format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_hash_from_XY">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_hash_from_XY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_hash_from_XY" title="Permalink to this definition"></a></dt>
+<dd><p>calculate public key hash from its component X and Y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> – public key component X in hex string, X is 32 bytes for PFR 2.0, it is 48 bytes for PFR 3.0</p></li>
+<li><p><strong>Y</strong> – public key component Y in hex string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>keyhash</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_pfr_version">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_pfr_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_pfr_version" title="Permalink to this definition"></a></dt>
+<dd><p>get pfr version 2.0, 3.0 from key in pem format
+If curve.name: ‘NIST384p’ or ‘NIST256p’
+:param key_pem: key in PEM format
+:return: pfr_version, 2 or 3</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.get_rk_hashbuffer">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">get_rk_hashbuffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rk_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.get_rk_hashbuffer" title="Permalink to this definition"></a></dt>
+<dd><p>get root key hash buffer for provising verification
+return hashbuffer in hex string format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rk_key</strong> – root key in pem format, wither private or public key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.main">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.main" title="Permalink to this definition"></a></dt>
+<dd><p>command arguments for openspdm key and certificate chain generation</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.sign_data">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">sign_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pvt_key_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.sign_data" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>sign data and return signature</p>
+</div></blockquote>
+<p>:param pvt_key_pem : private key in PEM format
+:param data: data to be signed in bytes format
+:type bytes: bytes
+:return: signature
+:rtype: bytes</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.signature_RS">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">signature_RS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.signature_RS" title="Permalink to this definition"></a></dt>
+<dd><p>extract R, S from a signature binary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>signature</strong> – binary data of a signature</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(R, S)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>hex string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.verify_ec_keypair">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">verify_ec_keypair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pub_key_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prv_key_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.verify_ec_keypair" title="Permalink to this definition"></a></dt>
+<dd><p>verify EC key is a pair</p>
+<p>This function validates the input public and private keys are a pair</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pub_key_pem</strong> – public key in PEM format</p></li>
+<li><p><strong>prv_key_pem</strong> – private key in PEM format</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns Bool rtn<span class="colon">:</span></dt>
+<dd class="field-even"><p>True/False - Pass/Fail</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.verify_signature">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">verify_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pub_key_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.verify_signature" title="Permalink to this definition"></a></dt>
+<dd><p>Verify signature with Signature Component R, S, private key PEM and signed data,
+assert with verification key, vk.verify(sig, data, hashlib.sha256, sigdecode=sigdecode_der)</p>
+<p>:param pub_key_pem : public key that is extracted from private sign key
+:param R: signature component R in bytes
+:param S: signature component S in bytes
+:param data : data signed (in Bytes)
+:return: True/False - Pass or Failure with raised error
+:rtype: Bool</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keys.verify_signature_from_prvkey">
+<span class="sig-prename descclassname"><span class="pre">keys.</span></span><span class="sig-name descname"><span class="pre">verify_signature_from_prvkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prv_key_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keys.verify_signature_from_prvkey" title="Permalink to this definition"></a></dt>
+<dd><p>Verify signature with Signature Component R, S, private key PEM and signed data,
+assert with verification key, vk.verify(sig, data, hashlib.sha256, sigdecode=sigdecode_der)</p>
+<p>:param prv_key_pem : private key in PEM format
+:param R: signature component R in bytes
+:param S: signature component S in bytes
+:param data : data signed (in bytes)
+:return: True/False - Pass or Failure with raised error
+:rtype: Bool</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="capsule.html" class="btn btn-neutral float-left" title="capsule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pfm.html" class="btn btn-neutral float-right" title="pfm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

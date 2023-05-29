@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>capsule &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="keys" href="keys.html" />
+    <link rel="prev" title="sign" href="sign.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">capsule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#command-line">Command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-afm-staging-capsule">Generate AFM staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#in-command-line">in command line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#in-python-console-or-script">in python console or script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-cfm-staging-capsule">Generate CFM staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-prompt">command prompt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.AFM"><code class="docutils literal notranslate"><span class="pre">AFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.build_afm"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.build_afm_single_device"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm_single_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.build_afm_struct"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.build_staging_afm"><code class="docutils literal notranslate"><span class="pre">AFM.build_staging_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.set_csk_id"><code class="docutils literal notranslate"><span class="pre">AFM.set_csk_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.set_signing_keys"><code class="docutils literal notranslate"><span class="pre">AFM.set_signing_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM.sign_afm_device"><code class="docutils literal notranslate"><span class="pre">AFM.sign_afm_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.AFM_BHS"><code class="docutils literal notranslate"><span class="pre">AFM_BHS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.build_afm"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.build_afm_single_device"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm_single_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.build_afm_struct"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.build_staging_afm"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_staging_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.pack_bytes_from_struct"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.pack_bytes_from_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.pack_device_measurement"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.pack_device_measurement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.set_csk_id"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.set_csk_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.set_signing_keys"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.set_signing_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.AFM_BHS.sign_afm_device"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.sign_afm_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.BMC_Capsule"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.BMC_Capsule.decompression"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule.decompression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.BMC_Capsule.show"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.CFM"><code class="docutils literal notranslate"><span class="pre">CFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.build_cfm_capsule"><code class="docutils literal notranslate"><span class="pre">CFM.build_cfm_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.build_pfm"><code class="docutils literal notranslate"><span class="pre">CFM.build_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.build_pfm_struct"><code class="docutils literal notranslate"><span class="pre">CFM.build_pfm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.build_single_capsule"><code class="docutils literal notranslate"><span class="pre">CFM.build_single_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.calc_pfm_body"><code class="docutils literal notranslate"><span class="pre">CFM.calc_pfm_body()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.logger"><code class="docutils literal notranslate"><span class="pre">CFM.logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CFM.move_files"><code class="docutils literal notranslate"><span class="pre">CFM.move_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.CPLD_Capsule"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CPLD_Capsule.build_cpld_capsule"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule.build_cpld_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.CPLD_Capsule.get_cap_content"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule.get_cap_content()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.Decommission"><code class="docutils literal notranslate"><span class="pre">Decommission</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.Decommission.build"><code class="docutils literal notranslate"><span class="pre">Decommission.build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.IFWI_Capsule"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.IFWI_Capsule.decompression"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.decompression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.IFWI_Capsule.show"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.IFWI_Capsule.show_pfm"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.show_pfm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.Key_Cancellation"><code class="docutils literal notranslate"><span class="pre">Key_Cancellation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.Key_Cancellation.build"><code class="docutils literal notranslate"><span class="pre">Key_Cancellation.build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.STG_Capsule"><code class="docutils literal notranslate"><span class="pre">STG_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.STG_Capsule.build_cap"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.build_cap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.STG_Capsule.deassemble"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.deassemble()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capsule.STG_Capsule.get_length_location"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.get_length_location()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#capsule.set_logger"><code class="docutils literal notranslate"><span class="pre">set_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">capsule</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/capsule.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-capsule">
+<span id="capsule"></span><h1>capsule<a class="headerlink" href="#module-capsule" title="Permalink to this heading"></a></h1>
+<p>Generate and sign various PFR capsules, so far it includes:</p>
+<ul class="simple">
+<li><p>Key cancellation capsule</p></li>
+<li><p>Decommission capsule</p></li>
+<li><p>AFM capsule</p></li>
+<li><p>CFM capsule</p></li>
+</ul>
+<section id="command-line">
+<h2>Command line<a class="headerlink" href="#command-line" title="Permalink to this heading"></a></h2>
+<p>help-menu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="o">-</span><span class="n">h</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="o">&lt;</span><span class="n">sub</span><span class="o">-</span><span class="n">cmd</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">h</span> <span class="c1"># sub-cmd example: {afm,decomm,kcc,stgcap,cfm}</span>
+</pre></div>
+</div>
+</section>
+<section id="generate-afm-staging-capsule">
+<h2>Generate AFM staging capsule<a class="headerlink" href="#generate-afm-staging-capsule" title="Permalink to this heading"></a></h2>
+<section id="in-command-line">
+<h3>in command line<a class="headerlink" href="#in-command-line" title="Permalink to this heading"></a></h3>
+<p>Generate AFM staging capsule in command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate reference manifest to your work directory</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="o">-</span><span class="n">start_afm</span>
+<span class="c1"># modify the reference json file and replace your keys, then</span>
+<span class="c1"># generate new BMC image with active/recovery afm capsule</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">afm</span> <span class="o">-</span><span class="n">a</span> <span class="o">&lt;</span><span class="n">manifest_file</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">bmc_image</span><span class="o">&gt;</span>
+<span class="c1"># generate afm staging capsule only</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">afm</span> <span class="o">-</span><span class="n">a</span> <span class="o">&lt;</span><span class="n">manifest_file</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="in-python-console-or-script">
+<h3>in python console or script<a class="headerlink" href="#in-python-console-or-script" title="Permalink to this heading"></a></h3>
+<p>code block for generating afm staging capsule:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;from intelprot import capsule</span>
+<span class="go">&gt;&gt;&gt;myafm = capsule.AFM(&lt;afm_manifest&gt;)</span>
+<span class="go">&gt;&gt;&gt;myafm.build_staging_afm()  # build AFM staging capsule</span>
+</pre></div>
+</div>
+<p>code block for generating new BMC image with AFM capsule integrated and also include afm staging capsule:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;from intelprot import capsule, bmc</span>
+<span class="go">&gt;&gt;&gt;myafm = capsule.AFM(&lt;afm_manifest&gt;)</span>
+<span class="go">&gt;&gt;&gt;myafm.build_afm()  # build AFM active, recovery and staging capsule</span>
+<span class="go">&gt;&gt;&gt;bmc.load_afm_capsule(&lt;bmc_image&gt; myafm.afm_image, myafm.afm_recovery_image)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="generate-cfm-staging-capsule">
+<h2>Generate CFM staging capsule<a class="headerlink" href="#generate-cfm-staging-capsule" title="Permalink to this heading"></a></h2>
+<section id="command-prompt">
+<h3>command prompt<a class="headerlink" href="#command-prompt" title="Permalink to this heading"></a></h3>
+<p>Generate CFM staging capsule in command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate reference manifest to your work directory</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="o">-</span><span class="n">start_cfm</span>
+<span class="c1"># modify the reference json file and replace your keys, then</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">cfm</span> <span class="o">-</span><span class="n">c</span> <span class="o">&lt;</span><span class="n">cfm_manifest_file</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#capsule.AFM" title="capsule.AFM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AFM</span></code></a>(manifest)</p></td>
+<td><p>class for AFM build</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#capsule.Decommission" title="capsule.Decommission"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Decommission</span></code></a>(csk_id, rk_prv, csk_prv[, fdir])</p></td>
+<td><p>class for build and sign decommission capsule</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#capsule.Key_Cancellation" title="capsule.Key_Cancellation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Key_Cancellation</span></code></a>(csk_id, rk_prv[, fdir, pctype])</p></td>
+<td><p>class of key cancellation capsule</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.AFM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">AFM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for AFM build</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>manifest</strong> – JSON file with AFM manifest.json. This file should be modified from afm_manifest.json reference</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.build_afm">
+<span class="sig-name descname"><span class="pre">build_afm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.build_afm" title="Permalink to this definition"></a></dt>
+<dd><p>build afm capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.build_afm_single_device">
+<span class="sig-name descname"><span class="pre">build_afm_single_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.build_afm_single_device" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM for single device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dict_input</strong> – dictionary variable of input.
+This is an internal function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.build_afm_struct">
+<span class="sig-name descname"><span class="pre">build_afm_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.build_afm_struct" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM structure</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.build_staging_afm">
+<span class="sig-name descname"><span class="pre">build_staging_afm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.build_staging_afm" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM staging capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.set_csk_id">
+<span class="sig-name descname"><span class="pre">set_csk_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cskID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.set_csk_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.set_signing_keys">
+<span class="sig-name descname"><span class="pre">set_signing_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_prv_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.set_signing_keys" title="Permalink to this definition"></a></dt>
+<dd><p>set signing keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_prv_key</strong> – root private key in PEM format</p></li>
+<li><p><strong>csk_prv_key</strong> – CSK private key in PEM format</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM.sign_afm_device">
+<span class="sig-name descname"><span class="pre">sign_afm_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM.sign_afm_device" title="Permalink to this definition"></a></dt>
+<dd><p>signing single device AFM using two private keys</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.AFM_BHS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">AFM_BHS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manifest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><p>class for Birch Stream AFM build</p>
+</div></blockquote>
+<p>List of manifest json file and usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">bhs_afm_manifest_1</span><span class="o">.</span><span class="n">json</span> <span class="o">--</span> <span class="n">single</span> <span class="n">device</span> <span class="n">AFM</span> <span class="n">validation</span> <span class="n">using</span> <span class="n">SPDM</span><span class="o">-</span><span class="n">Emu</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>manifest</strong> – JSON file with AFM manifest.json. This file should be modified from bhs_afm_manifest_1.json reference</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.build_afm">
+<span class="sig-name descname"><span class="pre">build_afm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.build_afm" title="Permalink to this definition"></a></dt>
+<dd><p>build afm capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.build_afm_single_device">
+<span class="sig-name descname"><span class="pre">build_afm_single_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.build_afm_single_device" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM for single device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dict_input</strong> – dictionary variable of input.
+This is an internal function</p>
+</dd>
+</dl>
+<p>BHS_AFM_PER_DEVICE_FORMAT
+BHS_AFM_PER_DEVICE_STRUCT</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.build_afm_struct">
+<span class="sig-name descname"><span class="pre">build_afm_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.build_afm_struct" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM structure</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.build_staging_afm">
+<span class="sig-name descname"><span class="pre">build_staging_afm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.build_staging_afm" title="Permalink to this definition"></a></dt>
+<dd><p>build AFM staging capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.pack_bytes_from_struct">
+<span class="sig-name descname"><span class="pre">pack_bytes_from_struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">def_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst_def_struct</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.pack_bytes_from_struct" title="Permalink to this definition"></a></dt>
+<dd><p>pack bytes from struct and manifest dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.pack_device_measurement">
+<span class="sig-name descname"><span class="pre">pack_device_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dev_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.pack_device_measurement" title="Permalink to this definition"></a></dt>
+<dd><p>pack per device measurement data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.set_csk_id">
+<span class="sig-name descname"><span class="pre">set_csk_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cskID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.set_csk_id" title="Permalink to this definition"></a></dt>
+<dd><p>set CSK ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cskID</strong> – CSK ID number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.set_signing_keys">
+<span class="sig-name descname"><span class="pre">set_signing_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_prv_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.set_signing_keys" title="Permalink to this definition"></a></dt>
+<dd><p>set signing keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_prv_key</strong> – root private key in PEM format</p></li>
+<li><p><strong>csk_prv_key</strong> – CSK private key in PEM format</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.AFM_BHS.sign_afm_device">
+<span class="sig-name descname"><span class="pre">sign_afm_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.AFM_BHS.sign_afm_device" title="Permalink to this definition"></a></dt>
+<dd><p>signing single device AFM using two private keys</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.BMC_Capsule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">BMC_Capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cap_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.BMC_Capsule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for BMC update capsule operations, including:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">*</span> <span class="n">checking</span> <span class="n">PFM</span> <span class="n">inside</span> <span class="n">capsule</span>
+ <span class="o">*</span> <span class="n">decompression</span> <span class="n">capsule</span> <span class="n">to</span> <span class="n">recover</span> <span class="n">it</span> <span class="k">as</span> <span class="n">a</span> <span class="n">BMC</span> <span class="n">pfr</span> <span class="n">image</span><span class="p">,</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">manifest</span> <span class="n">JSON</span> <span class="n">file</span>
+
+<span class="n">In</span> <span class="n">the</span> <span class="n">decompressed</span> <span class="n">image</span><span class="p">,</span> <span class="n">the</span> <span class="n">recovery</span> <span class="n">capsule</span> <span class="ow">is</span> <span class="n">included</span><span class="p">,</span> <span class="n">staging</span> <span class="n">area</span> <span class="ow">is</span> <span class="n">empty</span>
+<span class="n">The</span> <span class="n">signed</span> <span class="n">pfm</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">capsule</span> <span class="ow">is</span> <span class="n">used</span><span class="o">.</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap_image</strong> – BMC update capsule image file, either unsigned or signed capsule. Signed capsule will be added in flash recovery area.</p></li>
+<li><p><strong>manifest_json</strong> – file name of the manifest jason file used to build pfr bmc image and the capsule.
+It is required to follow the format.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.BMC_Capsule.decompression">
+<span class="sig-name descname"><span class="pre">decompression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.BMC_Capsule.decompression" title="Permalink to this definition"></a></dt>
+<dd><p>get decompressed image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.BMC_Capsule.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.BMC_Capsule.show" title="Permalink to this definition"></a></dt>
+<dd><p>display deComp_dict</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.CFM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">CFM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for CPLD firmware manifest capsule operation</p>
+<p>CPLD Firmware Manifest data structure (CFM)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.build_cfm_capsule">
+<span class="sig-name descname"><span class="pre">build_cfm_capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.build_cfm_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>build cpld update capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.build_pfm">
+<span class="sig-name descname"><span class="pre">build_pfm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.build_pfm" title="Permalink to this definition"></a></dt>
+<dd><p>build and sign pfm capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.build_pfm_struct">
+<span class="sig-name descname"><span class="pre">build_pfm_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.build_pfm_struct" title="Permalink to this definition"></a></dt>
+<dd><p>build pfm_struct binary data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.build_single_capsule">
+<span class="sig-name descname"><span class="pre">build_single_capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpld_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.build_single_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>build and sign single capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.calc_pfm_body">
+<span class="sig-name descname"><span class="pre">calc_pfm_body</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.calc_pfm_body" title="Permalink to this definition"></a></dt>
+<dd><p>calculate pfm body addr definition manifest</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.logger">
+<span class="sig-name descname"><span class="pre">logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.logger" title="Permalink to this definition"></a></dt>
+<dd><p>enable log in screen</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CFM.move_files">
+<span class="sig-name descname"><span class="pre">move_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CFM.move_files" title="Permalink to this definition"></a></dt>
+<dd><p>save temporary and output files in Temp, Output folder</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.CPLD_Capsule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">CPLD_Capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpld_capsule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_capsule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CPLD_Capsule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>take BKC cpld update capsule and signed it with customer private keys and desired CSKID
+No PFM inside cpld update capsule</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CPLD_Capsule.build_cpld_capsule">
+<span class="sig-name descname"><span class="pre">build_cpld_capsule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CPLD_Capsule.build_cpld_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>build new signed cpld capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.CPLD_Capsule.get_cap_content">
+<span class="sig-name descname"><span class="pre">get_cap_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.CPLD_Capsule.get_cap_content" title="Permalink to this definition"></a></dt>
+<dd><p>get protect content</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.ConfigDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">ConfigDict</span></span><a class="headerlink" href="#capsule.ConfigDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></p>
+<p>define an ordered dictionary</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.Decommission">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">Decommission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.Decommission" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for build and sign decommission capsule</p>
+<p>The Decommission reuses the same Protected Content authentication format,
+but the payload is 128 bytes of 0s. The Decommission Certificate should be used with the CPLD Update CSK.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csk_id</strong> – id of the CSK to build key cancellation certificate (0 - 127)</p></li>
+<li><p><strong>rk_prv</strong> – root private key in PEM format, including file path</p></li>
+<li><p><strong>csk_prv</strong> – csk private key in PEM format, including file path</p></li>
+<li><p><strong>fdir</strong> – target folder of key cancellation certificate, default is current work directly</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;from intelprot import capsule</span>
+<span class="go"># build decommission capsule with csk ID 2</span>
+<span class="go">&gt;&gt;&gt;obj1 = capsule.Decommission(cskid=2, rk_prv_pem=&lt;rk_prv&gt;, csk_prv_pem = &lt;csk_prv&gt;, fdir=&lt;&gt;)</span>
+<span class="go">&gt;&gt;&gt;obj1.build()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.Decommission.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.Decommission.build" title="Permalink to this definition"></a></dt>
+<dd><p>build key cancellation certificate</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.IFWI_Capsule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">IFWI_Capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cap_image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.IFWI_Capsule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for IFWI capsule operation including capsule decompression</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.IFWI_Capsule.decompression">
+<span class="sig-name descname"><span class="pre">decompression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.IFWI_Capsule.decompression" title="Permalink to this definition"></a></dt>
+<dd><p>get decompressed image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.IFWI_Capsule.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.IFWI_Capsule.show" title="Permalink to this definition"></a></dt>
+<dd><p>show capsule information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.IFWI_Capsule.show_pfm">
+<span class="sig-name descname"><span class="pre">show_pfm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.IFWI_Capsule.show_pfm" title="Permalink to this definition"></a></dt>
+<dd><p>display PFM inside the capsule</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.Key_Cancellation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">Key_Cancellation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pctype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.Key_Cancellation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class of key cancellation capsule</p>
+<p>build and parse key cancellation certificate capsule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csk_id</strong> – id of the CSK to build key cancellation certificate (0 - 127)</p></li>
+<li><p><strong>rk_prv</strong> – root private key in PEM format, including file path</p></li>
+<li><p><strong>fdir</strong> – target folder of key cancellation certificate, default is current work directly</p></li>
+<li><p><strong>pctype</strong> – <p>protect type of the CSK to be cancelled, integer or string, default is to create all five types</p>
+<blockquote>
+<div><p>integer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="mh">0x0</span> <span class="o">-</span> <span class="n">PFR</span> <span class="n">CPLD</span> <span class="n">Update</span> <span class="n">Capsule</span><span class="p">;</span>
+<span class="o">*</span> <span class="mh">0x1</span> <span class="o">-</span> <span class="n">PFR</span> <span class="n">PCH</span> <span class="n">PFM</span><span class="p">;</span>
+<span class="o">*</span> <span class="mh">0x2</span> <span class="o">-</span> <span class="n">PFR</span> <span class="n">PCH</span> <span class="n">Update</span> <span class="n">Caosule</span><span class="p">;</span>
+<span class="o">*</span> <span class="mh">0x3</span> <span class="o">-</span> <span class="n">PFR</span> <span class="n">BMC</span> <span class="n">PFM</span><span class="p">;</span>
+<span class="o">*</span> <span class="mh">0x4</span> <span class="o">-</span> <span class="n">PFR</span> <span class="n">BMC</span> <span class="n">Update</span> <span class="n">Capsule</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="s2">&quot;cpld_cap&quot;</span>
+<span class="o">*</span> <span class="s2">&quot;pch_pfm&quot;</span>
+<span class="o">*</span> <span class="s2">&quot;pch_cap&quot;</span>
+<span class="o">*</span> <span class="s2">&quot;bmc_pfm&quot;</span>
+<span class="o">*</span> <span class="s2">&quot;bmc_cap&quot;</span>
+</pre></div>
+</div>
+<p>if not include pctype, but specified cskid, build all 5 types of certificates</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;from intelprot import capsule</span>
+<span class="go"># build PCH PFM cancel. cert. for csk ID 2</span>
+<span class="go">&gt;&gt;&gt;obj1 = capsule.Key_Cancellation(csk_id=2, rk_prv=&lt;rk_prv&gt;, fdir=&lt;&gt;, pctype=1)</span>
+<span class="go">&gt;&gt;&gt;obj1.build()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.Key_Cancellation.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.Key_Cancellation.build" title="Permalink to this definition"></a></dt>
+<dd><p>build key cancellation certificate</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="capsule.STG_Capsule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">STG_Capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cap_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bkc_ver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfm_rev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oem_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.STG_Capsule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class to process/update a valid good recovery and staging capsule following Intel PFR data structure
+This is generic class for updating BMC, IFWI, and CPLD recovery/staging capsule for PFR validation</p>
+<p>Input: a known good validated signed capsule
+Output: an updated signed capsule with updated parameters including csk_id, svn, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cap_image</strong> – known good update capsule from BKC or customer built capsule. It can be bmc, ifwi, or cpld capsule.</p></li>
+<li><p><strong>rk_prv</strong> – root private key in PEM format, including file path</p></li>
+<li><p><strong>csk_prv</strong> – csk private key in PEM format, including file path</p></li>
+<li><p><strong>csk_id</strong> – id of the CSK to build key cancellation certificate (0 - 127)</p></li>
+<li><p><strong>svn</strong> – SVN number for the PFM inside a capsule</p></li>
+<li><p><strong>bkc_ver</strong> – BKC Version number (one byte)</p></li>
+<li><p><strong>pfm_rev</strong> – PFM revision (two bytes)</p></li>
+<li><p><strong>oem_data</strong> – OEM specific data (16 bytes)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.STG_Capsule.build_cap">
+<span class="sig-name descname"><span class="pre">build_cap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.STG_Capsule.build_cap" title="Permalink to this definition"></a></dt>
+<dd><p>build new capsule and sign it with new parameters</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.STG_Capsule.deassemble">
+<span class="sig-name descname"><span class="pre">deassemble</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.STG_Capsule.deassemble" title="Permalink to this definition"></a></dt>
+<dd><p>deassemble a signed update capsule</p>
+<p>..compress and signed format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Capsule_Signature</span><span class="p">(</span><span class="n">B0</span><span class="o">+</span><span class="n">B1</span><span class="p">)</span> <span class="o">+</span> <span class="p">{</span><span class="n">PFM_signature</span><span class="p">(</span><span class="n">B0</span><span class="o">+</span><span class="n">B1</span><span class="p">)</span><span class="o">+</span> <span class="p">{</span><span class="n">PFM</span><span class="p">}</span> <span class="o">+</span> <span class="n">Compression_Header</span> <span class="o">+</span> <span class="n">Compressed_Data</span><span class="p">}</span>
+<span class="mi">1024</span><span class="n">B</span><span class="p">:</span> <span class="p">[</span><span class="n">B0</span> <span class="p">(</span><span class="mi">128</span><span class="n">B</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">B1_Head</span> <span class="p">(</span><span class="mi">16</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">B1_Root</span> <span class="p">(</span><span class="mi">132</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">B1_CSK</span><span class="p">(</span><span class="mi">232</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">B1_B0</span> <span class="p">(</span><span class="mi">104</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">B1_Pad</span><span class="p">(</span><span class="mi">412</span><span class="n">B</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="capsule.STG_Capsule.get_length_location">
+<span class="sig-name descname"><span class="pre">get_length_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.STG_Capsule.get_length_location" title="Permalink to this definition"></a></dt>
+<dd><p>search and find protect length for PFM and capsule</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="capsule.main">
+<span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#capsule.main" title="Permalink to this definition"></a></dt>
+<dd><p>command line execution inteface</p>
+<p>Execution command in command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create AFM capsule</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="o">-</span><span class="n">start_afm</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">afm</span> <span class="o">-</span><span class="n">a</span> <span class="o">&lt;</span><span class="n">afm_manifest_json</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">BMC</span> <span class="n">image</span><span class="o">&gt;</span>
+
+<span class="c1"># create decommission capsule</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">decomm</span> <span class="o">-</span><span class="n">rk</span> <span class="o">&lt;</span><span class="n">root</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">csk</span> <span class="o">&lt;</span><span class="n">csk</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="nb">id</span> <span class="o">&lt;</span><span class="n">CSK</span> <span class="n">ID</span><span class="o">&gt;</span>
+
+<span class="c1"># create key cancellation cerificate</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">kcc</span> <span class="o">-</span><span class="n">rk</span> <span class="o">&lt;</span><span class="n">root</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="nb">id</span> <span class="o">&lt;</span><span class="n">CSK</span> <span class="n">ID</span><span class="o">&gt;</span> <span class="o">-</span><span class="nb">type</span> <span class="o">&lt;</span><span class="n">Protect</span> <span class="n">Content</span> <span class="nb">type</span><span class="o">&gt;</span>
+
+<span class="c1"># re-sign a capsule with a differnt CSK_ID, can also and update pfm parameters (svn, bkc_ver, pfm_rev, oem_data)</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">capsule</span> <span class="n">stgcap</span> <span class="o">-</span><span class="n">cap</span> <span class="o">&lt;</span><span class="n">signed</span> <span class="n">bmc</span><span class="p">,</span> <span class="n">ifwi</span> <span class="ow">or</span> <span class="n">cpld</span> <span class="n">capsule</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">rk</span> <span class="o">&lt;</span><span class="n">root</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">csk</span> <span class="o">&lt;</span><span class="n">csk</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="nb">id</span> <span class="o">&lt;</span><span class="n">new</span> <span class="n">csk_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="capsule.set_logger">
+<span class="sig-prename descclassname"><span class="pre">capsule.</span></span><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#capsule.set_logger" title="Permalink to this definition"></a></dt>
+<dd><p>set screen logger display</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sign.html" class="btn btn-neutral float-left" title="sign" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="keys.html" class="btn btn-neutral float-right" title="keys" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

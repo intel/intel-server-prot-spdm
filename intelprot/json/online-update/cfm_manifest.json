@@ -1,0 +1,46 @@
+{
+    "root_private_key": "key_root_prv.pem",
+    "csk_private_key" : "key_csk_prv.pem",
+    "csk_id"          : "0x01",
+    "pfm_struct" : {
+        "pfm_tag"   : "0x02b3ce1d",
+        "pfm_svn"   : "0x01",
+        "bkc_ver"   : "0x01",
+        "pfm_rev"   : "0x0607",
+        "dev_id"    : "0x00",
+        "pfm_rsvd"  : "0xffff",
+        "oem_data"  : "0xffffffffffffffffffffffffffffffff",
+        "lst_cpld"  : "cpu_cpld, scm_cpld, debug_cpld",
+        "start_addr": "0x7c00000"
+    },
+    "cpu_cpld" : {
+        "cpld_tag"  : "0xA8E7C2D6",
+        "cpld_svn"  : "0x01",
+        "cpld_rsvd1": "0xff",
+        "cpld_rev"  : "0x0101",
+        "cpld_rsvd2": "0xffff",
+        "cpld_type" : "0x00",
+        "oem_data"  : "0xffffffffffffffffffffffffffffffff",
+        "image_name": "cpu_fpga.pof"
+    },
+    "scm_cpld" : {
+        "cpld_tag"  : "0xA8E7C2D6",
+        "cpld_svn"  : "0x01",
+        "cpld_rsvd1": "0xff",
+        "cpld_rev"  : "0x0101",
+        "cpld_rsvd2": "0xffff",
+        "cpld_type" : "0x01",
+        "oem_data"  : "0xffffffffffffffffffffffffffffffff",
+        "image_name": "scm_fpga.pof"
+    },
+    "debug_cpld" : {
+        "cpld_tag"  : "0xA8E7C2D6",
+        "cpld_svn"  : "0x01",
+        "cpld_rsvd1": "0xff",
+        "cpld_rev"  : "0x0101",
+        "cpld_rsvd2": "0xffff",
+        "cpld_type" : "0x02",
+        "oem_data"  : "0xffffffffffffffffffffffffffffffff",
+        "image_name": "debug_fpga.pof"
+    }
+}

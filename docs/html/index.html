@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to intel server prot tool package documentation! &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="bmc" href="modules/bmc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to intel server prot tool package documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-intel-server-prot-tool-package-documentation">
+<h1>Welcome to intel server prot tool package documentation!<a class="headerlink" href="#welcome-to-intel-server-prot-tool-package-documentation" title="Permalink to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>Install intelprot package from whl file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">intelprot</span><span class="o">-&lt;</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">&gt;-</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+<span class="c1"># force reinstall or ignore installed package and reinstall</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="o">--</span><span class="n">force</span><span class="o">-</span><span class="n">reinstall</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">&gt;</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">installed</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/bmc.html">bmc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#build-bmc-pfr-image">Build BMC PFR Image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#build-in-command-line">Build in Command line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#build-in-python-console-or-add-to-script">Build in Python console or add to script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.BMC_Build"><code class="docutils literal notranslate"><span class="pre">BMC_Build</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_Build.build_image"><code class="docutils literal notranslate"><span class="pre">BMC_Build.build_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_Build.set_manifest"><code class="docutils literal notranslate"><span class="pre">BMC_Build.set_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_Build.start_build"><code class="docutils literal notranslate"><span class="pre">BMC_Build.start_build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_bmc_offset"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_bmc_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_deviceId_pubkey"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_deviceId_pubkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_fifo"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_fifo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_ifwi_offset"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_ifwi_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_mailbox"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_mailbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.read_root_keyhash"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_root_keyhash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.BMC_OOB_Mailbox.show"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC"><code class="docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_bkc"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_bkc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_build_num"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_build_num()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_oem"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_oem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_pfm_len"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_pfm_len()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_pfm_rev"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_pfm_rev()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.get_svn"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_svn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.load_cpld_recovery"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_cpld_recovery()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.load_manifest"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.load_staging_image"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_staging_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.set_pfm_offset"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.set_pfm_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.set_prov_offset"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.set_prov_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.show"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.PFR_BMC.show_pfm"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.show_pfm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update"><code class="docutils literal notranslate"><span class="pre">Redfish_Update</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.check_redfish_logs"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.check_redfish_logs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.delete"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.get"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.login"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.logout"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.post"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.update"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Redfish_Update.watch_task"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.watch_task()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.Updater"><code class="docutils literal notranslate"><span class="pre">Updater</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.check_redfish_logs"><code class="docutils literal notranslate"><span class="pre">Updater.check_redfish_logs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.delete"><code class="docutils literal notranslate"><span class="pre">Updater.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.get"><code class="docutils literal notranslate"><span class="pre">Updater.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.login"><code class="docutils literal notranslate"><span class="pre">Updater.login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.logout"><code class="docutils literal notranslate"><span class="pre">Updater.logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.post"><code class="docutils literal notranslate"><span class="pre">Updater.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.update"><code class="docutils literal notranslate"><span class="pre">Updater.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.Updater.watch_task"><code class="docutils literal notranslate"><span class="pre">Updater.watch_task()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.load_afm_capsule"><code class="docutils literal notranslate"><span class="pre">load_afm_capsule()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image.build_pfm"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image.build_pfr_image"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_pfr_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image.build_update_capsule"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_update_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image.build_update_capsule_with_afm"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_update_capsule_with_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/bmc.html#bmc.pfr_bmc_image.move_temp_file"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.move_temp_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/cpld.html">cpld</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#sign-cpld-recovery-staging-capsule">Sign CPLD recovery/staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#sign-in-python-console-and-script">Sign in python console and script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#sign-in-command-line">Sign in command line</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.Convert"><code class="docutils literal notranslate"><span class="pre">Convert</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.Convert.bytearray_to_hex_string"><code class="docutils literal notranslate"><span class="pre">Convert.bytearray_to_hex_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.Convert.bytearray_to_integer"><code class="docutils literal notranslate"><span class="pre">Convert.bytearray_to_integer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.Convert.hex_string_to_bytes"><code class="docutils literal notranslate"><span class="pre">Convert.hex_string_to_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.Convert.integer_to_bytes"><code class="docutils literal notranslate"><span class="pre">Convert.integer_to_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.Convert.swap32"><code class="docutils literal notranslate"><span class="pre">Convert.swap32()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream"><code class="docutils literal notranslate"><span class="pre">PFRBitstream</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.append"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.get_raw_byte_array"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_raw_byte_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.get_raw_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_raw_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.get_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.get_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.initialize"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.initialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.read"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.set_raw_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.set_raw_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.set_value"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.set_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.size"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.update"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.validate"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFRBitstream.write"><code class="docutils literal notranslate"><span class="pre">PFRBitstream.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.PFR_CPLD"><code class="docutils literal notranslate"><span class="pre">PFR_CPLD</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.PFR_CPLD.build_update_capsule"><code class="docutils literal notranslate"><span class="pre">PFR_CPLD.build_update_capsule()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule.get_unsigned_cap"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.get_unsigned_cap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule.rebuild_capsule"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.rebuild_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule.with_new_cskid"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_cskid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule.with_new_keys"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/cpld.html#cpld.UpdateCapsule.with_new_svn"><code class="docutils literal notranslate"><span class="pre">UpdateCapsule.with_new_svn()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/cpld.html#cpld.reverse_bits"><code class="docutils literal notranslate"><span class="pre">reverse_bits()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/ifwi.html">ifwi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent.get_keym_value"><code class="docutils literal notranslate"><span class="pre">Agent.get_keym_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent.get_pfrs_value"><code class="docutils literal notranslate"><span class="pre">Agent.get_pfrs_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent.get_prov_data"><code class="docutils literal notranslate"><span class="pre">Agent.get_prov_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent.logger"><code class="docutils literal notranslate"><span class="pre">Agent.logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.Agent.show"><code class="docutils literal notranslate"><span class="pre">Agent.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.build_new_pfr_ifwi"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.build_new_pfr_ifwi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.build_update_capsule"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.build_update_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.combine_ifwi"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.combine_ifwi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.get_pfm_entry"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.get_pfm_entry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.get_unsigned_pfm"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.get_unsigned_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.remove_temp_files"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.remove_temp_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.sign_pfm"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.sign_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.update_as_one_component"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.update_as_one_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.BHS_IFWI.update_unsigned_pfm"><code class="docutils literal notranslate"><span class="pre">BHS_IFWI.update_unsigned_pfm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4"><code class="docutils literal notranslate"><span class="pre">FIT4</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.dump_to_json"><code class="docutils literal notranslate"><span class="pre">FIT4.dump_to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_bp_keyhash"><code class="docutils literal notranslate"><span class="pre">FIT4.get_bp_keyhash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_bp_keytype"><code class="docutils literal notranslate"><span class="pre">FIT4.get_bp_keytype()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_bp_revocation"><code class="docutils literal notranslate"><span class="pre">FIT4.get_bp_revocation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_bp_rstr"><code class="docutils literal notranslate"><span class="pre">FIT4.get_bp_rstr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_bp_type"><code class="docutils literal notranslate"><span class="pre">FIT4.get_bp_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.get_fit4_data"><code class="docutils literal notranslate"><span class="pre">FIT4.get_fit4_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.FIT4.show"><code class="docutils literal notranslate"><span class="pre">FIT4.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.IFWI"><code class="docutils literal notranslate"><span class="pre">IFWI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.IFWI.add_capsule"><code class="docutils literal notranslate"><span class="pre">IFWI.add_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.IFWI.get_rcv_capsule"><code class="docutils literal notranslate"><span class="pre">IFWI.get_rcv_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.IFWI.show"><code class="docutils literal notranslate"><span class="pre">IFWI.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/ifwi.html#ifwi.IFWI.update_bmc_active"><code class="docutils literal notranslate"><span class="pre">IFWI.update_bmc_active()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/ifwi.html#ifwi.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/sign.html">sign</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.Ext_Signing"><code class="docutils literal notranslate"><span class="pre">Ext_Signing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Ext_Signing.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Ext_Signing.sign"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.sign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Ext_Signing.verify_key"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.verify_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.Signing"><code class="docutils literal notranslate"><span class="pre">Signing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Signing.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Signing.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Signing.sign"><code class="docutils literal notranslate"><span class="pre">Signing.sign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Signing.verify_key"><code class="docutils literal notranslate"><span class="pre">Signing.verify_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.Signing_No_B1CSK"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Signing_No_B1CSK.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/sign.html#sign.Signing_No_B1CSK.sign"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK.sign()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.get_csk_entry_hash"><code class="docutils literal notranslate"><span class="pre">get_csk_entry_hash()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.get_csk_permission"><code class="docutils literal notranslate"><span class="pre">get_csk_permission()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/sign.html#sign.rk_sign_csk_entry"><code class="docutils literal notranslate"><span class="pre">rk_sign_csk_entry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/capsule.html">capsule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#command-line">Command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#generate-afm-staging-capsule">Generate AFM staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#in-command-line">in command line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#in-python-console-or-script">in python console or script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#generate-cfm-staging-capsule">Generate CFM staging capsule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#command-prompt">command prompt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.AFM"><code class="docutils literal notranslate"><span class="pre">AFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.build_afm"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.build_afm_single_device"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm_single_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.build_afm_struct"><code class="docutils literal notranslate"><span class="pre">AFM.build_afm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.build_staging_afm"><code class="docutils literal notranslate"><span class="pre">AFM.build_staging_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.set_csk_id"><code class="docutils literal notranslate"><span class="pre">AFM.set_csk_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.set_signing_keys"><code class="docutils literal notranslate"><span class="pre">AFM.set_signing_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM.sign_afm_device"><code class="docutils literal notranslate"><span class="pre">AFM.sign_afm_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS"><code class="docutils literal notranslate"><span class="pre">AFM_BHS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.build_afm"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.build_afm_single_device"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm_single_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.build_afm_struct"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_afm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.build_staging_afm"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.build_staging_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.pack_bytes_from_struct"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.pack_bytes_from_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.pack_device_measurement"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.pack_device_measurement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.set_csk_id"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.set_csk_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.set_signing_keys"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.set_signing_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.AFM_BHS.sign_afm_device"><code class="docutils literal notranslate"><span class="pre">AFM_BHS.sign_afm_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.BMC_Capsule"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.BMC_Capsule.decompression"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule.decompression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.BMC_Capsule.show"><code class="docutils literal notranslate"><span class="pre">BMC_Capsule.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.CFM"><code class="docutils literal notranslate"><span class="pre">CFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.build_cfm_capsule"><code class="docutils literal notranslate"><span class="pre">CFM.build_cfm_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.build_pfm"><code class="docutils literal notranslate"><span class="pre">CFM.build_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.build_pfm_struct"><code class="docutils literal notranslate"><span class="pre">CFM.build_pfm_struct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.build_single_capsule"><code class="docutils literal notranslate"><span class="pre">CFM.build_single_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.calc_pfm_body"><code class="docutils literal notranslate"><span class="pre">CFM.calc_pfm_body()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.logger"><code class="docutils literal notranslate"><span class="pre">CFM.logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CFM.move_files"><code class="docutils literal notranslate"><span class="pre">CFM.move_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.CPLD_Capsule"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CPLD_Capsule.build_cpld_capsule"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule.build_cpld_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.CPLD_Capsule.get_cap_content"><code class="docutils literal notranslate"><span class="pre">CPLD_Capsule.get_cap_content()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.Decommission"><code class="docutils literal notranslate"><span class="pre">Decommission</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.Decommission.build"><code class="docutils literal notranslate"><span class="pre">Decommission.build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.IFWI_Capsule"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.IFWI_Capsule.decompression"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.decompression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.IFWI_Capsule.show"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.IFWI_Capsule.show_pfm"><code class="docutils literal notranslate"><span class="pre">IFWI_Capsule.show_pfm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.Key_Cancellation"><code class="docutils literal notranslate"><span class="pre">Key_Cancellation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.Key_Cancellation.build"><code class="docutils literal notranslate"><span class="pre">Key_Cancellation.build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.STG_Capsule"><code class="docutils literal notranslate"><span class="pre">STG_Capsule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.STG_Capsule.build_cap"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.build_cap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.STG_Capsule.deassemble"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.deassemble()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/capsule.html#capsule.STG_Capsule.get_length_location"><code class="docutils literal notranslate"><span class="pre">STG_Capsule.get_length_location()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/capsule.html#capsule.set_logger"><code class="docutils literal notranslate"><span class="pre">set_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/keys.html">keys</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.OpenSpdm_Keys"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.OpenSpdm_Keys.create_Certchain_EcP384"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.create_Certchain_EcP384()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.OpenSpdm_Keys.create_afm_manifest"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.create_afm_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.OpenSpdm_Keys.gen_openssl_cnf"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.gen_openssl_cnf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.OpenSpdm_Keys.verify_openssl_version"><code class="docutils literal notranslate"><span class="pre">OpenSpdm_Keys.verify_openssl_version()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.PrivateKey"><code class="docutils literal notranslate"><span class="pre">PrivateKey</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.from_hexstr"><code class="docutils literal notranslate"><span class="pre">PrivateKey.from_hexstr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.get_hashbuffer"><code class="docutils literal notranslate"><span class="pre">PrivateKey.get_hashbuffer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.get_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">PrivateKey.get_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.read_from_pem"><code class="docutils literal notranslate"><span class="pre">PrivateKey.read_from_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.save_to_pem"><code class="docutils literal notranslate"><span class="pre">PrivateKey.save_to_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.show"><code class="docutils literal notranslate"><span class="pre">PrivateKey.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PrivateKey.verify_pair"><code class="docutils literal notranslate"><span class="pre">PrivateKey.verify_pair()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.PublicKey"><code class="docutils literal notranslate"><span class="pre">PublicKey</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.from_x_curve"><code class="docutils literal notranslate"><span class="pre">PublicKey.from_x_curve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.get_hashbuffer"><code class="docutils literal notranslate"><span class="pre">PublicKey.get_hashbuffer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.get_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">PublicKey.get_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.read_from_pem"><code class="docutils literal notranslate"><span class="pre">PublicKey.read_from_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.save_to_pem"><code class="docutils literal notranslate"><span class="pre">PublicKey.save_to_pem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/keys.html#keys.PublicKey.show"><code class="docutils literal notranslate"><span class="pre">PublicKey.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_RS_signdata"><code class="docutils literal notranslate"><span class="pre">get_RS_signdata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_curve"><code class="docutils literal notranslate"><span class="pre">get_curve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_curve_baselen"><code class="docutils literal notranslate"><span class="pre">get_curve_baselen()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_eckey_type"><code class="docutils literal notranslate"><span class="pre">get_eckey_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_hash_from_XY"><code class="docutils literal notranslate"><span class="pre">get_hash_from_XY()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_pfr_version"><code class="docutils literal notranslate"><span class="pre">get_pfr_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.get_rk_hashbuffer"><code class="docutils literal notranslate"><span class="pre">get_rk_hashbuffer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.sign_data"><code class="docutils literal notranslate"><span class="pre">sign_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.signature_RS"><code class="docutils literal notranslate"><span class="pre">signature_RS()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.verify_ec_keypair"><code class="docutils literal notranslate"><span class="pre">verify_ec_keypair()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.verify_signature"><code class="docutils literal notranslate"><span class="pre">verify_signature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/keys.html#keys.verify_signature_from_prvkey"><code class="docutils literal notranslate"><span class="pre">verify_signature_from_prvkey()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pfm.html">pfm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/pfm.html#pfm.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/pfm.html#pfm.PFM"><code class="docutils literal notranslate"><span class="pre">PFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.process_fvm"><code class="docutils literal notranslate"><span class="pre">PFM.process_fvm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.show"><code class="docutils literal notranslate"><span class="pre">PFM.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.show_fvm"><code class="docutils literal notranslate"><span class="pre">PFM.show_fvm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.show_pfm_head"><code class="docutils literal notranslate"><span class="pre">PFM.show_pfm_head()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.show_smb"><code class="docutils literal notranslate"><span class="pre">PFM.show_smb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/pfm.html#pfm.PFM.show_spi"><code class="docutils literal notranslate"><span class="pre">PFM.show_spi()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/pfm.html#pfm.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utility.html">utility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.bmc_offset"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.bmc_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.dev_pubkey"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.dev_pubkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.dump"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.dump()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.ifwi_offset"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.ifwi_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.read_mailbox"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.read_mailbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.rk_hash"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.rk_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/utility.html#utility.OOB_Read_Mailbox.show"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_compare"><code class="docutils literal notranslate"><span class="pre">bin_compare()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_compare_bytes"><code class="docutils literal notranslate"><span class="pre">bin_compare_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_compare_region"><code class="docutils literal notranslate"><span class="pre">bin_compare_region()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_decomp"><code class="docutils literal notranslate"><span class="pre">bin_decomp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_hexdump"><code class="docutils literal notranslate"><span class="pre">bin_hexdump()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_search_bytes"><code class="docutils literal notranslate"><span class="pre">bin_search_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bin_search_tag"><code class="docutils literal notranslate"><span class="pre">bin_search_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.bind_file_at_addr"><code class="docutils literal notranslate"><span class="pre">bind_file_at_addr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.decode_mailbox"><code class="docutils literal notranslate"><span class="pre">decode_mailbox()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.get_hash256"><code class="docutils literal notranslate"><span class="pre">get_hash256()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.get_hash384"><code class="docutils literal notranslate"><span class="pre">get_hash384()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.insert_bytes"><code class="docutils literal notranslate"><span class="pre">insert_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.integrate_capsule"><code class="docutils literal notranslate"><span class="pre">integrate_capsule()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.read_bmc_offset"><code class="docutils literal notranslate"><span class="pre">read_bmc_offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.read_deviceId_pubkey"><code class="docutils literal notranslate"><span class="pre">read_deviceId_pubkey()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.read_mailbox"><code class="docutils literal notranslate"><span class="pre">read_mailbox()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.read_pch_cpu_offset"><code class="docutils literal notranslate"><span class="pre">read_pch_cpu_offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.read_root_public_key_hash"><code class="docutils literal notranslate"><span class="pre">read_root_public_key_hash()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/utility.html#utility.replace_bytes"><code class="docutils literal notranslate"><span class="pre">replace_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/verify.html">verify</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed.validate"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed.verify_magic"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_magic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed.verify_pc_hash"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_pc_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed.verify_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed.verify_signature"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.validate"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.verify_magic"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_magic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.verify_pc_hash"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pc_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.verify_pc_len_type"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pc_len_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.verify_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.BLOCK_1K_Signed_KCC.verify_signature"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.Capsule_signed"><code class="docutils literal notranslate"><span class="pre">Capsule_signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Capsule_signed.validate"><code class="docutils literal notranslate"><span class="pre">Capsule_signed.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.Capsule_unsigned"><code class="docutils literal notranslate"><span class="pre">Capsule_unsigned</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Capsule_unsigned.validate"><code class="docutils literal notranslate"><span class="pre">Capsule_unsigned.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.PFM_signed"><code class="docutils literal notranslate"><span class="pre">PFM_signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.PFM_signed.validate"><code class="docutils literal notranslate"><span class="pre">PFM_signed.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.PFR_BMC"><code class="docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.PFR_BMC.validate"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.PFR_IFWI"><code class="docutils literal notranslate"><span class="pre">PFR_IFWI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.PFR_IFWI.validate"><code class="docutils literal notranslate"><span class="pre">PFR_IFWI.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.Verify_AFM"><code class="docutils literal notranslate"><span class="pre">Verify_AFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_AFM.validate"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_AFM.validate_afm_device"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate_afm_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_AFM.validate_afm_struct_header"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate_afm_struct_header()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.Verify_KCC"><code class="docutils literal notranslate"><span class="pre">Verify_KCC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_KCC.show"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_KCC.validate"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_KCC.verify_payload_cskid"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.verify_payload_cskid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.Verify_PFM"><code class="docutils literal notranslate"><span class="pre">Verify_PFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/verify.html#verify.Verify_PFM.validate"><code class="docutils literal notranslate"><span class="pre">Verify_PFM.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/verify.html#verify.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/spdm.html">spdm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER.calc"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER.calc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER.set_responder_pubkey"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER.set_responder_pubkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER.show"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER.verify_L2"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER.verify_L2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_REQUESTER.verify_M2"><code class="docutils literal notranslate"><span class="pre">SPDM_REQUESTER.verify_M2()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_RESPONDER"><code class="docutils literal notranslate"><span class="pre">SPDM_RESPONDER</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_RESPONDER.calc"><code class="docutils literal notranslate"><span class="pre">SPDM_RESPONDER.calc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.SPDM_RESPONDER.show"><code class="docutils literal notranslate"><span class="pre">SPDM_RESPONDER.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Algorithm"><code class="docutils literal notranslate"><span class="pre">dec_Algorithm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Certificate"><code class="docutils literal notranslate"><span class="pre">dec_Certificate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Digests"><code class="docutils literal notranslate"><span class="pre">dec_Digests()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Get_Measurements"><code class="docutils literal notranslate"><span class="pre">dec_Get_Measurements()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Measurements"><code class="docutils literal notranslate"><span class="pre">dec_Measurements()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_Neogotiate_Algo"><code class="docutils literal notranslate"><span class="pre">dec_Neogotiate_Algo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.dec_spdm_message"><code class="docutils literal notranslate"><span class="pre">dec_spdm_message()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.egs_spdm"><code class="docutils literal notranslate"><span class="pre">egs_spdm</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/spdm.html#spdm.egs_spdm.decode_message"><code class="docutils literal notranslate"><span class="pre">egs_spdm.decode_message()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.get_codestr"><code class="docutils literal notranslate"><span class="pre">get_codestr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.get_lst_data"><code class="docutils literal notranslate"><span class="pre">get_lst_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.get_openspdm_data"><code class="docutils literal notranslate"><span class="pre">get_openspdm_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.map_dict_val"><code class="docutils literal notranslate"><span class="pre">map_dict_val()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.msg_challenge"><code class="docutils literal notranslate"><span class="pre">msg_challenge()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.msg_get_certificate"><code class="docutils literal notranslate"><span class="pre">msg_get_certificate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.msg_get_mesurement"><code class="docutils literal notranslate"><span class="pre">msg_get_mesurement()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.msg_negotiate_algorithms"><code class="docutils literal notranslate"><span class="pre">msg_negotiate_algorithms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.server_hello"><code class="docutils literal notranslate"><span class="pre">server_hello()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.show_dict"><code class="docutils literal notranslate"><span class="pre">show_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.start_hello"><code class="docutils literal notranslate"><span class="pre">start_hello()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/spdm.html#spdm.stop_msg"><code class="docutils literal notranslate"><span class="pre">stop_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/mctp_spdm.html">mctp_spdm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#openspdm-mctp-over-tcp-ip">OPENSPDM: MCTP-over-TCP/IP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#cpld-mctp-over-smbus">CPLD: MCTP over SMBus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_BMC_Bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_BMC_Bridge.get_openspdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.get_openspdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_BMC_Bridge.show"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_BMC_Bridge.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_BMC_Bridge.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD.get_openspdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.get_openspdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD.get_spdm_emu_data_bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.get_spdm_emu_data_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD.is_multi_mctp"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.is_multi_mctp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD.show"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_CPLD.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_CPLD.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.check_pkt"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.check_pkt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.get_smbus_data"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_smbus_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.get_smbus_data_bridge"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_smbus_data_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.get_spdm_data"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.get_spdm_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.is_end"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.is_hello"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_hello()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.is_spdm"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.is_spdm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.show"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.MCTP_SOCKET.show_spdm_msg"><code class="docutils literal notranslate"><span class="pre">MCTP_SOCKET.show_spdm_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.extract_mctp_data"><code class="docutils literal notranslate"><span class="pre">extract_mctp_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.log_list"><code class="docutils literal notranslate"><span class="pre">log_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.split_multi_random"><code class="docutils literal notranslate"><span class="pre">split_multi_random()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/mctp_spdm.html#mctp_spdm.split_multi_random_1"><code class="docutils literal notranslate"><span class="pre">split_multi_random_1()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/aardvark/smb_avark.html">aardvark.smb_avark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.detect"><code class="docutils literal notranslate"><span class="pre">detect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark"><code class="docutils literal notranslate"><span class="pre">mctp_avark</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.check_if_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark.check_if_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark.send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark.send_recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark.send_recv()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.check_if_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.check_if_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_2.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark_2.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_ctrl_req_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.check_if_mctp_ctrl_req_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.check_if_mctp_spdm_packet"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.check_if_mctp_spdm_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.close"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.free"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.free()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.open"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.recv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.send"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/aardvark/smb_avark.html#aardvark.smb_avark.mctp_avark_bridge.send_recv"><code class="docutils literal notranslate"><span class="pre">mctp_avark_bridge.send_recv()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/testprot.html">testprot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#run-spdm-test">Run SPDM Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#about-spdm-emulator">About SPDM emulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.close_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.close_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.hello_to_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.hello_to_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.hello_to_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.hello_to_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.process_mctp_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.process_mctp_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.process_mctp_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.process_mctp_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.requester_to_res"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.requester_to_res()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.responder_to_req"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.responder_to_req()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.run_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.run_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.run_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.setup_mctp_bridge"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.setup_mctp_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.setup_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.setup_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/testprot.html#testprot.Run_SPDM_Test.verify_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.verify_test()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#testprot.config_log"><code class="docutils literal notranslate"><span class="pre">config_log()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#testprot.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#testprot.print_lst"><code class="docutils literal notranslate"><span class="pre">print_lst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/testprot.html#testprot.setup_mctp_bridge"><code class="docutils literal notranslate"><span class="pre">setup_mctp_bridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/bmc.html" class="btn btn-neutral float-right" title="bmc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

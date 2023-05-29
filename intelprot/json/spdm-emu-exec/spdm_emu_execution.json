@@ -1,0 +1,7 @@
+{
+    "spdm_emu_responder_dir": "C:\\shuang4\\Work\\_PFR\\spdm-emu\\build\\bin",
+    "spdm_emu_requester_dir": "C:\\shuang4\\Work\\_PFR\\spdm-emu\\build\\bin",
+    "cmd_spdm_responder_emu": "spdm_responder_emu.exe --ver 1.0 --cap CERT,CHAL,MEAS_SIG --hash SHA_384 --meas_hash SHA_384 --asym ECDSA_P384",
+    "cmd_spdm_requester_emu": "spdm_requester_emu.exe --ver 1.0 --cap CERT,CHAL --hash SHA_384 --meas_hash SHA_384 --asym ECDSA_P384",
+    "delay_time": "0.32"
+}

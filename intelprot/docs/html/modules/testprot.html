@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>testprot &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="aardvark.smb_avark" href="aardvark/smb_avark.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">testprot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-spdm-test">Run SPDM Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-spdm-emulator">About SPDM emulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testprot.Run_SPDM_Test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.close_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.close_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.hello_to_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.hello_to_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.hello_to_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.hello_to_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.process_mctp_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.process_mctp_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.process_mctp_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.process_mctp_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.requester_to_res"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.requester_to_res()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.responder_to_req"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.responder_to_req()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.run_requester"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_requester()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.run_responder"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_responder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.run_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.run_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.setup_mctp_bridge"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.setup_mctp_bridge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.setup_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.setup_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testprot.Run_SPDM_Test.verify_test"><code class="docutils literal notranslate"><span class="pre">Run_SPDM_Test.verify_test()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#testprot.config_log"><code class="docutils literal notranslate"><span class="pre">config_log()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testprot.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testprot.print_lst"><code class="docutils literal notranslate"><span class="pre">print_lst()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testprot.setup_mctp_bridge"><code class="docutils literal notranslate"><span class="pre">setup_mctp_bridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">testprot</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/testprot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-testprot">
+<span id="testprot"></span><h1>testprot<a class="headerlink" href="#module-testprot" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>This module is to test cpld SPDM protocol using SPDM emulator</p>
+</dd>
+</dl>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
+<p>This module is used to test CPLD as SPDM-requester and responder</p>
+</section>
+<section id="run-spdm-test">
+<h2>Run SPDM Test<a class="headerlink" href="#run-spdm-test" title="Permalink to this heading"></a></h2>
+<p>In default, both requester and responder are set as “spdm-emu”. User select -req or -res as prot</p>
+<p>Execution in command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">testprot</span> <span class="o">-</span><span class="n">get_setup</span>   <span class="c1"># get spdm_emu_execution.json file in work folder</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">testprot</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">spdm_emu_execution_json</span><span class="o">&gt;</span> <span class="c1"># test with spdm-emu requester and spdm-emu responder</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">testprot</span> <span class="o">-</span><span class="n">req</span> <span class="n">prot</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">spdm_emu_execution_json</span><span class="o">&gt;</span>  <span class="c1"># test PRoT as spdm requester, spdm-emu as spdm responder</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">testprot</span> <span class="o">-</span><span class="n">res</span> <span class="n">prot</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">spdm_emu_execution_json</span><span class="o">&gt;</span>  <span class="c1"># test PRoT as spdm responder, spdm-emu as spdm requester</span>
+</pre></div>
+</div>
+<p>Setup execution with spdm_emu_execution.json:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;spdm_emu_responder_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;path of spdm_emu responder execution file&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;spdm_emu_requester_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;path of spdm_emu requester execution file&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;cmd_spdm_responder_emu&quot;</span><span class="p">:</span> <span class="s2">&quot;spdm_responder_emu.exe --ver 1.0 --cap CERT,CHAL,MEAS_SIG --hash SHA_384 --meas_hash SHA_384 --asym ECDSA_P384&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;cmd_spdm_requester_emu&quot;</span><span class="p">:</span> <span class="s2">&quot;spdm_requester_emu.exe --ver 1.0 --cap CERT,CHAL --hash SHA_384 --meas_hash SHA_384 --asym ECDSA_P384&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;delay_time&quot;</span><span class="p">:</span> <span class="s2">&quot;0.32&quot;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="about-spdm-emulator">
+<h2>About SPDM emulator<a class="headerlink" href="#about-spdm-emulator" title="Permalink to this heading"></a></h2>
+<p>SPDM-Emu is open source project emulating SPDM devices.
+Refer spdm-emu GitHub link  <a class="reference external" href="https://github.com/DMTF/spdm-emu">spdm-emu</a>. for detail.</p>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#testprot.main" title="testprot.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(args)</p></td>
+<td><p>test PRoT command line options</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">testprot.</span></span><span class="sig-name descname"><span class="pre">Run_SPDM_Test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_setup_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for spdm test execution using SPDM_EMU</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.close_test">
+<span class="sig-name descname"><span class="pre">close_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.close_test" title="Permalink to this definition"></a></dt>
+<dd><p>do close actions for the test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.hello_to_requester">
+<span class="sig-name descname"><span class="pre">hello_to_requester</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.hello_to_requester" title="Permalink to this definition"></a></dt>
+<dd><p>send ‘Client Hello!' packet to requester
+to finish first handshake to openspdm requester</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.hello_to_responder">
+<span class="sig-name descname"><span class="pre">hello_to_responder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.hello_to_responder" title="Permalink to this definition"></a></dt>
+<dd><p>send ‘Server Hello!' packet to responder
+to finish first handshake to spdm-emu responder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.process_mctp_requester">
+<span class="sig-name descname"><span class="pre">process_mctp_requester</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.process_mctp_requester" title="Permalink to this definition"></a></dt>
+<dd><p>process requester MCTP packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.process_mctp_responder">
+<span class="sig-name descname"><span class="pre">process_mctp_responder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.process_mctp_responder" title="Permalink to this definition"></a></dt>
+<dd><p>process responder MCTP packet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.requester_to_res">
+<span class="sig-name descname"><span class="pre">requester_to_res</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.requester_to_res" title="Permalink to this definition"></a></dt>
+<dd><p>SPDM.requester to SPDM.responder
+Deliver packet from requester to responder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.responder_to_req">
+<span class="sig-name descname"><span class="pre">responder_to_req</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.responder_to_req" title="Permalink to this definition"></a></dt>
+<dd><p>SPDM responder to SPDM requester</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.run_requester">
+<span class="sig-name descname"><span class="pre">run_requester</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.run_requester" title="Permalink to this definition"></a></dt>
+<dd><p>run spdm requester</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.run_responder">
+<span class="sig-name descname"><span class="pre">run_responder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.run_responder" title="Permalink to this definition"></a></dt>
+<dd><p>run spdm responder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.run_test">
+<span class="sig-name descname"><span class="pre">run_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.run_test" title="Permalink to this definition"></a></dt>
+<dd><p>run spdm test between requester and responder
+self.req</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.setup_mctp_bridge">
+<span class="sig-name descname"><span class="pre">setup_mctp_bridge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.setup_mctp_bridge" title="Permalink to this definition"></a></dt>
+<dd><p>setup BMC MCTP bridge</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.setup_test">
+<span class="sig-name descname"><span class="pre">setup_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requester</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">responder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.setup_test" title="Permalink to this definition"></a></dt>
+<dd><p>setup requester and responder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="testprot.Run_SPDM_Test.verify_test">
+<span class="sig-name descname"><span class="pre">verify_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.Run_SPDM_Test.verify_test" title="Permalink to this definition"></a></dt>
+<dd><p>verify test</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="testprot.config_log">
+<span class="sig-prename descclassname"><span class="pre">testprot.</span></span><span class="sig-name descname"><span class="pre">config_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#testprot.config_log" title="Permalink to this definition"></a></dt>
+<dd><p>config log file include a Filehandler and a Streamhandler</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="testprot.main">
+<span class="sig-prename descclassname"><span class="pre">testprot.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#testprot.main" title="Permalink to this definition"></a></dt>
+<dd><p>test PRoT command line options</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="testprot.print_lst">
+<span class="sig-prename descclassname"><span class="pre">testprot.</span></span><span class="sig-name descname"><span class="pre">print_lst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_per_line</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#testprot.print_lst" title="Permalink to this definition"></a></dt>
+<dd><p>print long list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fh</strong> – log file handler</p></li>
+<li><p><strong>lst</strong> – long list to be print</p></li>
+<li><p><strong>num_per_line</strong> – number of items per line</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="testprot.setup_mctp_bridge">
+<span class="sig-prename descclassname"><span class="pre">testprot.</span></span><span class="sig-name descname"><span class="pre">setup_mctp_bridge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#testprot.setup_mctp_bridge" title="Permalink to this definition"></a></dt>
+<dd><p>setup BMC MCTP bridge</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="aardvark/smb_avark.html" class="btn btn-neutral float-left" title="aardvark.smb_avark" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sign &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="capsule" href="capsule.html" />
+    <link rel="prev" title="ifwi" href="ifwi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sign</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sign.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.Ext_Signing"><code class="docutils literal notranslate"><span class="pre">Ext_Signing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Ext_Signing.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Ext_Signing.sign"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.sign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Ext_Signing.verify_key"><code class="docutils literal notranslate"><span class="pre">Ext_Signing.verify_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.Signing"><code class="docutils literal notranslate"><span class="pre">Signing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Signing.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Signing.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Signing.sign"><code class="docutils literal notranslate"><span class="pre">Signing.sign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Signing.verify_key"><code class="docutils literal notranslate"><span class="pre">Signing.verify_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.Signing_No_B1CSK"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Signing_No_B1CSK.set_signed_image"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK.set_signed_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign.Signing_No_B1CSK.sign"><code class="docutils literal notranslate"><span class="pre">Signing_No_B1CSK.sign()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.get_csk_entry_hash"><code class="docutils literal notranslate"><span class="pre">get_csk_entry_hash()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.get_csk_permission"><code class="docutils literal notranslate"><span class="pre">get_csk_permission()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sign.rk_sign_csk_entry"><code class="docutils literal notranslate"><span class="pre">rk_sign_csk_entry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">sign</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/sign.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sign">
+<span id="sign"></span><h1>sign<a class="headerlink" href="#module-sign" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>PFR sining module. This module is to sign an image for pfr using private keys.
+It also supports pfr image analysis and verification.
+It can be used as stanalone with command line arguments.</p>
+</dd>
+</dl>
+<p>It also includes external sign class and command line execution.</p>
+<p>..Command line execution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">sign</span> <span class="o">-</span><span class="n">h</span>   <span class="c1"># get help</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">sign</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">input_unsigned_image</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">t</span> <span class="o">&lt;</span><span class="n">pc</span> <span class="nb">type</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">csk_id</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">r</span> <span class="o">&lt;</span><span class="n">root</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">c</span> <span class="o">&lt;</span><span class="n">csk</span> <span class="n">private</span> <span class="n">key</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">output_signed_image</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sign.get_csk_permission" title="sign.get_csk_permission"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_csk_permission</span></code></a>(pc_type)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sign.main" title="sign.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(args)</p></td>
+<td><p>main program</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sign.ConfigDict" title="sign.ConfigDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></p></td>
+<td><p>define an ordered dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sign.Signing" title="sign.Signing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signing</span></code></a>(image, pc_type, csk_id, rk_prv_pem, ...)</p></td>
+<td><p>Signing class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sign.Ext_Signing" title="sign.Ext_Signing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ext_Signing</span></code></a>(image, pc_type, csk_id, rk_pub, ...)</p></td>
+<td><p>Class for external signing operation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sign.Signing_No_B1CSK" title="sign.Signing_No_B1CSK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signing_No_B1CSK</span></code></a>(image, pc_type, csk_id, ...)</p></td>
+<td><p>Signing class</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="sign.ConfigDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">ConfigDict</span></span><a class="headerlink" href="#sign.ConfigDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></p>
+<p>define an ordered dictionary</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sign.Ext_Signing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">Ext_Signing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_pub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_entry_sigR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_entry_sigS</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Ext_Signing" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for external signing operation.
+This is used by system builder (ODM) to sign content using CSK without knowing the root private key.
+It is given the csk  entry signature R and S provided by Root key owner (OEM)</p>
+<p>ODM (CSK owner) gives CSK Public key to OEM (RK owner) to generate csk entry signature R and S
+OEM gives ODM root public key and CSK entry signature R and S</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – unsigned image file name</p></li>
+<li><p><strong>pc_type</strong> – <p>protect content type</p>
+<p>Bit[7:0]:</p>
+<blockquote>
+<div><ul>
+<li><p>00h = PFR CPLD Update capsule</p></li>
+<li><p>01h = PFR PCH PFM</p></li>
+<li><p>02h = PFR PCH Update Capsule</p></li>
+<li><p>03h = PFR BMC PFM</p></li>
+<li><p>04h = PFR BMC Update Capsule</p></li>
+<li><p>05h = PFR PCH/CPU Seamless Update Capsule</p></li>
+<li><p>06h = PFR AFM</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>csk_id</strong> – ID of CSK</p></li>
+<li><p><strong>rk_pub</strong> – root public key in pem format</p></li>
+<li><p><strong>csk_prv</strong> – csk private key in pem format</p></li>
+<li><p><strong>csk_entry_sigR</strong> – CSK entry signature R in hex string format</p></li>
+<li><p><strong>csk_entry_sigS</strong> – CSK entry signature S in hex string format</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Ext_Signing.set_signed_image">
+<span class="sig-name descname"><span class="pre">set_signed_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outimage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Ext_Signing.set_signed_image" title="Permalink to this definition"></a></dt>
+<dd><p>set output image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Ext_Signing.sign">
+<span class="sig-name descname"><span class="pre">sign</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sign.Ext_Signing.sign" title="Permalink to this definition"></a></dt>
+<dd><p>signing image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Ext_Signing.verify_key">
+<span class="sig-name descname"><span class="pre">verify_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sign.Ext_Signing.verify_key" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sign.Signing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">Signing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Signing class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – unsigned image file name</p></li>
+<li><p><strong>pc_type</strong> – <p>protect content type</p>
+<p>Bit[7:0]:</p>
+<blockquote>
+<div><ul>
+<li><p>00h = PFR CPLD Update capsule</p></li>
+<li><p>01h = PFR PCH PFM</p></li>
+<li><p>02h = PFR PCH Update Capsule</p></li>
+<li><p>03h = PFR BMC PFM</p></li>
+<li><p>04h = PFR BMC Update Capsule</p></li>
+<li><p>05h = PFR PCH/CPU Seamless Update Capsule</p></li>
+<li><p>06h = PFR AFM</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>csk_id</strong> – ID of CSK</p></li>
+<li><p><strong>rk_prv_pem</strong> – root private key in pem format</p></li>
+<li><p><strong>csk_prv_pem</strong> – csk private key in pem format</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Signing.set_signed_image">
+<span class="sig-name descname"><span class="pre">set_signed_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outimage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing.set_signed_image" title="Permalink to this definition"></a></dt>
+<dd><p>set output image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Signing.sign">
+<span class="sig-name descname"><span class="pre">sign</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing.sign" title="Permalink to this definition"></a></dt>
+<dd><p>signing image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Signing.verify_key">
+<span class="sig-name descname"><span class="pre">verify_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing.verify_key" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sign.Signing_No_B1CSK">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">Signing_No_B1CSK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing_No_B1CSK" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Signing class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – unsigned image file name</p></li>
+<li><p><strong>pc_type</strong> – <p>protect content type</p>
+<p>Bit[7:0]:</p>
+<blockquote>
+<div><ul>
+<li><p>00h = PFR CPLD Update capsule</p></li>
+<li><p>01h = PFR PCH PFM</p></li>
+<li><p>02h = PFR PCH Update Capsule</p></li>
+<li><p>03h = PFR BMC PFM</p></li>
+<li><p>04h = PFR BMC Update Capsule</p></li>
+<li><p>05h = PFR PCH/CPU Seamless Update Capsule</p></li>
+<li><p>06h = PFR AFM</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>csk_id</strong> – ID of CSK</p></li>
+<li><p><strong>rk_prv_pem</strong> – root private key in pem format</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Signing_No_B1CSK.set_signed_image">
+<span class="sig-name descname"><span class="pre">set_signed_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outimage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing_No_B1CSK.set_signed_image" title="Permalink to this definition"></a></dt>
+<dd><p>set output image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sign.Signing_No_B1CSK.sign">
+<span class="sig-name descname"><span class="pre">sign</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sign.Signing_No_B1CSK.sign" title="Permalink to this definition"></a></dt>
+<dd><p>signing image</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sign.get_csk_entry_hash">
+<span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">get_csk_entry_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_pub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hashfunc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha384'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csk_entry_hash.bin'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.get_csk_entry_hash" title="Permalink to this definition"></a></dt>
+<dd><p>This function is to get csk entry hash data to be signed by root private key.
+This function is used for external signing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>permission</strong> – permission, = 0x3 for ifwi, 0x4: bmc pfm; 0x8: bmc update</p></li>
+<li><p><strong>csk_id</strong> – CSK ID number</p></li>
+<li><p><strong>csk_pub</strong> – CSK public key in PEM format</p></li>
+<li><p><strong>hashfunc</strong> – hash function, either ‘sha384’ or ‘sha256’. Default is ‘sha384’ for secp384r1</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sign.get_csk_permission">
+<span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">get_csk_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pc_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.get_csk_permission" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sign.main">
+<span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.main" title="Permalink to this definition"></a></dt>
+<dd><p>main program</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_img</strong> – input image, -i –input_img</p></li>
+<li><p><strong>pc_type</strong> – protect content type, -t –pc_type</p></li>
+<li><p><strong>csk_id</strong> – csk ID, -n –csk_id</p></li>
+<li><p><strong>rk_prv</strong> – root private key, -r rk_prv</p></li>
+<li><p><strong>csk_prv</strong> – csk private key, -c –csk_prv</p></li>
+<li><p><strong>out_img</strong> – output image, default is &lt;input_img&gt;_signed_pfr&lt;pfr_ver&gt;.bin, -o –out_img</p></li>
+</ul>
+</dd>
+</dl>
+<p>..example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">Python</span> <span class="n">console</span> <span class="ow">or</span> <span class="ow">in</span> <span class="n">another</span> <span class="n">python</span> <span class="n">scripts</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">intelprot</span> <span class="kn">import</span> <span class="n">sign</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sign</span><span class="o">.</span><span class="n">main</span><span class="p">([</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="n">input_image</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">pc_type</span><span class="p">,</span> <span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">csk_id</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">rk_prv</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">csk_prv</span><span class="p">])</span>
+<span class="ow">or</span><span class="p">:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">=</span><span class="n">sign</span><span class="o">.</span><span class="n">Signing</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">pc_type</span><span class="p">,</span> <span class="n">csk_id</span><span class="p">,</span> <span class="n">rk_prv</span><span class="p">,</span> <span class="n">csk_prv</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">sign</span><span class="p">()</span>
+
+<span class="n">For</span> <span class="n">external</span> <span class="n">signing</span><span class="p">::</span>
+
+ <span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">sign</span> <span class="o">-</span><span class="n">extsign</span> <span class="o">-</span><span class="n">h</span>
+ <span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">sign</span> <span class="n">extsign</span> <span class="o">-</span><span class="n">i</span> <span class="n">PFM_signed</span><span class="o">.</span><span class="n">bin</span> <span class="o">-</span><span class="n">t</span> <span class="mi">3</span> <span class="o">-</span><span class="n">n</span> <span class="mi">2</span> <span class="o">-</span><span class="n">rk</span> <span class="n">key_root_pub</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">csk</span> <span class="n">key_csk_prv</span><span class="o">.</span><span class="n">pem</span>     <span class="o">-</span><span class="n">sigR</span>  <span class="n">f43c9041e75328c89ab42a8981abe5cdeac9c6d513ad929c2f30ef104ae38a615fdd8d8f08c9d30423ba39da7a8e8c0c</span>     <span class="o">-</span><span class="n">sigS</span> <span class="mi">4</span><span class="n">f147c189d9a9eefda99375fba1d4e47aeafac1a205ae7fbe124b45d9f4af6c6106b8caebbd7a2ffea3f2461d9cb9528</span>     <span class="o">-</span><span class="n">o</span> <span class="n">out_test_extsign_image</span><span class="o">.</span><span class="n">bin</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sign.rk_sign_csk_entry">
+<span class="sig-prename descclassname"><span class="pre">sign.</span></span><span class="sig-name descname"><span class="pre">rk_sign_csk_entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_entry_hash</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sign.rk_sign_csk_entry" title="Permalink to this definition"></a></dt>
+<dd><p>Root key sign CSK entry hash data, return signature R and S</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rk_prv</strong> – root private key</p></li>
+<li><p><strong>csk_entry_hash</strong> – csk entry hash data to be signed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ifwi.html" class="btn btn-neutral float-left" title="ifwi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="capsule.html" class="btn btn-neutral float-right" title="capsule" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

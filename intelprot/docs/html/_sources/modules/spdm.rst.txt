@@ -1,0 +1,50 @@
+spdm
+====
+
+.. automodule:: spdm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      dec_Algorithm
+      dec_Certificate
+      dec_Get_Measurements
+      dec_Measurements
+      dec_Neogotiate_Algo
+      dec_spdm_message
+      get_codestr
+      get_lst_data
+      get_openspdm_data
+      map_dict_val
+      msg_challenge
+      msg_get_certificate
+      msg_get_mesurement
+      msg_negotiate_algorithms
+      server_hello
+      show_dict
+      start_hello
+      stop_msg
+   
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SPDM_REQUESTER
+      SPDM_RESPONDER
+      egs_spdm
+   
+   
+
+   
+   
+   
+
+
+

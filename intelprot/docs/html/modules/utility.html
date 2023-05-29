@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utility &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="verify" href="verify.html" />
+    <link rel="prev" title="pfm" href="pfm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">utility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#utility.OOB_Read_Mailbox"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.bmc_offset"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.bmc_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.dev_pubkey"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.dev_pubkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.dump"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.dump()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.ifwi_offset"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.ifwi_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.read_mailbox"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.read_mailbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.rk_hash"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.rk_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility.OOB_Read_Mailbox.show"><code class="docutils literal notranslate"><span class="pre">OOB_Read_Mailbox.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_compare"><code class="docutils literal notranslate"><span class="pre">bin_compare()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_compare_bytes"><code class="docutils literal notranslate"><span class="pre">bin_compare_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_compare_region"><code class="docutils literal notranslate"><span class="pre">bin_compare_region()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_decomp"><code class="docutils literal notranslate"><span class="pre">bin_decomp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_hexdump"><code class="docutils literal notranslate"><span class="pre">bin_hexdump()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_search_bytes"><code class="docutils literal notranslate"><span class="pre">bin_search_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bin_search_tag"><code class="docutils literal notranslate"><span class="pre">bin_search_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.bind_file_at_addr"><code class="docutils literal notranslate"><span class="pre">bind_file_at_addr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.decode_mailbox"><code class="docutils literal notranslate"><span class="pre">decode_mailbox()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.get_hash256"><code class="docutils literal notranslate"><span class="pre">get_hash256()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.get_hash384"><code class="docutils literal notranslate"><span class="pre">get_hash384()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.insert_bytes"><code class="docutils literal notranslate"><span class="pre">insert_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.integrate_capsule"><code class="docutils literal notranslate"><span class="pre">integrate_capsule()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.read_bmc_offset"><code class="docutils literal notranslate"><span class="pre">read_bmc_offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.read_deviceId_pubkey"><code class="docutils literal notranslate"><span class="pre">read_deviceId_pubkey()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.read_mailbox"><code class="docutils literal notranslate"><span class="pre">read_mailbox()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.read_pch_cpu_offset"><code class="docutils literal notranslate"><span class="pre">read_pch_cpu_offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.read_root_public_key_hash"><code class="docutils literal notranslate"><span class="pre">read_root_public_key_hash()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility.replace_bytes"><code class="docutils literal notranslate"><span class="pre">replace_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">utility</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/utility.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-utility">
+<span id="utility"></span><h1>utility<a class="headerlink" href="#module-utility" title="Permalink to this heading"></a></h1>
+<p>PFR binary image parsing utility functions</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.bin_compare" title="utility.bin_compare"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_compare</span></code></a>(f1, f2)</p></td>
+<td><p>compare two binary files</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.bin_compare_bytes" title="utility.bin_compare_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_compare_bytes</span></code></a>(f1, f2, st_addr, size_bytes)</p></td>
+<td><p>compare two binary files from start addr</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.bin_compare_region" title="utility.bin_compare_region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_compare_region</span></code></a>(fn1, start1, end1, fn2, ...)</p></td>
+<td><p>compare region from two files</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.bin_decomp" title="utility.bin_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_decomp</span></code></a>(fbin, st_addr, end_addr[, fout])</p></td>
+<td><p>decompost a region from a binary file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.bin_hexdump" title="utility.bin_hexdump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_hexdump</span></code></a>(fbin[, st_addr, end_addr, fout])</p></td>
+<td><p>dump binary file as hex string and save to a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.bin_search_bytes" title="utility.bin_search_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_search_bytes</span></code></a>(fbin, st_tag, ...)</p></td>
+<td><p>search bytes from a binary file relative to a start tag</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.bin_search_tag" title="utility.bin_search_tag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_search_tag</span></code></a>(fbin, st_tag)</p></td>
+<td><p>search a tag from a binary file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.get_hash256" title="utility.get_hash256"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash256</span></code></a>(fname_or_bdata[, start_addr, ...])</p></td>
+<td><p>calculate SHA 256</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.get_hash384" title="utility.get_hash384"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hash384</span></code></a>(fname_or_bdata[, start_addr, ...])</p></td>
+<td><p>calculate SHA 384</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.insert_bytes" title="utility.insert_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insert_bytes</span></code></a>(fbin, st_addr, new_bytes[, fout])</p></td>
+<td><p>insert bytes to an image from a start address</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utility.integrate_capsule" title="utility.integrate_capsule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrate_capsule</span></code></a>(fbin, fcap, st_addr[, fout])</p></td>
+<td><p>integrate capsule to a pfr image</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utility.replace_bytes" title="utility.replace_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_bytes</span></code></a>(fbin, start_addr, new_bytes[, ...])</p></td>
+<td><p>replace bytes from a start address for a binary image</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">OOB_Read_Mailbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'10.19.154.207'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'debuguser'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0penBmc1'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for read mailbox operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bmc_ip_addr</strong> – BMC IP address</p></li>
+<li><p><strong>username</strong> – BMC OOB user username, default is debuguser</p></li>
+<li><p><strong>password</strong> – BMC OOB user password, default is 0penBmc1</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.bmc_offset">
+<span class="sig-name descname"><span class="pre">bmc_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.bmc_offset" title="Permalink to this definition"></a></dt>
+<dd><p>read BMC PFM offset provisioned in CPLD</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.dev_pubkey">
+<span class="sig-name descname"><span class="pre">dev_pubkey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.dev_pubkey" title="Permalink to this definition"></a></dt>
+<dd><p>read BMC PFM offset provisioned in CPLD</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.dump" title="Permalink to this definition"></a></dt>
+<dd><p>dump all data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.ifwi_offset">
+<span class="sig-name descname"><span class="pre">ifwi_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.ifwi_offset" title="Permalink to this definition"></a></dt>
+<dd><p>read host PFM offset provisioned in CPLD</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.read_mailbox">
+<span class="sig-name descname"><span class="pre">read_mailbox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.read_mailbox" title="Permalink to this definition"></a></dt>
+<dd><p>read mailbox register from 0 to 0x7F</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.rk_hash">
+<span class="sig-name descname"><span class="pre">rk_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.rk_hash" title="Permalink to this definition"></a></dt>
+<dd><p>read root public key hash</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utility.OOB_Read_Mailbox.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utility.OOB_Read_Mailbox.show" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_compare">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_compare" title="Permalink to this definition"></a></dt>
+<dd><p>compare two binary files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f1</strong> – filename of the first image.</p></li>
+<li><p><strong>f2</strong> – filename of the second image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns rtn<span class="colon">:</span></dt>
+<dd class="field-even"><p>True/False of compare results. True: f1 and f2 are exactly same.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_compare_bytes">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_compare_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_compare_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>compare two binary files from start addr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f1</strong> – first file to compare.</p></li>
+<li><p><strong>f2</strong> – second file to compare.</p></li>
+<li><p><strong>st_addr</strong> – start address to compare</p></li>
+<li><p><strong>size_bytes</strong> – size of bytes to compare.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns rtn<span class="colon">:</span></dt>
+<dd class="field-even"><p>True/False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_compare_region">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_compare_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_compare_region" title="Permalink to this definition"></a></dt>
+<dd><p>compare region from two files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn1</strong> – the first file to compare.</p></li>
+<li><p><strong>start1</strong> – start address of the file fn1.</p></li>
+<li><p><strong>end1</strong> – end address of file fn1</p></li>
+<li><p><strong>fn2</strong> – the second file to compare.</p></li>
+<li><p><strong>start2</strong> – start address of the file fn2.</p></li>
+<li><p><strong>end2</strong> – end address of file fn2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns rtn<span class="colon">:</span></dt>
+<dd class="field-even"><p>True/False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_decomp">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_decomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_decomp" title="Permalink to this definition"></a></dt>
+<dd><p>decompost a region from a binary file</p>
+<p>decompost a region from start to end address from a binary file and write the region content to a file
+the output file name is optional. The default output file name is input file name with address range</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – filename of a binary file</p></li>
+<li><p><strong>st_addr</strong> – start address of the region</p></li>
+<li><p><strong>end_addr</strong> – end address of the region</p></li>
+<li><p><strong>fout</strong> – output image file name</p></li>
+</ul>
+</dd>
+</dl>
+<p>:returns None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_hexdump">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_hexdump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_hexdump" title="Permalink to this definition"></a></dt>
+<dd><p>dump binary file as hex string and save to a file</p>
+<p>This function dump partial or whole binary image to a text file.
+The text file is hex string bytes with address information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input image filename.</p></li>
+<li><p><strong>st_addr</strong> – start address, optional. Defaul is from beginning of the image</p></li>
+<li><p><strong>end_addr</strong> – end address, optionsl. Default is to the end of image</p></li>
+<li><p><strong>fout</strong> – output image filename, optional. Default is fbin_&lt;st_addr&gt;_&lt;end_addr&gt;_hexdump.txt</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_search_bytes">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_search_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_of_bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_search_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>search bytes from a binary file relative to a start tag</p>
+<p>This function search a binary file and return the interested bytes relative to the start tag location
+It is useful to find a varibale number of bytes relative to a known tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input filename</p></li>
+<li><p><strong>st_tag</strong> – start of a tagflag. st_tag is wither bytes or integer, example b’__PFRS__’, b’__KEYM__’ or 0x02B3CE1D, 0xB6EAFD19</p></li>
+<li><p><strong>relative_offset</strong> – relative offset in bytes to the st_tag</p></li>
+<li><p><strong>size_of_bytes</strong> – size of return bytes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns rtn_bytes<span class="colon">:</span></dt>
+<dd class="field-even"><p>return bytes of size size_of_bytes</p>
+</dd>
+</dl>
+<p>example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##. find 32 bytes of data that is relative 16 bytes after integer tag 0xB6EAFD19 from a_file</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">pfr_utility</span><span class="o">.</span><span class="n">bin_search_bytes</span><span class="p">(</span><span class="n">a_file</span><span class="p">,</span> <span class="mh">0xB6EAFD19</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="c1">##. find 32 bytes of data that is 80 bytes after tag b&#39;__KEYM__&#39;</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">pfr_utility</span><span class="o">.</span><span class="n">bin_search_bytes</span><span class="p">(</span><span class="n">a_file</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;__KEYM__&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bin_search_tag">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bin_search_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bin_search_tag" title="Permalink to this definition"></a></dt>
+<dd><p>search a tag from a binary file</p>
+<p>The st_tag is either a double word little endian integer or bytes/bytearray format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input filename</p></li>
+<li><p><strong>dw_tag</strong> – double word tag, example 0x02B3CE1D</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns lst_addr<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of addresses of all occurances of the tag</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.bind_file_at_addr">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">bind_file_at_addr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inf_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outf_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_addr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.bind_file_at_addr" title="Permalink to this definition"></a></dt>
+<dd><p>combine two binary file together, read inf_n and write it to outf_n at offset_addr in bytes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inf_n</strong> – input file name</p></li>
+<li><p><strong>outf_n</strong> – output file name</p></li>
+<li><p><strong>offset_addr</strong> – offset address</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.decode_mailbox">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">decode_mailbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst_mailbox</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.decode_mailbox" title="Permalink to this definition"></a></dt>
+<dd><p>decode mailbox register value</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.get_hash256">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">get_hash256</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_or_bdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.get_hash256" title="Permalink to this definition"></a></dt>
+<dd><p>calculate SHA 256</p>
+<p>It calculates hash256 32 bytes either from a binary file or from binary data in bytes/bytearray
+If fname_or_bdata is a file, default from offset 0 to the end of file.
+Input start, end address if only calculate hash from partial data from the binary file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_or_bdata</strong> – file name of the binary image with path, or binary data read from a binary file</p></li>
+<li><p><strong>start_addr</strong> – start address, optional.
+It is needed if fname_or_bdata is a file and not start from the begining of the file</p></li>
+<li><p><strong>end_addr</strong> – end address, optional.
+It is needed if fname_por_bdata is a file, and not to the end of the file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns hash256<span class="colon">:</span></dt>
+<dd class="field-even"><p>hex string of digest</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.get_hash384">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">get_hash384</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_or_bdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.get_hash384" title="Permalink to this definition"></a></dt>
+<dd><p>calculate SHA 384</p>
+<p>It calculates hash384 48 bytes either from a binary file or from binary data in bytes/bytearray
+If fname_or_bdata is a file, default from offset 0 to the end of file.
+Input start, end address if only calculate hash from partial data from the binary file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_or_bdata</strong> – file name of the binary image with path, or binary data read from a binary file</p></li>
+<li><p><strong>start_addr</strong> – start address, optional.
+It is needed if fname_or_bdata is a file and not start from the begining of the file</p></li>
+<li><p><strong>end_addr</strong> – end address, optional.
+It is needed if fname_por_bdata is a file, and not to the end of the file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns hash256<span class="colon">:</span></dt>
+<dd class="field-even"><p>hex string of digest</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.insert_bytes">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">insert_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.insert_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>insert bytes to an image from a start address</p>
+<p>This function insert bytes to an image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input binary filename</p></li>
+<li><p><strong>st_addr</strong> – start offset of the file</p></li>
+<li><p><strong>new_bytes</strong> – bytes or bytearray to be inserted</p></li>
+<li><p><strong>fout</strong> – output image filename, optional. Default is fbin_insert.bin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.integrate_capsule">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">integrate_capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fcap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.integrate_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>integrate capsule to a pfr image</p>
+<p>This function integrate a capsule image to a pfr image.
+A new image file will be generated at the same folder of input image. The content from st_addr will be replaced with capsule image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input pfr image</p></li>
+<li><p><strong>fcap</strong> – signed capsule image to be added</p></li>
+<li><p><strong>st_addr</strong> – start address to integrate</p></li>
+<li><p><strong>fout</strong> – output filename, optional. default is fbin file name path with “_with_cap”.bin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.main">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.main" title="Permalink to this definition"></a></dt>
+<dd><p>command line to read CPLD mailbox register remotely using ipmi, and decode it.</p>
+<p>You will need set bmc user username/password with OOB authority and also with BMC IP address.</p>
+<p>Read CPLD mailbox command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">utility</span> <span class="n">mailbox</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">BMC_IP</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">u</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.read_bmc_offset">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">read_bmc_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.read_bmc_offset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.read_deviceId_pubkey">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">read_deviceId_pubkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.read_deviceId_pubkey" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.read_mailbox">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">read_mailbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.read_mailbox" title="Permalink to this definition"></a></dt>
+<dd><p>Read CPLD host mailbox register using BMC OOB method</p>
+<p>This function use below command to read CPLD mailbox register:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bmc</span> <span class="n">console</span><span class="p">:</span> <span class="n">ipmitool</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">No</span> <span class="n">of</span> <span class="n">Bytes</span> <span class="n">to</span> <span class="n">Read</span><span class="p">]</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Identifier</span><span class="p">]</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="o">&lt;</span><span class="n">BMC_IP</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">P</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">No</span> <span class="n">of</span> <span class="n">Bytes</span> <span class="n">to</span> <span class="n">Read</span><span class="p">]</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Identifier</span><span class="p">]</span>
+
+<span class="n">Note</span><span class="p">:</span> <span class="n">Register</span> <span class="n">Identifier</span><span class="p">:</span><span class="mi">0</span> <span class="k">for</span> <span class="n">single</span> <span class="n">byte</span> <span class="n">read</span> <span class="n">register</span>
+      <span class="n">Register</span> <span class="n">Identifier</span><span class="p">:</span><span class="mi">1</span> <span class="k">for</span> <span class="n">FIFO</span> <span class="n">read</span> <span class="n">register</span>
+
+<span class="c1">#example::</span>
+<span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="mf">10.19.154.207</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="n">debuguser</span> <span class="o">-</span><span class="n">P</span> <span class="mi">0</span><span class="n">penBmc1</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="mh">0x0</span> <span class="mh">0x7f</span> <span class="mi">0</span>
+<span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="mf">10.19.154.207</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="n">debuguser</span> <span class="o">-</span><span class="n">P</span> <span class="mi">0</span><span class="n">penBmc1</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="mh">0x20</span> <span class="mh">0x40</span> <span class="mi">0</span>
+<span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="mf">10.19.154.207</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="n">debuguser</span> <span class="o">-</span><span class="n">P</span> <span class="mi">0</span><span class="n">penBmc1</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="mh">0x08</span> <span class="mi">48</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bmc_ip_addr</strong> – BMC IP address</p></li>
+<li><p><strong>username</strong> – BMC OOB user username</p></li>
+<li><p><strong>password</strong> – BMC OOB user password</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.read_pch_cpu_offset">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">read_pch_cpu_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.read_pch_cpu_offset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.read_root_public_key_hash">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">read_root_public_key_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.read_root_public_key_hash" title="Permalink to this definition"></a></dt>
+<dd><p>read root public key hash</p>
+<p>This function read root public key hash:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bmc</span> <span class="n">console</span><span class="p">:</span> <span class="n">ipmitool</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">No</span> <span class="n">of</span> <span class="n">Bytes</span> <span class="n">to</span> <span class="n">Read</span><span class="p">]</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Identifier</span><span class="p">]</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="o">&lt;</span><span class="n">BMC_IP</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">P</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">No</span> <span class="n">of</span> <span class="n">Bytes</span> <span class="n">to</span> <span class="n">Read</span><span class="p">]</span> <span class="p">[</span><span class="n">Register</span> <span class="n">Identifier</span><span class="p">]</span>
+
+<span class="n">Note</span><span class="p">:</span> <span class="n">Register</span> <span class="n">Identifier</span><span class="p">:</span><span class="mi">0</span> <span class="k">for</span> <span class="n">single</span> <span class="n">byte</span> <span class="n">read</span> <span class="n">register</span>
+      <span class="n">Register</span> <span class="n">Identifier</span><span class="p">:</span><span class="mi">1</span> <span class="k">for</span> <span class="n">FIFO</span> <span class="n">read</span> <span class="n">register</span>
+
+<span class="c1">#example::</span>
+<span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">lanplus</span> <span class="o">-</span><span class="n">H</span> <span class="mf">10.19.154.208</span> <span class="o">-</span><span class="n">C</span> <span class="mi">17</span> <span class="o">-</span><span class="n">U</span> <span class="n">debuguser</span> <span class="o">-</span><span class="n">P</span> <span class="mi">0</span><span class="n">penBmc1</span> <span class="n">raw</span> <span class="mh">0x3e</span> <span class="mh">0x84</span> <span class="mh">0x08</span> <span class="mi">48</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bmc_ip_addr</strong> – BMC IP address</p></li>
+<li><p><strong>username</strong> – BMC OOB user username</p></li>
+<li><p><strong>password</strong> – BMC OOB user password</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utility.replace_bytes">
+<span class="sig-prename descclassname"><span class="pre">utility.</span></span><span class="sig-name descname"><span class="pre">replace_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utility.replace_bytes" title="Permalink to this definition"></a></dt>
+<dd><p>replace bytes from a start address for a binary image</p>
+<p>This function is replace variable number of bytes of a binary image and save it as a new image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fbin</strong> – input image file</p></li>
+<li><p><strong>start_addr</strong> – start address to replace</p></li>
+<li><p><strong>new_bytes</strong> – new bytes to replace from an image</p></li>
+<li><p><strong>fout</strong> – output image filename, optional. Default is fbin_replaced.bin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pfm.html" class="btn btn-neutral float-left" title="pfm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="verify.html" class="btn btn-neutral float-right" title="verify" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

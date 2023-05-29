@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>verify &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="spdm" href="spdm.html" />
+    <link rel="prev" title="utility" href="utility.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bmc.html">bmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">verify</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#verify.BLOCK_1K_Signed"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed.validate"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed.verify_magic"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_magic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed.verify_pc_hash"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_pc_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed.verify_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed.verify_signature"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed.verify_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.validate"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.verify_magic"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_magic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.verify_pc_hash"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pc_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.verify_pc_len_type"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pc_len_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.verify_pubkey_xy"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_pubkey_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.BLOCK_1K_Signed_KCC.verify_signature"><code class="docutils literal notranslate"><span class="pre">BLOCK_1K_Signed_KCC.verify_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.Capsule_signed"><code class="docutils literal notranslate"><span class="pre">Capsule_signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Capsule_signed.validate"><code class="docutils literal notranslate"><span class="pre">Capsule_signed.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.Capsule_unsigned"><code class="docutils literal notranslate"><span class="pre">Capsule_unsigned</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Capsule_unsigned.validate"><code class="docutils literal notranslate"><span class="pre">Capsule_unsigned.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.ConfigDict"><code class="docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.PFM_signed"><code class="docutils literal notranslate"><span class="pre">PFM_signed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.PFM_signed.validate"><code class="docutils literal notranslate"><span class="pre">PFM_signed.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.PFR_BMC"><code class="docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.PFR_BMC.validate"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.PFR_IFWI"><code class="docutils literal notranslate"><span class="pre">PFR_IFWI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.PFR_IFWI.validate"><code class="docutils literal notranslate"><span class="pre">PFR_IFWI.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.Verify_AFM"><code class="docutils literal notranslate"><span class="pre">Verify_AFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_AFM.validate"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_AFM.validate_afm_device"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate_afm_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_AFM.validate_afm_struct_header"><code class="docutils literal notranslate"><span class="pre">Verify_AFM.validate_afm_struct_header()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.Verify_KCC"><code class="docutils literal notranslate"><span class="pre">Verify_KCC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_KCC.show"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_KCC.validate"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_KCC.verify_payload_cskid"><code class="docutils literal notranslate"><span class="pre">Verify_KCC.verify_payload_cskid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.Verify_PFM"><code class="docutils literal notranslate"><span class="pre">Verify_PFM</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verify.Verify_PFM.validate"><code class="docutils literal notranslate"><span class="pre">Verify_PFM.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verify.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">verify</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/verify.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-verify">
+<span id="verify"></span><h1>verify<a class="headerlink" href="#module-verify" title="Permalink to this heading"></a></h1>
+<p>This module is to verify pfr ifwi and BMC image.
+It also supports pfr image analysis and verification.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#verify.Capsule_signed" title="verify.Capsule_signed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Capsule_signed</span></code></a>(signedcap_image_bdata, ...)</p></td>
+<td><p>PFR Capsule verification class</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#verify.Capsule_unsigned" title="verify.Capsule_unsigned"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Capsule_unsigned</span></code></a>(cap_image_bdata, pfr_ver, ...)</p></td>
+<td><p>PFR Capsule verification class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#verify.ConfigDict" title="verify.ConfigDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigDict</span></code></a></p></td>
+<td><p>define an ordered dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#verify.PFM_signed" title="verify.PFM_signed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PFM_signed</span></code></a>(signed_image_bdata, pfr_ver, ...)</p></td>
+<td><p>verification class for PFR PFM signed image file or binary data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#verify.PFR_BMC" title="verify.PFR_BMC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a>(bmc_image[, rk_key, csk_prv, logfile])</p></td>
+<td><p>PFR BMC FW verification class</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#verify.PFR_IFWI" title="verify.PFR_IFWI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PFR_IFWI</span></code></a>(ifwi_image[, rk_key, csk_prv, logfile])</p></td>
+<td><p>PFR IFWI verification class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#verify.Verify_PFM" title="verify.Verify_PFM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Verify_PFM</span></code></a>(image_bdata)</p></td>
+<td><p>verification class of unsigned PFM image file or binary data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#verify.Verify_AFM" title="verify.Verify_AFM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Verify_AFM</span></code></a>(afm_cap, rk_key, csk_prv[, logfile])</p></td>
+<td><p>class for AFM verification</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">BLOCK_1K_Signed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blk_signed_data_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for 1K (1024 Bytes) Block Signed Data Verification</p>
+<p>A generic class to verify all kinds of 1024 Bytes Block signed data verification
+The Hash algorithm is based on the private key curves
+The protect content starts from offset 1024 with protect content length padding to mutiple of 128B</p>
+<p>The root key param takes either private or public key in PEM format.
+When in external signing, the root private key is not visiable to CSK owner, in this case, use root public key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>block_signed_data_file</strong> – block signed data or file name.</p></li>
+<li><p><strong>rk_key</strong> – root private key (regular signed) or root public key (for external sign)</p></li>
+<li><p><strong>csk_prv</strong> – CSK private key</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed.validate" title="Permalink to this definition"></a></dt>
+<dd><p>validate block 1 sign chain
+:returns: True/False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed.verify_magic">
+<span class="sig-name descname"><span class="pre">verify_magic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed.verify_magic" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed.verify_pc_hash">
+<span class="sig-name descname"><span class="pre">verify_pc_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed.verify_pc_hash" title="Permalink to this definition"></a></dt>
+<dd><p>verify protected data hash</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed.verify_pubkey_xy">
+<span class="sig-name descname"><span class="pre">verify_pubkey_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed.verify_pubkey_xy" title="Permalink to this definition"></a></dt>
+<dd><p>verify root public key component X and Y</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed.verify_signature">
+<span class="sig-name descname"><span class="pre">verify_signature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed.verify_signature" title="Permalink to this definition"></a></dt>
+<dd><p>verify signature</p>
+<p>if root public key is provided, root key owner generate the signature for CSK entry
+skip verify csk entry signature</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">BLOCK_1K_Signed_KCC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blk_signed_kcc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcc_cskid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for 1K (1024 Bytes) Block Signed Data w/o CSK Verification</p>
+<p>A generic class to verify 1024 Bytes Block signed data w/o CSK verification
+The Hash algorithm is based on the private key curves
+The protect content starts from offset 1024 with protect content length padding to mutiple of 128B</p>
+<p>The root key param takes either private or public key in PEM format.
+When in external signing, the root private key is not visiable to CSK owner, in this case, use root public key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>block_signed_kcc</strong> – block signed KCC data or file name without CSK</p></li>
+<li><p><strong>rk_key</strong> – root private key (regular signed) or root public key (for external sign)</p></li>
+<li><p><strong>kcc_cskid</strong> – KCC CSK ID, default is 0</p></li>
+<li><p><strong>logfile</strong> – log file name, optional</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.validate" title="Permalink to this definition"></a></dt>
+<dd><p>validate block 1 sign chain
+:returns: True/False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.verify_magic">
+<span class="sig-name descname"><span class="pre">verify_magic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.verify_magic" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.verify_pc_hash">
+<span class="sig-name descname"><span class="pre">verify_pc_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.verify_pc_hash" title="Permalink to this definition"></a></dt>
+<dd><p>verify protected data hash</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.verify_pc_len_type">
+<span class="sig-name descname"><span class="pre">verify_pc_len_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.verify_pc_len_type" title="Permalink to this definition"></a></dt>
+<dd><p>verify PC Type is KCC PC_Type=0x100, BIT[8] is 1 for KCC</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.verify_pubkey_xy">
+<span class="sig-name descname"><span class="pre">verify_pubkey_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.verify_pubkey_xy" title="Permalink to this definition"></a></dt>
+<dd><p>verify root public key component X and Y</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.BLOCK_1K_Signed_KCC.verify_signature">
+<span class="sig-name descname"><span class="pre">verify_signature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.BLOCK_1K_Signed_KCC.verify_signature" title="Permalink to this definition"></a></dt>
+<dd><p>verify signature</p>
+<p>if root public key is provided, root key owner generate the signature for CSK entry
+skip verify csk entry signature</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.Capsule_signed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">Capsule_signed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signedcap_image_bdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfr_ver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Capsule_signed" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>PFR Capsule verification class</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Capsule_signed.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Capsule_signed.validate" title="Permalink to this definition"></a></dt>
+<dd><p>verify the signature</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.Capsule_unsigned">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">Capsule_unsigned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cap_image_bdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfr_ver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Capsule_unsigned" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>PFR Capsule verification class</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Capsule_unsigned.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Capsule_unsigned.validate" title="Permalink to this definition"></a></dt>
+<dd><p>verify the signature</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.ConfigDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">ConfigDict</span></span><a class="headerlink" href="#verify.ConfigDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></p>
+<p>define an ordered dictionary</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.PFM_signed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">PFM_signed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signed_image_bdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfr_ver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_prv_pem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv_pem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFM_signed" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>verification class for PFR PFM signed image file or binary data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signed_image_bdata</strong> – signed pfm image file or binary data bytes</p></li>
+<li><p><strong>pfr_ver</strong> – PFR version 2.0 or 3.0</p></li>
+<li><p><strong>rk_prv_pem</strong> – root private key in PEM format</p></li>
+<li><p><strong>csk_prv_pem</strong> – csk private key in PEM format</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.PFM_signed.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFM_signed.validate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.PFR_BMC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">PFR_BMC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFR_BMC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>PFR BMC FW verification class</p>
+<blockquote>
+<div><p>if optional root key (either private or public) and csk private key are provided
+validate functino will validate the signature.
+If no key provided, it will skip signature validation.
+staging image need validate separately.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ifwi_image</strong> – PFR IFWI image.</p></li>
+<li><p><strong>rk_key</strong> – root key, either private or public key in PEM format, optional</p></li>
+<li><p><strong>csk_prv</strong> – CSK private key in PEM format, optional</p></li>
+<li><p><strong>logfile</strong> – logfile name, optional</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.PFR_BMC.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFR_BMC.validate" title="Permalink to this definition"></a></dt>
+<dd><p>verify PFR BMC image</p>
+<p>This function will search active and recovery PFM offset from PFR BMC image</p>
+<p>Validate items:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#. verify pfm spi region</span>
+<span class="c1">#. verify pfm hash data</span>
+<span class="c1">#. verify AFM capsule if included</span>
+<span class="c1">#. verify signature if key is provided</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.PFR_IFWI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">PFR_IFWI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ifwi_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFR_IFWI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>PFR IFWI verification class</p>
+<p>if optional root key (either private or public) and csk private key are provided
+validate functino will validate the signature.</p>
+<p>If no key provided, it will skip signature validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ifwi_image</strong> – PFR IFWI image.</p></li>
+<li><p><strong>rk_key</strong> – root key, either private or public key in PEM format, optional</p></li>
+<li><p><strong>csk_prv</strong> – CSK private key in PEM format, optional</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.PFR_IFWI.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.PFR_IFWI.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Verify PFR compliant IFWI image</p>
+<p>Validate items:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#. verify pfm spi region has no undefined gap</span>
+<span class="c1">#. verify pfm spi hash data matches with calculation</span>
+<span class="c1">#. verify public key hash in provisioned in BIOS</span>
+<span class="c1">#. verify block signed signature in capsule</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.Verify_AFM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">Verify_AFM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">afm_cap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csk_prv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_AFM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for AFM verification</p>
+<p>Decode AFM capsule to a json file, and also verify the format and signature
+if AFM TAG offset is 0x400, it is active AFM
+if AFM_TAG offset is 0x800, it is recover/staging capsule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>afm_cap</strong> – AFM active, or recovery/staging capsule, either binary data or binary file.</p></li>
+<li><p><strong>rk_key</strong> – root key, either private or public key. If external signing, root public key is used</p></li>
+<li><p><strong>csk_prv</strong> – CSK private key</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_AFM.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_AFM.validate" title="Permalink to this definition"></a></dt>
+<dd><p>verify AFM capsule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_AFM.validate_afm_device">
+<span class="sig-name descname"><span class="pre">validate_afm_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_AFM.validate_afm_device" title="Permalink to this definition"></a></dt>
+<dd><p>validate afm single device</p>
+<p>This validation only check format. It does not include measurement data and SPDM protocol</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_AFM.validate_afm_struct_header">
+<span class="sig-name descname"><span class="pre">validate_afm_struct_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_AFM.validate_afm_struct_header" title="Permalink to this definition"></a></dt>
+<dd><p>validate afm header</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.Verify_KCC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">Verify_KCC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kcc_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rk_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcc_cskid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_KCC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for PFR Key Calcellation Cerificate Capsule verification</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kcc_image</strong> – PFR KCC capsule image.</p></li>
+<li><p><strong>rk_key</strong> – root private key in PEM format</p></li>
+<li><p><strong>logfile</strong> – logfile name, optional</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_KCC.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_KCC.show" title="Permalink to this definition"></a></dt>
+<dd><p>show KCC</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_KCC.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_KCC.validate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_KCC.verify_payload_cskid">
+<span class="sig-name descname"><span class="pre">verify_payload_cskid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_KCC.verify_payload_cskid" title="Permalink to this definition"></a></dt>
+<dd><p>verify payload size and CSK ID</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="verify.Verify_PFM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">Verify_PFM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_bdata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_PFM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>verification class of unsigned PFM image file or binary data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_bdata</strong> – unsigned pfm image file or data bytes</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="verify.Verify_PFM.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#verify.Verify_PFM.validate" title="Permalink to this definition"></a></dt>
+<dd><p>validate PFM setting in unsigned pfm image (or binary data) against its active pfr image (or binary data)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="verify.main">
+<span class="sig-prename descclassname"><span class="pre">verify.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#verify.main" title="Permalink to this definition"></a></dt>
+<dd><p>verify PFR image or stgaing capsure</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="utility.html" class="btn btn-neutral float-left" title="utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="spdm.html" class="btn btn-neutral float-right" title="spdm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

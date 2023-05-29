@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bmc &mdash; intelprot  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cpld" href="cpld.html" />
+    <link rel="prev" title="Welcome to intelprot’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            intelprot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">bmc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-bmc-pfr-image">Build BMC PFR Image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-in-command-line">Build in Command line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-in-python-console-or-add-to-script">Build in Python console or add to script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.BMC_Build"><code class="docutils literal notranslate"><span class="pre">BMC_Build</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_Build.build_image"><code class="docutils literal notranslate"><span class="pre">BMC_Build.build_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_Build.set_manifest"><code class="docutils literal notranslate"><span class="pre">BMC_Build.set_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_Build.start_build"><code class="docutils literal notranslate"><span class="pre">BMC_Build.start_build()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_bmc_offset"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_bmc_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_deviceId_pubkey"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_deviceId_pubkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_fifo"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_fifo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_ifwi_offset"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_ifwi_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_mailbox"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_mailbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.read_root_keyhash"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.read_root_keyhash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.BMC_OOB_Mailbox.show"><code class="docutils literal notranslate"><span class="pre">BMC_OOB_Mailbox.show()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.PFR_BMC"><code class="docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_bkc"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_bkc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_build_num"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_build_num()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_oem"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_oem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_pfm_len"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_pfm_len()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_pfm_rev"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_pfm_rev()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.get_svn"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.get_svn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.load_cpld_recovery"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_cpld_recovery()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.load_manifest"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_manifest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.load_staging_image"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.load_staging_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.set_pfm_offset"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.set_pfm_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.set_prov_offset"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.set_prov_offset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.show"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.PFR_BMC.show_pfm"><code class="docutils literal notranslate"><span class="pre">PFR_BMC.show_pfm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.Redfish_Update"><code class="docutils literal notranslate"><span class="pre">Redfish_Update</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.check_redfish_logs"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.check_redfish_logs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.delete"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.get"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.login"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.logout"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.post"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.update"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Redfish_Update.watch_task"><code class="docutils literal notranslate"><span class="pre">Redfish_Update.watch_task()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.Updater"><code class="docutils literal notranslate"><span class="pre">Updater</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.check_redfish_logs"><code class="docutils literal notranslate"><span class="pre">Updater.check_redfish_logs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.delete"><code class="docutils literal notranslate"><span class="pre">Updater.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.get"><code class="docutils literal notranslate"><span class="pre">Updater.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.login"><code class="docutils literal notranslate"><span class="pre">Updater.login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.logout"><code class="docutils literal notranslate"><span class="pre">Updater.logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.post"><code class="docutils literal notranslate"><span class="pre">Updater.post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.update"><code class="docutils literal notranslate"><span class="pre">Updater.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.Updater.watch_task"><code class="docutils literal notranslate"><span class="pre">Updater.watch_task()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.load_afm_capsule"><code class="docutils literal notranslate"><span class="pre">load_afm_capsule()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bmc.pfr_bmc_image"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.pfr_bmc_image.build_pfm"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_pfm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.pfr_bmc_image.build_pfr_image"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_pfr_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.pfr_bmc_image.build_update_capsule"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_update_capsule()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.pfr_bmc_image.build_update_capsule_with_afm"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.build_update_capsule_with_afm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bmc.pfr_bmc_image.move_temp_file"><code class="docutils literal notranslate"><span class="pre">pfr_bmc_image.move_temp_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpld.html">cpld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ifwi.html">ifwi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capsule.html">capsule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keys.html">keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfm.html">pfm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utility.html">utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spdm.html">spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mctp_spdm.html">mctp_spdm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aardvark/smb_avark.html">aardvark.smb_avark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testprot.html">testprot</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">intelprot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">bmc</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/bmc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-bmc">
+<span id="bmc"></span><h1>bmc<a class="headerlink" href="#module-bmc" title="Permalink to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">platform<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linux, Windows</p>
+</dd>
+<dt class="field-even">synopsis<span class="colon">:</span></dt>
+<dd class="field-even"><p>It is used for pfr BMC image generation of PFM and Capsule based in image manifest json file.</p>
+</dd>
+</dl>
+<section id="build-bmc-pfr-image">
+<h2>Build BMC PFR Image<a class="headerlink" href="#build-bmc-pfr-image" title="Permalink to this heading"></a></h2>
+<p>Use -start_build and reference design name to generate template manifest and keys used in reference design.
+Then modify the manifest file and replace key file as yours. The build image will based on the json file.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please do not change the keyname in manifest json file.</p>
+</div>
+<section id="build-in-command-line">
+<h3>Build in Command line<a class="headerlink" href="#build-in-command-line" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>create and switch to work folder</p></li>
+<li><p>run and verify python (Windows) or python3 (Linux) is in your execution path</p></li>
+<li><p>run below commands, modify the reference manifest as your need.</p></li>
+</ol>
+<p>Execution in command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">bmc</span> <span class="o">-</span><span class="n">start_build</span> <span class="o">-</span><span class="n">r</span> <span class="o">&lt;</span><span class="n">refernence_platform</span><span class="o">&gt;</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">bmc</span> <span class="o">-</span><span class="n">m</span> <span class="o">&lt;</span><span class="n">manifest_json</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please do not change the manifest file keyname when modify the json file.</p>
+</div>
+<p>Example build eaglestream BMC PFR image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate reference manifest and keys to work folder</span>
+<span class="o">&gt;</span><span class="n">cd</span> <span class="n">C</span><span class="p">:</span>\<span class="n">shuang4</span>\<span class="n">Work</span>\<span class="n">temp</span>\<span class="n">testbmc</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">bmc</span> <span class="o">-</span><span class="n">start_build</span> <span class="o">-</span><span class="n">r</span> <span class="n">eaglestream</span>
+<span class="c1"># modify the json file and keys, include 128M BMC active &quot;mtd_firmware&quot;, run below command to create bmc pfr image</span>
+<span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">intelprot</span><span class="o">.</span><span class="n">bmc</span> <span class="o">-</span><span class="n">m</span> <span class="n">eaglestream</span><span class="o">/</span><span class="n">egs_pfr_bmc_manifest</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</section>
+<section id="build-in-python-console-or-add-to-script">
+<h3>Build in Python console or add to script<a class="headerlink" href="#build-in-python-console-or-add-to-script" title="Permalink to this heading"></a></h3>
+<p>Code block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;import os</span>
+<span class="go">&gt;&gt;&gt;os.chdir(&lt;work_folder_path&gt;)</span>
+<span class="go">&gt;&gt;&gt;from intelprot import bmc</span>
+<span class="go">&gt;&gt;&gt;mybmc = bmc.BMC_Build(&lt;reference platform name&gt;)</span>
+<span class="go">&gt;&gt;&gt;mybmc.start_build()  # only need for template manifest json file and keys</span>
+<span class="go"># after modify json file and keys to your files</span>
+<span class="go">&gt;&gt;&gt;mybmc.set_manifest(&lt;pfr_bmc_manifest&gt;)</span>
+<span class="go">&gt;&gt;&gt;mybmc.build_image()</span>
+</pre></div>
+</div>
+<p>example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;import os</span>
+<span class="go">&gt;&gt;&gt;os.chdir(r&#39;C:\shuang4\Work\temp\testbmc&#39;)</span>
+<span class="go">&gt;&gt;&gt;from intelprot import bmc</span>
+<span class="go">&gt;&gt;&gt;egsbmc=bmc.BMC_Build(&#39;eaglestream&#39;)</span>
+<span class="go">&gt;&gt;&gt;egsbmc.start_build()</span>
+<span class="go"># modify the manifest json file and replace key files</span>
+<span class="go">&gt;&gt;&gt;egsbmc.set_manifest(r&#39;eaglestram\egs_pfr_bmc_manifest.json&#39;)</span>
+<span class="go">&gt;&gt;&gt;egsbmc.build_image()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bmc.load_afm_capsule" title="bmc.load_afm_capsule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_afm_capsule</span></code></a>(bmc_pfr_image, afm_active, ...)</p></td>
+<td><p>load AFM capsule to PFR bmc image</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bmc.main" title="bmc.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(args)</p></td>
+<td><p>bmc module command line interface</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bmc.PFR_BMC" title="bmc.PFR_BMC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PFR_BMC</span></code></a>(fbin)</p></td>
+<td><p>class of pfr bmc 128MB binary image operation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bmc.Redfish_Update" title="bmc.Redfish_Update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Redfish_Update</span></code></a>(args)</p></td>
+<td><p>class for redfish out-of-band staging update</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bmc.pfr_bmc_image" title="bmc.pfr_bmc_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pfr_bmc_image</span></code></a>(manifest)</p></td>
+<td><p>class to build BMC pfr image including PFM, and capsule from its manifest json file</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.BMC_Build">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">BMC_Build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_Build" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>build PFR BMC image, this is a wrap class for commandline options</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_Build.build_image">
+<span class="sig-name descname"><span class="pre">build_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_Build.build_image" title="Permalink to this definition"></a></dt>
+<dd><p>build image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_Build.set_manifest">
+<span class="sig-name descname"><span class="pre">set_manifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_Build.set_manifest" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_Build.start_build">
+<span class="sig-name descname"><span class="pre">start_build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_Build.start_build" title="Permalink to this definition"></a></dt>
+<dd><p>Copy manifest json file and keys to a subdirectory inside work folder.
+subfolder is names as the reference platform
+User can modify the json file for customize needs
+The 128MB or 256MB mtd_image should be saved in the work folder</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">BMC_OOB_Mailbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'debuguser'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0penBmc1'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class of BMC OOB access to CPLD Mailbox</p>
+<p>After login as root in BMC console, type “i2cdump -y 4 0x38” to check if it returns valid values.</p>
+<dl class="simple">
+<dt>Console OOB command:</dt><dd><p>ipmitool raw 0x3e 0x84 0x0 0x7f 0  # read mailbox 0x0–0x7F, format: raw 0x3e 0x84 &lt;start_addr&gt; &lt;end_addr&gt; 0
+ipmitool raw 0x3e 0x84 0x08 48  1  # read root key hash
+ipmitool raw 0x3e 0x84 0x0C 12  1  # read IFWI offset 12 bytes
+ipmitool raw 0x3e 0x84 0x0D 12  1  # read BMC offset 12 bytes
+ipmitool raw 0x3e 0x84 0x13 96  1  # read deviceID public key 96 bytes</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_bmc_offset">
+<span class="sig-name descname"><span class="pre">read_bmc_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_bmc_offset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_deviceId_pubkey">
+<span class="sig-name descname"><span class="pre">read_deviceId_pubkey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_deviceId_pubkey" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_fifo">
+<span class="sig-name descname"><span class="pre">read_fifo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_fifo" title="Permalink to this definition"></a></dt>
+<dd><p>read fifo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_ifwi_offset">
+<span class="sig-name descname"><span class="pre">read_ifwi_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_ifwi_offset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_mailbox">
+<span class="sig-name descname"><span class="pre">read_mailbox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_mailbox" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.read_root_keyhash">
+<span class="sig-name descname"><span class="pre">read_root_keyhash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.read_root_keyhash" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.BMC_OOB_Mailbox.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.BMC_OOB_Mailbox.show" title="Permalink to this definition"></a></dt>
+<dd><p>display information</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.PFR_BMC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">PFR_BMC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fbin</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class of pfr bmc 128MB binary image operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fbin</strong> – pfr bmc binary image</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_bkc">
+<span class="sig-name descname"><span class="pre">get_bkc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_bkc" title="Permalink to this definition"></a></dt>
+<dd><p>return capsule BKC revision</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_build_num">
+<span class="sig-name descname"><span class="pre">get_build_num</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_build_num" title="Permalink to this definition"></a></dt>
+<dd><p>return capsule build number</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_oem">
+<span class="sig-name descname"><span class="pre">get_oem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_oem" title="Permalink to this definition"></a></dt>
+<dd><p>return capsule OEM bytes in hex string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_pfm_len">
+<span class="sig-name descname"><span class="pre">get_pfm_len</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_pfm_len" title="Permalink to this definition"></a></dt>
+<dd><p>get pfm length</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_pfm_rev">
+<span class="sig-name descname"><span class="pre">get_pfm_rev</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_pfm_rev" title="Permalink to this definition"></a></dt>
+<dd><p>return capsule PFM revision in (major, minor) format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.get_svn">
+<span class="sig-name descname"><span class="pre">get_svn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.get_svn" title="Permalink to this definition"></a></dt>
+<dd><p>return capsule SVN value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.load_cpld_recovery">
+<span class="sig-name descname"><span class="pre">load_cpld_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpld_capsule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frcv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.load_cpld_recovery" title="Permalink to this definition"></a></dt>
+<dd><p>load CPLD recovery image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cpld_capsule</strong> – CPLD recovery capsule image</p></li>
+<li><p><strong>frcv</strong> – output image = default is &lt;bmc_image&gt;_cpld_rcvy.bin (use default)</p></li>
+<li><p><strong>offset</strong> – CPLD recovery offset address, default is 0x7F00000 (if no change of CPLD code)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.load_manifest">
+<span class="sig-name descname"><span class="pre">load_manifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_bmc_manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.load_manifest" title="Permalink to this definition"></a></dt>
+<dd><p>load pfr bmc manifest json file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fname_bmc_manifest</strong> – file name of bmc image manifest json file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.load_staging_image">
+<span class="sig-name descname"><span class="pre">load_staging_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capsule_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fsta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.load_staging_image" title="Permalink to this definition"></a></dt>
+<dd><p>load capsule image to BMC flash staging area, default type is pch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>capsule_image</strong> – file name of signed update capsule image</p></li>
+<li><p><strong>type</strong> – type of signed capsule_image ‘pch’/’bmc’/’cpld’, default is ‘pch’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.set_pfm_offset">
+<span class="sig-name descname"><span class="pre">set_pfm_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act_pfm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.set_pfm_offset" title="Permalink to this definition"></a></dt>
+<dd><p>set bmc pfm offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>act_pfm</strong> – bmc pfm offset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.set_prov_offset">
+<span class="sig-name descname"><span class="pre">set_prov_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act_pfm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcv_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bmc_stag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pch_stag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpld_stag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.set_prov_offset" title="Permalink to this definition"></a></dt>
+<dd><p>set provision offsets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>act_pfm</strong> – active image pfm offset</p></li>
+<li><p><strong>rcv_offset</strong> – recover offset</p></li>
+<li><p><strong>bmc_stag</strong> – bmc staging offset</p></li>
+<li><p><strong>pch_stag</strong> – bmc staging offset</p></li>
+<li><p><strong>cpld_stag</strong> – cpld staging offset</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.show" title="Permalink to this definition"></a></dt>
+<dd><p>display update capsule information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.PFR_BMC.show_pfm">
+<span class="sig-name descname"><span class="pre">show_pfm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.PFR_BMC.show_pfm" title="Permalink to this definition"></a></dt>
+<dd><p>display pfm in the update capsule</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.Redfish_Update">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">Redfish_Update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for redfish out-of-band staging update</p>
+<p>This is the class to do BMC OOB update via staging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – argument namespace, from argsparse.Namespace()</p></li>
+<li><p><strong>bmc_ip</strong> – IP address of BMC</p></li>
+<li><p><strong>username</strong> – username of BMC user account</p></li>
+<li><p><strong>password</strong> – password of BMC user account</p></li>
+<li><p><strong>file</strong> – unzipped file name of binary image with full path</p></li>
+<li><p><strong>insecure</strong> – insecure, default False</p></li>
+<li><p><strong>timeout</strong> – time to wait for a response from the BMC, default is 60s</p></li>
+<li><p><strong>nowait</strong> – transfer the file and exit. Don’t wait for status</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.check_redfish_logs">
+<span class="sig-name descname"><span class="pre">check_redfish_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.check_redfish_logs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.delete" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.login">
+<span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.login" title="Permalink to this definition"></a></dt>
+<dd><p>log in user with password</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.logout">
+<span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.logout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Redfish_Update.watch_task">
+<span class="sig-name descname"><span class="pre">watch_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Redfish_Update.watch_task" title="Permalink to this definition"></a></dt>
+<dd><p>watch on-going task status</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>task_id</strong> – ID of the task</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.Updater">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">Updater</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.check_redfish_logs">
+<span class="sig-name descname"><span class="pre">check_redfish_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.check_redfish_logs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.delete" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.login">
+<span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.login" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.logout">
+<span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.logout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.Updater.watch_task">
+<span class="sig-name descname"><span class="pre">watch_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.Updater.watch_task" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bmc.load_afm_capsule">
+<span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">load_afm_capsule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bmc_pfr_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afm_active</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afm_recovery</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'egs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.load_afm_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>load AFM capsule to PFR bmc image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bmc_pfr_image</strong> – file name of pfr bmc image</p></li>
+<li><p><strong>afm_active</strong> – afm active capsule</p></li>
+<li><p><strong>afm_recovery</strong> – afm recovery capsule</p></li>
+<li><p><strong>plat</strong> – platform name bhs or egs</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="bmc.main">
+<span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.main" title="Permalink to this definition"></a></dt>
+<dd><p>bmc module command line interface</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bmc.</span></span><span class="sig-name descname"><span class="pre">pfr_bmc_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manifest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class to build BMC pfr image including PFM, and capsule from its manifest json file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>manifest</strong> – image manifest JSON file, include all required information. It is generated from reference json file</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image.build_pfm">
+<span class="sig-name descname"><span class="pre">build_pfm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image.build_pfm" title="Permalink to this definition"></a></dt>
+<dd><p>build PFM based on rules defined in manifest file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image.build_pfr_image">
+<span class="sig-name descname"><span class="pre">build_pfr_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image.build_pfr_image" title="Permalink to this definition"></a></dt>
+<dd><p>build bmc pfr image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image.build_update_capsule">
+<span class="sig-name descname"><span class="pre">build_update_capsule</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image.build_update_capsule" title="Permalink to this definition"></a></dt>
+<dd><p>build unsigned bmc update capsule using PBC algorithm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image.build_update_capsule_with_afm">
+<span class="sig-name descname"><span class="pre">build_update_capsule_with_afm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">afm_active</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afm_recovery</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image.build_update_capsule_with_afm" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>build signed update capsule with AFM active and afm recovery</dt><dd><p>output capsule is named as {pfr_bmc_image}_capsule_afm.bin</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>afm_active</strong> – AFM active capsule</p></li>
+<li><p><strong>afm_recovery</strong> – AFM recovery capsule</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bmc.pfr_bmc_image.move_temp_file">
+<span class="sig-name descname"><span class="pre">move_temp_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmc.pfr_bmc_image.move_temp_file" title="Permalink to this definition"></a></dt>
+<dd><p>Move output files and temporary files to Output and Temp subfolder.
+Create subfolder if not exists</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to intelprot’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cpld.html" class="btn btn-neutral float-right" title="cpld" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Intel Cooperaion.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

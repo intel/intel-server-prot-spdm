@@ -1,0 +1,39 @@
+ifwi
+====
+
+.. automodule:: ifwi
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      main
+
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Agent
+      IFWI
+   
+   
+
+   
+   
+   
+
+
+

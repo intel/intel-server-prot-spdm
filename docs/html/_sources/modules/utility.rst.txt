@@ -1,0 +1,40 @@
+utility
+=======
+
+.. automodule:: utility
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      bin_compare
+      bin_compare_bytes
+      bin_compare_region
+      bin_decomp
+      bin_hexdump
+      bin_search_bytes
+      bin_search_tag
+      get_hash256
+      get_hash384
+      insert_bytes
+      integrate_capsule
+      replace_bytes
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
