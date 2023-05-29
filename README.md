@@ -2,23 +2,20 @@
 
 ## Description
 
-**intel-server-prot-spdm** is a python package for Intel Server Platform Root of Trust (PRoT) 
-spdm development . It is used for image build, capsule generation and device attestation 
-for both Intel PFR based PRoT and non-Intel PFR based PRoT designs.
+**intelprot** is a python package for Intel Server Platform Root of Trust (PRoT) 
+spdm development. It is used for PRoT design of SPDM based device attestation. 
+This package is useful for both Intel PFR based PRoT and non-Intel PFR based PRoT system.
 
-The tool package includes scripts to build Intel® PFR compliant firmware, update
-capsule, Attestation Firmware Manifest generation for attestation using SPDM emulation. 
+The tool package includes scripts to build Intel PRoT (PFR) compliant firmware, update
+capsule, and attestation firmware manifest (AFM) generation for attestation using DMTF SPDM_Emu open source project. 
 
-This Python package is released to assist Intel® PFR project in Whitley, Idaville and Eaglestream server,
-and Bitch Stream plaforms. For Birch stream platform, it is useful for both Intel PFR based PRoT 
-and non-Intel PFR PRoT design.
+This Python package is released to assist multiple generations of Intel server platforms PRoT design for device attestation.
 
-This tool package also includes scripts that are needed for SPDM based
-device attestation using SMBus tool on Intel® Eaglestream platform with
+This package has been used for SPDM based device attestation using SMBus tool (Aardvark) on Intel Eaglestream reference platform with
 open source project [spdm-emu](https://github.com/DMTF/spdm-emu).
 
 Intel® Platform Firmware Resilience (Intel® PFR) is a hardware-based
-cybersecurity solution for platform firmware resilience. About Intel®
+cybersecurity solution for platform firmware resilience. It is Intel PRoT solution. About Intel®
 PFR: <https://www.intel.com/pfr>. Intel® PFR Whitley Max10 FPGA source code is [released in
 GitHub](https://github.com/intel/platform-firmware-resiliency%3E).
 
@@ -28,7 +25,6 @@ Modules included in this package:
 -   bmc
 -   capsule
 -   cpld
--   ifwi
 -   keys
 -   mctp_spdm
 -   pfm
@@ -51,17 +47,19 @@ pip install intelprot-x.x.x-py3-none-any.whl
 
 ## Requirements
 
-This package requires Python 3.6 or above version. Dependencies modules:
+This package requires Python 3.7 or above version. Dependencies modules:
 
-1.  python-ecdsa: pip install ecsda
-2.  crccheck: pip install crccheck
-3.  python-tabulate: pip install tabulate
+1.  ecdsa
+2.  crccheck
+3.  tabulate
 4.  ipmitool
+5.  ecdsa
+6.  requests
 
 ## Usage
 
-Modules inside package can be included in scripts, run standalone in
-Python console or command lines.
+Modules inside package can be imported in customer scripts, or run standalone in
+Python console or Command Prompt.
 
 ``` python
 >>>from intelprot import <module-name>
@@ -75,8 +73,8 @@ Modules that have command line interface include : **bmc, capsule, cpld,
 ifwi, sign, testprot, utility, verify**.
 
 Please report issue or send email to admin if you observe any issue or
-have new request that you want to assist your Intel PFR project. Author
-will update the related modules quickly.
+have new request that you want to assist your Intel PFR (PRoT) project. 
+Note that this package is still work in progress for Birch Stream paltform. It has beed used for Eagle Stream platform. 
 
 ## Documentation
 
@@ -84,7 +82,7 @@ The documentation is available at ../docs/html/index.html
 
 ## Copyright and License
 
-Copyright (c) 2022 Intel Corporation
+Copyright (c) 2023 Intel Corporation
 
 Licensed under the Apache License, Version 2.0 (the \"License\"); you
 may not use this file except in compliance with the License. You may
