@@ -6,22 +6,18 @@
 spdm development. It is used for PRoT design of SPDM based device attestation. 
 This package is useful for both Intel PFR based PRoT and non-Intel PFR based PRoT system.
 
-The tool package includes scripts to build Intel PRoT (PFR) compliant firmware, update
-capsule, and attestation firmware manifest (AFM) generation for attestation using DMTF SPDM_Emu open source project. 
-
-This Python package is released to assist multiple generations of Intel server platforms PRoT design for device attestation.
-
 This package has been used for SPDM based device attestation using SMBus tool (Aardvark) on Intel Eaglestream reference platform with
 open source project [spdm-emu](https://github.com/DMTF/spdm-emu).
 
 Intel® Platform Firmware Resilience (Intel® PFR) is a hardware-based
 cybersecurity solution for platform firmware resilience. It is Intel PRoT solution. About Intel®
-PFR: <https://www.intel.com/pfr>. Intel® PFR Whitley Max10 FPGA source code is [released in
-GitHub](https://github.com/intel/platform-firmware-resiliency%3E).
+PFR: <https://www.intel.com/pfr>.
+
+The tool package includes scripts to build Intel PRoT (PFR) compliant firmware and capsules for device attestation using DMTF SPDM_Emu open source project. 
 
 Modules included in this package:
 
--   aardvark (driver and api)
+-   aardvark (need install its driver/api)
 -   bmc
 -   capsule
 -   cpld
@@ -55,6 +51,7 @@ This package requires Python 3.7 or above version. Dependencies modules:
 4.  ipmitool
 5.  ecdsa
 6.  requests
+7.  aardvark_py
 
 ## Usage
 
