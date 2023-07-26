@@ -342,7 +342,7 @@ class Convert(object):
 
   def integer_to_bytes(self, n, length, endianness='little'):
     """ integer to bytes """
-    h = '%x' % n
+    h = '%02x'%int(n)
     s = codecs.decode(('0'*(len(h) % 2) + h).zfill(length*2),'hex')
     ba = bytearray(s)
     if endianness != 'big':
