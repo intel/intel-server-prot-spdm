@@ -90,7 +90,10 @@ AFM_SPI_TYPE   = 0x3        # AFM SPI_TYPE
 AFM_HEAD_FMT   = "<IBBH16sI11s"
 AFM_BODY       ='<HBBBHBBBHIHH20s512sIIBBH64s64sBBH64s'
 
-PC_TYPE_PFR_AFM = 0x6   # Block sign Block 0 PC Type for PFR AFM
+PC_TYPE_PFR_AFM     = 0x6 # Block sign Block 0 PC Type for PFR AFM, for total AFM
+PC_TYPE_PER_DEV_AFM = 0x8 # per device AFM PC Type in Block 0
+PC_TYPE_ADD_DEV_AFM = 0xa # add on device afm
+
 RSVD_FF         = b'\xFF'  # reserved byte 0xff
 RSVD_00         = b'\x00'  # reserved byte 0x00
 
@@ -495,7 +498,7 @@ class AFM(object):
       os.remove(i)
 
 BHS_AFM_HEAD_ADDR_FORMAT = "<BBH16s4s8sH14sII"
-# format data, '--' read from manifest
+# format data, '--' means read from manifest json file
 BHS_AFM_CAP_STUCT = ( \
   ("afm_tag", 4, AFM_CAP_TAG), \
   ("svn", 1, '--'), \
@@ -506,7 +509,7 @@ BHS_AFM_CAP_STUCT = ( \
   ("afm_body", '--', '--'), \
   ("padding", '--', '--') \
 )
-
+"""
 BHS_AFM_HEAD_ADDR_FORMAT = "<BBH16sI8sH14sII"
 BHS_AFM_HEAD_ADDR_STRUCT = ( \
   ("afm_spi_type",            1,  0x3), \
@@ -520,7 +523,8 @@ BHS_AFM_HEAD_ADDR_STRUCT = ( \
   ("afm_length",              4,  '--'), \
   ("afm_addr",                4,  '--') \
 )
-
+"""
+"""
 BHS_AFM_PER_DEVICE_FORMAT = "<16sI8sH16sBBBHBBBHIHH20s48s48s416sII"
 BHS_AFM_PER_DEVICE_STRUCT = ( \
   ("uuid",                    16,  '--'), \
@@ -545,15 +549,16 @@ BHS_AFM_PER_DEVICE_STRUCT = ( \
   ("rsvd",                    416, RSVD_00*416), \
   ("public_key_exponent",     4, "--"), \
   ("total_number_of_measurement", 4, "--") )
-
+"""
+"""
 BHS_AFM_PER_DEVICE_MEAS_FORMAT = "<BBH"
 BHS_AFM_PER_DEVICE_MEAS_STRUCT = ( \
   ("number_of_possible_measurement", 1, '--'), \
   ("value_type", 1, "--"), \
   ("size", 2, "--") )
+"""
 
-
-class AFM_BHS(object):
+class AFM_BHS_s1(object):
   """
     class for Birch Stream AFM build
 
@@ -782,6 +787,389 @@ class AFM_BHS(object):
     for i in self.lst_signed_afm_dev:
       os.remove(i)
 
+
+BHS_AFM_HEAD_ADDR_FORMAT = "<BBH16sI8sH14sII"
+BHS_AFM_HEAD_ADDR_STRUCT = ( \
+  ("afm_spi_type",            1,  0x5), \
+  ("device_addr",             1,  '--'), \
+  ("rsvd",                    2,  0xFFFF), \
+  ("uuid",                    16, '--'), \
+  ("device_platform_id",      4,  '--'), \
+  ("device_platform_model",   8,  '--'), \
+  ("device_platform_version", 2,  '--'), \
+  ("rsvd",                    14, RSVD_FF*14), \
+  ("afm_length",              4,  '--'), \
+  ("afm_addr",                4,  '--') \
+)
+
+BHS_AFM_PER_DEVICE_FORMAT = "<16sI8sH16sBBBHBBBHIHH18sH48s48sIHH"
+BHS_AFM_PER_DEVICE_STRUCT = ( \
+  ("uuid",                    16, '--'), \
+  ("device_platform_id",      4,  '--'), \
+  ("device_platform_model",   8,  '--'), \
+  ("device_platform_version", 2,  '--'), \
+  ("rsvd",                    16, RSVD_FF*16), \
+  ("bus_id",                  1, "--"), \
+  ("smbus_addr",              1,"--"), \
+  ("binding_spec",            1, "--"), \
+  ("binding_spec_version",    2,"--"), \
+  ("policy",                  1, "--"), \
+  ("svn",                     1, "--"), \
+  ("rsvd",                    1, 0xFF), \
+  ("afm_version",             2, "--"), \
+  ("public_key_curve_magic",  4, "--"), \
+  ("manufacture_string",      2, "--"), \
+  ("manufacture_id_model",    2, "--"), \
+  ("rsvd",                    18, RSVD_FF*18), \
+  ("size_of_public_key",      2, "--"), \
+  ("public_key_X",            48, "--"), \
+  ("public_key_Y",            48, "--"), \
+  ("public_key_exponent",     4, "--"), \
+  ("rsvd",                    2, 0xFFFF), \
+  ("size_of_certificate",     2, "--") )
+
+# certificate is added separately
+#  ("certificate",             "--", "--"), \
+
+BHS_AFM_PER_DEVICE_TOTAL_MEAS_FORMAT = "<B3s"
+BHS_AFM_PER_DEVICE_TOTAL_MEAS_STRUCT = ( \
+  ("total_number_of_measurement", 1, "--"), \
+  ("rsvd",                        3, RSVD_FF*3))
+
+BHS_AFM_PER_DEVICE_MEAS_FORMAT = "<B3sBBH"
+BHS_AFM_PER_DEVICE_MEAS_STRUCT = ( \
+  ("number_of_possible_measurement", 1, "--"), \
+  ("rsvd",                           3, RSVD_FF*3), \
+  ("meas_value_index",               1, "--"), \
+  ("meas_value_type",                1, "--"), \
+  ("meas_value_size",                2, "--"))
+
+# updated AFM_BHS class:
+# 11/20/23 Update: Total AFM PC Type is 6, per device AFM PC Type is 8, add-on device AFM PC Type is 0xa
+#-----------------------------
+class AFM_BHS(object):
+  """
+    class for Birch Stream AFM build
+
+  List of manifest json file and usage::
+
+  * bhs_afm_manifest_1.json -- single device AFM validation using SPDM-Emu
+
+  :param manifest: JSON file with AFM manifest.json. This file should be modified from bhs_afm_manifest.json reference
+
+  """
+  def __init__(self, manifest, csk_id = 0):
+    self.work_path = os.path.dirname(manifest)  # set manifest file path as work_path for afm
+    with open(manifest, 'r') as f:
+      self.manifest = json.load(f)
+    self.afm = None
+    self.lst_afm_dev = []           # list of single device afm image
+    self.lst_afm_addon_dev = []     # list of addon device afm image
+    self.pc_type = PC_TYPE_PFR_AFM  # PC Type for Total AFM  = 0x6
+    self.pc_type_per_dev = PC_TYPE_PER_DEV_AFM # PC Type for per device afm = 0x8
+    self.pc_type_add_dev = PC_TYPE_ADD_DEV_AFM # PC type for add on device = 0xa
+    self.csk_id  = csk_id           # default CSKID is 0
+    self.pfr_ver = 4                # PFR Version 4.0 is used for signing
+    self.svn   = int(self.manifest["svn"], 0)
+    self.revision = int(self.manifest["revision"], 0)
+    self.oem_data = bytes.fromhex(self.manifest["oem_data"].strip('0x'))
+    self.rk_prv   = self.manifest["root_private_key"]  # root key
+    self.csk_prv = self.manifest["csk_private_key"]    # csk
+    self.lst_dev = self.manifest["list_devices"]       # key name of devices in "afm_header" and "afm_data", must match
+    self.length  = 0x38*len(self.manifest["list_devices"]) # int(self.manifest["length"], 0)    # BHS AFM header size for one device is 56=0x38
+
+    self.afm_header_addr = os.path.join(self.work_path, "afm_header_addr.bin")   # this is included in PFM protection data
+    self.afm_struct = os.path.join(self.work_path, "afm_struct.bin")
+    self.afm_struct_signed = os.path.join(self.work_path, "afm_struct_signed.bin")
+    self.afm_image_presign = os.path.join(self.work_path, "afm_capsule_presigned.bin")
+    self.afm_image = os.path.join(self.work_path, "afm_active_capsule.bin")
+    self.afm_recovery_image = os.path.join(self.work_path, "afm_recovery_capsule.bin")
+    self.afm_staging_image  = os.path.join(self.work_path, "afm_staging_capsule.bin")
+
+  def set_signing_keys(self, root_prv_key, csk_prv_key):
+    """ set signing keys
+
+    :param root_prv_key: root private key in PEM format
+    :param csk_prv_key: CSK private key in PEM format
+
+    """
+    self.rk_prv  = root_prv_key
+    self.csk_prv = csk_prv_key
+
+  def set_csk_id(self, cskID):
+    """ set CSK ID
+
+    :param cskID: CSK ID number
+
+    """
+    self.csk_id = cskID
+
+  def pack_bytes_from_struct(self, def_format, lst_def_struct, dict_manifest):
+    """ pack bytes from struct and manifest dictionary
+
+    """
+    rtn_bytes = b'' # start empty bytes
+    lst_val = []
+    for lst in lst_def_struct:
+      # combine value integer or bytes
+      key, size, val = lst[0], int(lst[1]), lst[2]
+      print(key, val)
+      if (size > 4 and lst[2] == '--'):
+        if dict_manifest[key].startswith('0x'):
+          val = bytes.fromhex(dict_manifest[key][2:])
+        else:
+          val = bytes.fromhex(dict_manifest[key])
+        print("key, dict_manifest[key] = {}{}, val={}".format(key, dict_manifest[key], val))
+
+      if (size <= 4 and lst[2] == '--'):
+        print("--- key={}, val={}".format(key, dict_manifest[key]))
+        val = int(dict_manifest[key], 16)
+        print("val={}".format(val))
+
+      lst_val.append(val)
+
+    print("\ndef_format={}".format(def_format))
+    print("\nlst_val={}".format(lst_val))
+
+    rtn_bytes += struct.pack(def_format, *lst_val)
+    #print('rtnbytes.hex()'.format(rtn_bytes.hex()))
+    return rtn_bytes
+
+  def pack_device_measurement(self, dev_name):
+    """ pack per device measurement data """
+    total_meas = int(self.manifest['afm_data'][dev_name]["total_number_of_measurement"], 0)
+    afm_dev_meas = b''
+    # add total measurement size first
+    afm_dev_meas += self.pack_bytes_from_struct(BHS_AFM_PER_DEVICE_TOTAL_MEAS_FORMAT, BHS_AFM_PER_DEVICE_TOTAL_MEAS_STRUCT, self.manifest['afm_data'][dev_name])
+    # loop all index of measurement
+
+    for idx in range(0, total_meas):
+      afm_dev_meas += self.pack_bytes_from_struct(BHS_AFM_PER_DEVICE_MEAS_FORMAT, BHS_AFM_PER_DEVICE_MEAS_STRUCT, self.manifest['afm_data'][dev_name]["measurement"][idx])
+      idx_meas_hexstr = ''
+      lst_idx_meas_data = self.manifest['afm_data'][dev_name]["measurement"][idx]["measurement"]
+      idx_meas_hexstr =''.join(lst_idx_meas_data)
+      meas_size = int(self.manifest['afm_data'][dev_name]["measurement"][idx]["meas_value_size"], 0)
+      #print("\n**** idx={}, idx_meas_hexstr={} \n".format(idx, idx_meas_hexstr))
+      #print("\n**** len(idx_meas_hexstr)={}, meas_size = {}".format(len(idx_meas_hexstr), meas_size))
+      afm_dev_meas += struct.pack("%ds"%(meas_size), bytes.fromhex(idx_meas_hexstr))
+    #print('\n---- device measurements: {}\n'.format(afm_dev_meas.hex()))
+    return afm_dev_meas
+
+  def build_afm_single_device(self, dev_name):
+    """ build AFM for single device
+
+    :param dict_input: dictionary variable of input.
+       This is an internal function
+
+    BHS_AFM_PER_DEVICE_FORMAT
+    BHS_AFM_PER_DEVICE_STRUCT
+    """
+    #print("--- self.manifest['list_devices']={}".format(self.manifest["list_devices"]))
+    #self.lst_afm_dev = []
+    #for dev_name in self.manifest["list_devices"]:
+    afm_dev_part1, certificate_data, afm_dev_part2 = b'', b'', b''
+    fname = "afm_dev_" + dev_name + '.bin'
+    self.unsigned_afm_image = os.path.join(self.work_path, fname)
+    afm_dev_part1 = self.pack_bytes_from_struct(BHS_AFM_PER_DEVICE_FORMAT, BHS_AFM_PER_DEVICE_STRUCT, self.manifest['afm_data'][dev_name])
+    # add certifice based on certificate size
+    certificate_size = int(self.manifest['afm_data'][dev_name]['size_of_certificate'], 16)
+    if certificate_size > 0:
+      certificate_data = bytes.fromhex(self.manifest['afm_data'][dev_name]['certificate_content'].strip('0x'))
+    afm_dev_part1 += certificate_data
+    # part2 is all measurement data
+    afm_dev_part2 = self.pack_device_measurement(dev_name)
+
+    padsize= AFM_ALIGN_SIZE - AFM_SIGN_SIZE - len(afm_dev_part1 + afm_dev_part2)  # pad 0xff to 3K (add 1K blocksign) as 4K alignment
+    with open(self.unsigned_afm_image, 'wb') as f:
+      f.write(afm_dev_part1)
+      f.write(afm_dev_part2)
+      f.write(b'\xff'*padsize)
+
+      # append unsigned single device afm image file name to self.lst_afm_dev
+      #print("****append unsigned afm image---{}".format(self.unsigned_afm_image))
+      #self.lst_afm_dev.append(self.unsigned_afm_image)
+
+
+  def build_afm_add_on_device(self):
+    """ build add on device AFM using PC_Type 0xa ()
+       self.pc_type_add_dev = PC_TYPE_ADD_DEV_AFM # PC type for add on device = 0xa
+    """
+    try:
+      print("--- self.manifest['list_addon_devices']={}".format(self.manifest["list_addon_devices"]))
+    except KeyError:
+      print("-- No addon device in manifest, skip build addon device afm...")
+      return
+    for dev_name in self.manifest["list_addon_devices"]:
+      afm_dev_part1, certificate_data, afm_dev_part2 = b'', b'', b''
+      fname = "afm_dev_addon_" + dev_name + '.bin'
+      self.unsigned_afm_image = os.path.join(self.work_path, fname)
+      afm_dev_part1 = self.pack_bytes_from_struct(BHS_AFM_PER_DEVICE_FORMAT, BHS_AFM_PER_DEVICE_STRUCT, self.manifest['afm_data'][dev_name])
+      # add certifice based on certificate size
+      certificate_size = int(self.manifest['afm_data'][dev_name]['size_of_certificate'], 16)
+      if certificate_size > 0:
+        certificate_data = bytes.fromhex(self.manifest['afm_data'][dev_name]['certificate_content'].strip('0x'))
+      afm_dev_part1 += certificate_data
+      # part2 is all measurement data
+      afm_dev_part2 = self.pack_device_measurement(dev_name)
+
+      padsize= AFM_ALIGN_SIZE - AFM_SIGN_SIZE - len(afm_dev_part1 + afm_dev_part2)  # pad 0xff to 3K (add 1K blocksign) as 4K alignment
+      with open(self.unsigned_afm_image, 'wb') as f:
+        f.write(afm_dev_part1)
+        f.write(afm_dev_part2)
+        f.write(b'\xff'*padsize)
+
+      # append unsigned single device afm image file name to self.lst_afm_addon_dev
+      print("append unsigned afm image---{}".format(self.unsigned_afm_image))
+      self.lst_afm_addon_dev.append(self.unsigned_afm_image)
+
+    # sign addon-dev afm
+    self.lst_signed_afm_addon_dev = []
+    print("****-- self.lst_afm_addon_dev = {}\n".format(self.lst_afm_addon_dev))
+    for fname in self.lst_afm_addon_dev:
+      x = sign.Signing(fname, self.pc_type_add_dev, self.csk_id, self.rk_prv, self.csk_prv)   # change to addon device PC Type 0xa
+      fname_signed = os.path.splitext(fname)[0]+"_signed.bin"
+      x.set_signed_image(fname_signed)
+      x.sign()
+      self.lst_signed_afm_addon_dev.append(fname_signed)
+
+
+  def sign_afm_device(self):
+    """ signing single device AFM using two private keys """
+    self.lst_signed_afm_dev = []
+    print("****-- self.lst_afm_dev = {}\n".format(self.lst_afm_dev))
+    for fname in self.lst_afm_dev:
+      x = sign.Signing(fname, self.pc_type_per_dev, self.csk_id, self.rk_prv, self.csk_prv)   # change to per device PC Type
+      fname_signed = os.path.splitext(fname)[0]+"_signed.bin"
+      x.set_signed_image(fname_signed)
+      x.sign()
+      self.lst_signed_afm_dev.append(fname_signed)
+      #os.remove(fname)
+
+
+  def build_afm_struct(self):
+    """ build AFM structure """
+
+    afm_hd  = struct.pack("<IBBH", AFM_CAP_TAG, self.svn, 0xFF, self.revision)
+    afm_hd += self.oem_data
+    afm_hd += struct.pack("<I", self.length)
+
+    # loop all afm header/address definition
+    afm_body = b''
+    for dev_name in self.lst_dev:
+      #print("dev_name=", dev_name)
+      afm_body += self.pack_bytes_from_struct(BHS_AFM_HEAD_ADDR_FORMAT, BHS_AFM_HEAD_ADDR_STRUCT, self.manifest['afm_header'][dev_name] )
+
+    # save afm header spi address defintion as a file to include in PFM
+    with open(self.afm_header_addr, 'wb') as f:
+      f.write(afm_body)
+
+    afm_padding = bytes(b'\xff'*(AFM_ALIGN_SIZE - AFM_SIGN_SIZE -len(afm_hd + afm_body)))  # 1024 is 1K block sign size
+    with open(self.afm_struct, 'wb') as f:
+      f.write(afm_hd)
+      f.write(afm_body)
+      f.write(afm_padding)
+
+    # sign afm_structure_header
+    x = sign.Signing(self.afm_struct, self.pc_type, self.csk_id, self.rk_prv, self.csk_prv)
+    x.set_signed_image(self.afm_struct_signed)
+    x.sign()
+    #os.remove(self.afm_struct)
+
+
+  def build_afm(self):
+    """ build afm capsule """
+
+    self.build_afm_struct() # build afm struct
+
+    for dev_name in self.manifest["list_devices"]:
+      self.build_afm_single_device(dev_name)
+
+    self.lst_afm_dev = []
+    for dev_name in self.manifest["list_devices"]:
+      fname = "afm_dev_" + dev_name + '.bin'
+      self.unsigned_afm_image = os.path.join(self.work_path, fname)
+      self.lst_afm_dev.append(self.unsigned_afm_image)
+
+    self.sign_afm_device()
+
+    with open(self.afm_image, 'wb') as f:
+      with open(self.afm_struct_signed, 'rb') as f1:
+        f.write(f1.read())
+      print("****self.lst_signed_afm_dev={} \n".format(self.lst_signed_afm_dev))
+      for signed_dev_afm in self.lst_signed_afm_dev:
+        #print("**** write {} to self.afm_image *****".format(signed_dev_afm))
+        with open(signed_dev_afm, 'rb') as fdev:
+           f.write(fdev.read())
+      # padd total to 128KB
+      #f.seek(0,2)
+      #f.write(b'\xff'*(AFM_CAP_SIZE - f.tell()))
+
+    with open(self.afm_image_presign, 'wb') as f1, open(self.afm_image, 'rb') as f2:
+      f1.write(f2.read())
+
+    # create afm recovery/staging capsule
+    rec = sign.Signing(self.afm_image_presign, self.pc_type, self.csk_id, self.rk_prv, self.csk_prv)
+    rec.set_signed_image(self.afm_recovery_image)
+    rec.sign()
+
+    stg = sign.Signing(self.afm_image_presign, self.pc_type, self.csk_id, self.rk_prv, self.csk_prv)
+    stg.set_signed_image(self.afm_staging_image)
+    stg.sign()
+
+    # build afm inside pfm area
+    self.build_afm_in_pfm()
+
+    # clean immediate files:
+    #os.remove(self.afm_struct)
+    #os.remove(self.afm_struct_signed)
+    #os.remove(self.afm_image_presign)
+    #for i in self.lst_signed_afm_dev:
+    #  os.remove(i)
+    logger.info("**** Done -- build afm capsule! ***")
+    print("**** Done -- build afm capsule! ***")
+
+
+  def build_afm_in_pfm(self):
+    """ build afm devices' capsule in PFM area """
+    self.afm_in_pfm = 'afm_active_in_pfm.bin'
+    with open(self.afm_in_pfm, 'wb') as f:
+      for dev in self.lst_signed_afm_dev: #lst_afm_dev:
+        ss = os.stat(dev).st_size
+        padding_size = 128*1024-(ss%(128*1024))  # pad to 128K size here for processing
+        with open(dev, 'rb') as f1:
+          f.write(f1.read())
+          f.write(b'\xff'*padding_size)
+
+
+  def build_staging_afm(self):
+    """ build AFM staging capsule """
+    self.build_afm_struct()
+    for d in self.manifest['devices']:
+      self.build_afm_single_device(d)
+    self.sign_afm_device()
+
+    with open(self.afm_image_presign, 'wb') as f:
+      with open(self.afm_struct_signed, 'rb') as f1:
+        f.write(f1.read())
+      for signed_dev_afm in self.lst_signed_afm_dev:
+        with open(signed_dev_afm, 'rb') as fdev:
+           f.write(fdev.read())
+      # padd total to 127KB
+      f.seek(0,2)
+      print('pad_ff_size: 0x{:x}, f.tell() = 0x{:x}'.format((AFM_CAP_SIZE -AFM_SIGN_SIZE - f.tell()), f.tell()))
+      f.write(b'\xff'*(AFM_CAP_SIZE -AFM_SIGN_SIZE - f.tell()))
+
+    stg = sign.Signing(self.afm_image_presign, self.pc_type, self.csk_id, self.rk_prv, self.csk_prv)
+    stg.set_signed_image(self.afm_staging_image)
+    stg.sign()
+
+    # clean immediate files:
+    os.remove(self.afm_struct_signed)
+    os.remove(self.afm_image_presign)
+    for i in self.lst_signed_afm_dev:
+      os.remove(i)
+#--------------------------
+
 PBC_STRUCT_KEY = ('pbc_tag', 'pbc_ver', 'page_size', 'pattern_size', 'pattern', 'bmap_size', \
 'payload_len', 'pbc_rsvd', 'active_bmap', 'compress_bmap')
 PBC_TAG = 0x5F504243
@@ -940,8 +1328,8 @@ class IFWI_Capsule():
     self.payload_staddr= self.pbc_st_addr + self.pbc_head_size
     self.prov = ifwi.Agent(self.cap_image)
     self.prov.get_pfrs_value()
-    self.pfm_offset = int(self.prov._pfrs['pch_active'], 0)
-    self.rcv_offset = int(self.prov._pfrs['pch_recovery'], 0)
+    self.pfm_offset = int(self.prov._pfrs['ifwi_active'], 0)
+    self.rcv_offset = int(self.prov._pfrs['ifwi_recovery'], 0)
 
   def decompression(self):
     """ get decompressed image
@@ -1166,7 +1554,6 @@ class CPLD_Capsule(object):
     else:
       self.out_cap = os.path.splitext(self.org_cpld_capsule)[0]+"_cskid_{}.bin".format(self.csk_id)
 
-
   def get_cap_content(self):
     """ get protect content """
     with open(self.org_cpld_capsule, 'rb') as f:
@@ -1183,10 +1570,10 @@ class CPLD_Capsule(object):
     cpldcap.set_signed_image(self.out_cap)
     cpldcap.sign()
 
-
 # definition for CPLD FW capsule
-CFM_ALIGN_SIZE = 4*1024    # 4KB aligned for each device CFM
-CFM_PC_TYPE = 0x07         # CPLD online update (CPU/SCM/Debug CPLD) protect type
+CFM_ALIGN_SIZE = 4*1024     # 4KB aligned for each device CFM
+CFM_PC_TYPE    = 0x07       # CPLD online update (CPU/SCM/Debug CPLD) protect type
+CPLD_PFM_SPI_ADDR_TAG = 0x4 # CPLD FM definition type 0x4 – CPLD PFM SPI region address/offset definition
 
 class CFM(object):
   """ Class for CPLD firmware manifest capsule operation
@@ -1213,7 +1600,6 @@ class CFM(object):
 
   def calc_pfm_body(self):
     """ calculate pfm body addr definition manifest """
-    SPI_ADDR_TAG = 0x3
     BLOCK_SIZE, HEADER_SIZE = 1024, 4
     self.pfm_body = b''
     self.capsule_start = 0 #--use the offset address relative to 0x07c00000
@@ -1223,7 +1609,7 @@ class CFM(object):
       cpld_start = prev_start
       #print("cpld:{:20s}, cpld_len:0x{:08x}".format(k, cpld_len))
       cpld_len   = BLOCK_SIZE + HEADER_SIZE + os.path.getsize(self.manifest[k]['image_name'])
-      lst = [SPI_ADDR_TAG, int(self.manifest[k]['cpld_type'], 16), 0xff, cpld_len, cpld_start]
+      lst = [CPLD_PFM_SPI_ADDR_TAG, int(self.manifest[k]['cpld_type'], 16), 0xff, cpld_len, cpld_start]
       self.pfm_body += struct.pack('<BHBII', *lst)
       print("cpld:{:20s}, cpld_len: 0x{:08x}, prev_start: 0x{:08x}, start_addr:0x{:08x}".format(k, cpld_len, prev_start, cpld_start))
       prev_start  = cpld_start + math.ceil(cpld_len/CFM_ALIGN_SIZE)*CFM_ALIGN_SIZE
@@ -1241,7 +1627,6 @@ class CFM(object):
     pfmcap.set_signed_image('cfm_pfm_signed.bin')
     pfmcap.sign()
 
-
   def build_single_capsule(self, cpld_key):
     """ build and sign single capsule
     """
@@ -1250,7 +1635,11 @@ class CFM(object):
     lst = [int(d[k], 16) for k in lst_key]
     image_len = os.path.getsize(d['image_name'])
     capsule_head = struct.pack('<IBBHHH16sI', *lst, bytes.fromhex(d["oem_data"].strip('0x')), image_len)
-    capsule_padsize = math.ceil((len(capsule_head)+image_len)/CFM_ALIGN_SIZE)*CFM_ALIGN_SIZE - (len(capsule_head)+image_len) - BLOCK_SIGN_SIZE
+    total_s = (len(capsule_head) + image_len) + BLOCK_SIGN_SIZE
+    capsule_padsize = math.ceil((total_s)/CFM_ALIGN_SIZE)*CFM_ALIGN_SIZE - total_s
+    print('--   image_len: {}, len_cap_head:{}, total_s = {}'.format(image_len, len(capsule_head), total_s))
+    print('**** image_name={}, -- capsule_padsize:={}'.format(d['image_name'], capsule_padsize))
+
     capsule_unsigned = os.path.splitext(d['image_name'])[0]+'_unsigned.bin'
     capsule_signed   = os.path.splitext(d['image_name'])[0]+'_signed.bin'
     with open(capsule_unsigned, 'wb') as f, open(d['image_name'], 'rb') as f1:
@@ -1262,7 +1651,6 @@ class CFM(object):
     cpldcap.set_signed_image(capsule_signed)
     cpldcap.sign()
     self.lst_temp_files += [capsule_unsigned, capsule_signed]
-
 
   def build_cfm_capsule(self, image_name=None):
     """ build cpld update capsule """
@@ -1334,6 +1722,10 @@ def main(args):
   afmcap.add_argument('-b', '--bmc_image',  metavar="[bmc_image]",  dest='bmc_image', help='bmc pfr image to add afm')
   afmcap.add_argument('-p', '--platform',   metavar="[platform]", dest='platform', default='bhs', help="platform - either 'egs' or 'bhs'")
 
+  afmcap1 = subparser.add_parser('afm_addon')
+  afmcap1.add_argument('-a', '--afm_manifest',  metavar="[AFM manifest]",  dest='afm_m', help='afm manifest json file')
+  afmcap1.add_argument('-p', '--platform',   metavar="[platform]", dest='platform', default='bhs', help="platform - either 'bhs' or 'oks'")
+
   decomm = subparser.add_parser('decomm')
   decomm.add_argument('-rk',  '--root_prv', metavar="[root private key]", dest='rk_prv',  help='Root Private Key in PEM format')
   decomm.add_argument('-csk', '--csk_prv',  metavar="[CSK private key]",  dest='csk_prv', help='CSK Private Key in PEM format')
@@ -1392,20 +1784,19 @@ def main(args):
       elif (args.platform == 'bhs' or args.platform == 'birchstream' or args.platform == 'birch stream'):
         myafm=AFM_BHS(args.afm_m)
         myafm.build_afm()
+        myafm.build_afm_add_on_device()
 
     if (args.afm_m != None) and (args.bmc_image != None):
       print("-- build new BMC image with afm integrated and also build afm staging capsule for {}".format(args.platform) )
       if(args.platform == 'egs'):
         myafm=AFM(args.afm_m)
         myafm.build_afm()
+        from intelprot import bmc
+        bmc.load_afm_capsule(args.bmc_image, myafm.afm_image, myafm.afm_recovery_image, args.platform)
       elif (args.platform == 'bhs'):
         myafm=AFM_BHS(args.afm_m)
         myafm.build_afm()
 
-      from intelprot import bmc
-      bmc.load_afm_capsule(args.bmc_image, myafm.afm_image, myafm.afm_recovery_image, args.platform)
-
-      #print(args)
   if args.capsule == 'decomm':
     print(args)
     obj1 = Decommission(csk_id=args.csk_id, rk_prv=args.rk_prv, csk_prv=args.csk_prv, fdir=None)
