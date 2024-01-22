@@ -46,6 +46,7 @@ B1_CSK_SIZE   = 232
 
 DECOMM_PCTYPE  = 0x200
 
+# Added afm_perdev, and afm_adddev pc_type as 0x8 and 0xa. CSK permission is same for all kinds of afm.
 _dict_PC_TYPE_CSK_PERMISSION = \
   {"cpld capsule": (0x0, 0x10), \
     "pch pfm":     (0x1, 0x01), \
@@ -53,6 +54,8 @@ _dict_PC_TYPE_CSK_PERMISSION = \
     "bmc pfm":     (0x3, 0x04), \
     "bmc capsule": (0x4, 0x08), \
     "afm":         (0x6, 0x20), \
+    "afm_perdev":  (0x8, 0x20), \
+    "afm_adddev":  (0xa, 0x20), \
     "seamless":    (0x5, 0x02), \
     "cfm":         (0x7, 0x40)  # this is for CPLD FW online update capsule, it is named as CFM capsule
     }
@@ -156,7 +159,7 @@ class Signing(object):
     with open(self.image_unsigned, 'rb') as f:
       bdata  = f.read()
       bdata += bytes(b'\xff'*padlen)
-    self.hash256= hashlib.sha256(bdata).hexdigest()
+    self.hash256= 'ff'*32 #hashlib.sha256(bdata).hexdigest() # BMC mtd-util expect sha256 have all 0xff
     self.hash384= hashlib.sha384(bdata).hexdigest()
     # 'b0_pclen', 'b0_pctyp', 'b0_rsvd', 'b0_hash256', 'b0_hash384',
     self.blk_dict['b0_pclen']   = struct.pack('<I', pclen)
@@ -177,6 +180,7 @@ class Signing(object):
       self.csksign_data += self.blk_dict[k]
     self.blk_dict['b1c_sigR'], self.blk_dict['b1c_sigS'] = keys.get_RS_signdata(self.rk_prv, self.csksign_data)
 
+    #print("-- R={}, S={}".format(self.blk_dict['b1c_sigR'].hex(), self.blk_dict['b1c_sigS'].hex()))
     #print("self.csksign_data.hex = {}".format(self.csksign_data.hex()))
     #print("--hash384: ", hashlib.sha384(self.csksign_data).hexdigest())
 
