@@ -21,6 +21,7 @@ from __future__ import division
 
 import os, sys, binascii, struct, hashlib, re, random
 
+import ecdsa
 from ecdsa.curves import NIST384p, NIST256p
 from ecdsa import SigningKey, VerifyingKey
 from ecdsa.util import sigencode_der, sigdecode_der
@@ -64,7 +65,7 @@ class PrivateKey(object):
     with open(self.key_pem, 'rt') as f:
       self.sk=SigningKey.from_pem(f.read(), hashfunc)
     self.curve = self.sk.curve.name
-    self.pfr_ver = 3 if self.curve is 'NIST384p' else 2
+    self.pfr_ver = 3 if self.curve == 'NIST384p' else 2
     self.vk = self.sk.get_verifying_key()
     self.get_hashbuffer()
     return self
@@ -84,7 +85,7 @@ class PrivateKey(object):
     prvkey_value = int(prvkey_hex, 16)
     self.sk = SigningKey.from_secret_exponent(prvkey_value, NIST384p, hashlib.sha384)
     self.curve = self.sk.curve.name
-    self.pfr_ver = 3 if self.curve is 'NIST384p' else 2
+    self.pfr_ver = 3 if self.curve == 'NIST384p' else 2
     self.vk = self.sk.get_verifying_key()
     self.get_hashbuffer()
     return self
@@ -189,7 +190,7 @@ class PublicKey(object):
     with open(self.key_pem, 'rt') as f:
       self.vk=VerifyingKey.from_pem(f.read())
     self.curve = self.vk.curve.name
-    self.pfr_ver = 3 if self.curve is 'NIST384p' else 2
+    self.pfr_ver = 3 if self.curve == 'NIST384p' else 2
     self.get_hashbuffer()
     return self
 
@@ -248,7 +249,7 @@ class PublicKey(object):
     self.vk = VerifyingKey.from_string(bytearray.fromhex(comp_str), curve=NIST384p)
     #print(vk.to_string("uncompressed").hex())
     self.curve = self.vk.curve.name
-    self.pfr_ver = 3 if self.curve is 'NIST384p' else 2
+    self.pfr_ver = 3 if self.curve == 'NIST384p' else 2
     self.get_hashbuffer()
     return self
 
@@ -293,9 +294,9 @@ def get_rk_hashbuffer(rk_key):
   :param rk_key: root key in pem format, wither private or public key
 
   """
-  if get_eckey_type(rk_key) is 'private':
+  if get_eckey_type(rk_key) == 'private':
     rk = PrivateKey().read_from_pem(rk_key)
-  if get_eckey_type(rk_key) is 'public':
+  if get_eckey_type(rk_key) == 'public':
     rk = PublicKey().read_from_pem(rk_key)
   return rk.hashbuffer
 
@@ -387,16 +388,21 @@ def signature_RS(signature):
 
   :param signature: binary data of a signature
   :return: (R, S)
-  :rtype: hex string
+  :rtype: hex string without 0x
 
   """
-  if len(signature) == 96:
+  #print("signature_RS: len(signature)={}".format(len(signature)))
+  if signature[0] == 0x30 and (signature[1] > 96):
     G = NIST384p.generator
-  elif len(signature) == 64:
+    n_byte = 48
+  elif signature[0] == 0x30 and (signature[1] > 64):
     G = NIST256p.generator
+    n_byte = 32
   order = G.order()
   (r, s) = ecdsa.util.sigdecode_der(signature, order)
-  (R,S) = hex(r), hex(s)
+  (R,S) = '{0:0{1}x}'.format(r, 2*n_byte), '{0:0{1}x}'.format(s, 2*n_byte)
+  print('R={} \nS={}'.format(R, S))
+  return (bytes.fromhex(R), bytes.fromhex(S))
 
 
 def sign_data(pvt_key_pem, data):
@@ -443,24 +449,14 @@ def get_RS_signdata(pvt_key_pem, data):
     sk = SigningKey.from_pem(f.read(), hashfunc)
 
   signature = sk.sign_deterministic(data, hashfunc, sigencode=sigencode_der)
-  print('signature:', signature.hex(), 'length:', len(signature.hex()))
-
-  len_r=signature[3]
-  print('len_r: ', len_r, 'signature[4]: ', signature[4])
-  if (len_r == rs_size+1) and (signature[4] == 0x00):
-    R = signature[5:5+rs_size]
-  else:
-    R = signature[4:4+rs_size]
-  len_s=signature[len_r+5]
-  if (len_s == rs_size+1) and (signature[len_r+6] == 0x00):
-    S = signature[(len_r+7):(len_r+7+rs_size)]
-  else:
-    S = signature[(len_r+6):(len_r+6+rs_size)]
-  if int(pfr_version) == 2:
-    R += bytes(b'\x00'*16)
-    S += bytes(b'\x00'*16)
-  print("R : ", R.hex())
-  print("S : ", S.hex())
+  len_r, len_s = signature[3], signature[3+signature[3]+2]
+  if (len_r != 0x30) or (len_s != 0x30):
+    print('-- signature:', signature.hex(), 'length:', len(signature.hex()))
+    print("-- len_r:{} len_s:{}".format(len_r, len_s))
+  #print('-- signature:', signature.hex(), 'length:', len(signature.hex()))
+  #print("len_signature={}".format(len(signature)))
+  #print("-- R, S = {}".format(signature_RS(signature)))
+  (R, S) = signature_RS(signature)
   return (R, S)
 
 
@@ -488,9 +484,9 @@ def verify_signature_from_prvkey(prv_key_pem, R, S, data):
   vk = sk.get_verifying_key()
   R, S = R[0:rs_size], S[0:rs_size]
   r, s = int.from_bytes(R, byteorder='big'), int.from_bytes(S, byteorder='big')
-  #print("r, s =", r, s)
+  print("r, s =", r, s)
   signature = sigencode_der(r, s, random.randrange(100, 200))
-  #print("-- signature :", signature.hex())
+  print("-- signature :", signature.hex())
   try:
     assert vk.verify(signature, data, hashfunc, sigdecode=sigdecode_der)
   except:
@@ -692,7 +688,7 @@ def main(args):
   if args.protkey == 'parse-keys':
     print("-- analysis PRoT key")
     if args.pub_key and (not args.prv_key):
-      if get_eckey_type(args.pub_key) is 'public':
+      if get_eckey_type(args.pub_key) == 'public':
         keyobj=PublicKey().read_from_pem(args.pub_key)
         keyobj.get_hashbuffer()
         keyobj.get_pubkey_xy()
@@ -700,7 +696,7 @@ def main(args):
       else:
         print("-- Error: wrong key type")
     if args.prv_key and (not args.pub_key):
-      if get_eckey_type(args.prv_key) is 'private':
+      if get_eckey_type(args.prv_key) == 'private':
         keyobj=PrivateKey().read_from_pem(args.prv_key)
         keyobj.get_hashbuffer()
         keyobj.get_pubkey_xy()
