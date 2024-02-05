@@ -353,7 +353,7 @@ class Run_SPDM_Test(object):
       # Create a TCP/IP socket
       self.sock_req = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-      dir = self.env['spdm_emu_dir']  # share same directory for both cases
+      dir = self.env['spdm_emu_requester_dir']  # share same directory for both cases
       if self.res == 'spdm-emu':
         req_cmdline= self.env['cmd_spdm_requester_emu'] # cmd for spdm-emu as spdm.responder
       if self.res == 'prot':
@@ -390,7 +390,7 @@ class Run_SPDM_Test(object):
       logger.info('-- run spdm-emu as responder')
 
       res_cmdline= self.env['cmd_spdm_responder_emu']
-      dir = self.env['spdm_emu_dir']
+      dir = self.env['spdm_emu_responder_dir']
       self.res_rc = subprocess.run("start cmd /K " + res_cmdline, cwd = dir, shell=True)
       time.sleep(1)
       # Create a TCP/IP socket

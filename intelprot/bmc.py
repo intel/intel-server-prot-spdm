@@ -63,8 +63,6 @@
     >>>egsbmc.set_manifest(r'eaglestram\egs_pfr_bmc_manifest.json')
     >>>egsbmc.build_image()
 
-
-
 """
 import binascii, struct, codecs, base64, hashlib, sys, os, shutil
 
@@ -275,7 +273,6 @@ class PFR_BMC(object):
     return self.oem.hex()
 
 
-
 class pfr_bmc_image(object):
   """ class to build BMC pfr image including PFM, and capsule from its manifest json file
 
@@ -304,13 +301,13 @@ class pfr_bmc_image(object):
     for d in self.dict_i2c_rules:
       d['address'] = int(d['address'], 16)
       d['cmd_bitmap'] = bytearray(PFM_I2C_BMAP_SIZE)
-      for c in d['cmd-whitelist']:
+      for c in d['cmd-allowlist']:
         if c == "all":
           for i in range(PFM_I2C_BMAP_SIZE):
             d['cmd_bitmap'][i] = 0xff
             break
         else:
-          idx = int(c,16) // 8 # index in the 32 bytes of white list i2c cmds
+          idx = int(c,16) // 8 # index in the 32 bytes of allow list i2c cmds
           bit = int(c,16) % 8 # bit position to set
           d['cmd_bitmap'][idx] |= (1 << bit)
 
@@ -343,6 +340,9 @@ class pfr_bmc_image(object):
     # calculate and add hash_data
     self.pfm_header = b''
     self.pfm_size = 0
+
+    print(self.dict_build_image)
+
     self.pfm_header += struct.pack('<IBBBB4sI12s', PFM_TAG, self.dict_build_image['svn'], self.dict_build_image['bkc_version'], \
                       self.dict_build_image['build_major'], self.dict_build_image['build_minor'], \
                       b'\xff'*4, self.dict_build_image['build_num'], b'\xff'*12)
@@ -535,15 +535,222 @@ class pfr_bmc_image(object):
       os.remove(f)
 
 
-  def build_update_capsule_with_afm(self, afm_active, afm_recovery):
-    """ build signed update capsule with AFM active and afm recovery
-        output capsule is named as {pfr_bmc_image}_capsule_afm.bin
 
-    :param afm_active: AFM active capsule
-    :param afm_recovery: AFM recovery capsule
+# reference design namme and pfr bmc manifest file
+_DICT_REF_MANIFEST = {
+  'whitley'    : 'whitley_pfr_bmc_manifest.json',
+  'idaville'   : 'idaville_pfr_bmc_manifest.json',
+  'eaglestream': 'egs_pfr_bmc_manifest.json',
+  'birchstream': 'bhs_pfr_bmc_manifest.json',
+}
+
+_list_reference_project = ['idaville', 'whitley', 'eaglestream', 'egs', 'birchstream', 'bhs']
+
+
+class BMC_Build(object):
+  """ build PFR BMC image, this is a wrap class for commandline options
+
+  """
+  def __init__(self, reference_platform):
+    self.reference = reference_platform
+    self.dict_manifest = _DICT_REF_MANIFEST
+
+  def start_build(self):
+    """ Copy manifest json file and keys to a subdirectory inside work folder.
+        subfolder is names as the reference platform
+        User can modify the json file for customize needs
+        The 128MB or 256MB mtd_image should be saved in the work folder
+    """
+    refplat = self.reference
+    if refplat not in _list_reference_project:
+      logger.error("-- wrong reference name!")
+      return
+    refjson = self.dict_manifest[refplat]
+    print("-- self.reference = {}".format(self.reference))
+    pathlib.Path(os.path.join(os.getcwd(), refplat)).mkdir(parents=True, exist_ok=True)
+    lst_keys = ('key_root_prv.pem', 'key_csk_prv.pem')
+    for f in lst_keys:
+      src_f = os.path.join(os.path.dirname(__file__), 'keys', refplat, f)
+      dst_f = os.path.join(os.getcwd(), refplat, f)
+      shutil.copyfile(src_f, dst_f)
+    src_json_file = os.path.join(os.path.dirname(__file__), 'json', 'bmc', refjson)
+    dst_json_file = os.path.join(os.getcwd(), refplat, refjson)
+    shutil.copyfile(src_json_file, dst_json_file)
+
+  def set_manifest(self, manifest):
+    print('-- set manifest')
+    self.manifest_f = manifest #os.path.join(os.getcwd(), self.reference, self.dict_manifest[self.reference])
+
+  def build_image(self):
+    """ build image """
+    print("-- self.reference = {}".format(self.reference))
+
+    if self.reference.startswith('bhs') or self.reference.startswith('birch'):
+      # build image for BHS platform
+      mybmc=BHS_PFR_BMC_AFM(self.manifest_f)
+      mybmc.build_pfr_image()
+    else:
+      mybmc = pfr_bmc_image(self.manifest_f)
+      mybmc.build_pfr_image()
+
+
+class BHS_PFR_BMC_AFM(object):
+  """
+    class to add AFM and update PFM with AFM
+
+  """
+  def __init__(self, manifest):
+    with open(manifest, 'r') as fd:
+      self.manifest    = json.load(fd)
+
+    self.afm_header  = self.manifest["build_image"]["afm_header"]
+    self.afm_active_capsule  = self.manifest["build_image"]["afm_active_capsule"]
+
+    self.dict_build_image = self.manifest['build_image']
+    self.dict_spi_parts   = self.manifest['image-parts']
+    self.dict_i2c_rules   = self.manifest['i2c-rules']
+
+    for k in ['csk_id', 'build_major', 'build_minor', 'build_num', 'svn', 'bkc_version']:
+      self.dict_build_image[k] = int(self.dict_build_image[k], 16)
+
+    self.pfr_bmc_image_size = 0
+    for d in self.dict_spi_parts:
+      d['offset'] = int(d['offset'], 16)
+      d['size'] = int(d['size'], 16)
+      if d['offset'] > self.pfr_bmc_image_size:
+        self.pfr_bmc_image_size = d['offset'] + d['size']
+    print('self.pfr_bmc_image_size = 0x{:08x}'.format(self.pfr_bmc_image_size))
+
+    for d in self.dict_i2c_rules:
+      d['address'] = int(d['address'], 16)
+      d['cmd_bitmap'] = bytearray(PFM_I2C_BMAP_SIZE)
+      for c in d['cmd-allowlist']:
+        if c == "all":
+          for i in range(PFM_I2C_BMAP_SIZE):
+            d['cmd_bitmap'][i] = 0xff
+            break
+        else:
+          idx = int(c,16) // 8 # index in the 32 bytes of allow list i2c cmds
+          bit = int(c,16) % 8 # bit position to set
+          d['cmd_bitmap'][idx] |= (1 << bit)
+
+    self.platform_name = self.manifest['build_image']['platform_name']
+    self.firmware_file = self.manifest['build_image']['mtd_firmware']
+    #self.csk_prv = self.manifest['build_image']['csk_private_key']
+    #self.rk_prv  = self.manifest['build_image']['root_private_key']
+    self.csk_prv = os.path.join(os.path.dirname(manifest), self.manifest['build_image']['csk_private_key'])
+    self.rk_prv  = os.path.join(os.path.dirname(manifest), self.manifest['build_image']['root_private_key'])
+
+    self.pfr_ver = 4
+
+    self.page_size = PAGE_SIZE
+    self.empty = b'\xff' * self.page_size
+
+    self.hash_func = hashlib.sha384    # for PFR 4.0, use sha384 algorithm
+
+    # hash, erase and compression bit maps for 128MB
+    self.pbc_erase_bitmap = bytearray(int(self.pfr_bmc_image_size/(PAGE_SIZE*8))) # (FlashSize)/(4K*8)
+    self.pbc_comp_bitmap  = bytearray(int(self.pfr_bmc_image_size/(PAGE_SIZE*8))) # (FlashSize)/(4K*8)
+    self.pbc_comp_payload = 0
+
+  def build_pfm(self):
+    """ build PFM based on rules defined in manifest file
 
     """
-    self.updatecap_afm = '{}_bmc_update_capsule_afm.bin'.format(self.platform_name)
+    # calculate and add hash_data
+    self.pfm_header = b''
+    self.pfm_region_size = 0
+
+    print(self.dict_build_image)
+
+    self.pfm_header += struct.pack('<IBBBB4sI12s', PFM_TAG, self.dict_build_image['svn'], self.dict_build_image['bkc_version'], \
+                      self.dict_build_image['build_major'], self.dict_build_image['build_minor'], \
+                      b'\xff'*4, self.dict_build_image['build_num'], b'\xff'*12)
+    self.pfm_body = b''
+    with open(self.firmware_file, 'rb') as f:
+      #print(self.dict_spi_parts)
+      for p in self.dict_spi_parts:
+        #print("name={}, p['offset']={}".format(p['name'], p['offset']))
+        start_addr = p['offset']
+        area_size  = p['size']
+        if p['name'] == 'pfm':
+          self.pfm_offset = p['offset']
+          self.pfm_region_size = p['size']
+        if p['pfm'] == 1:
+          if p['hash'] != 0: p['hash'] = 2
+          self.pfm_body += struct.pack('<BBH4sII', PFM_SPI, p['prot_mask'], p['hash'], b'\xff'*3 + b'\x00', start_addr, (start_addr+area_size))
+
+          if p['hash'] != 0:
+            f.seek(start_addr)
+            bdata = f.read(area_size)
+            p['hash_data'] = self.hash_func(bdata).hexdigest()
+            print(p['hash_data'])
+          else:
+            p['hash_data'] = ''
+          self.pfm_body += bytes.fromhex(p['hash_data'])
+
+    # add i2c-rules
+    bdata_i2c = b''
+    for d in self.dict_i2c_rules:
+       bdata_i2c += struct.pack('<B4sBBB32s', PFM_I2C, b'\xff'*4, d['bus-id'], d['rule-id'], d['address'], d['cmd_bitmap'])
+    #print(bdata_i2c.hex())
+    self.pfm_body += bdata_i2c
+
+    # add AFM header in pfm sign area
+    bdata_afm_header = b''
+    with open(self.afm_header, 'rb') as f:
+      bdata_afm_header = f.read()
+    self.afm_addr = struct.unpack('<I', bdata_afm_header[-4:])[0]
+
+    self.pfm_body += bdata_afm_header
+    self.pfm_size = PFM_DEF_SIZE + len(self.pfm_body)
+
+    # PFM should be 128bytes aligned, find the padding bytes
+    padding_bytes = 0
+    if (self.pfm_size % 128) != 0:
+      padding_bytes = 128 - (self.pfm_size % 128)
+    self.pfm_size += padding_bytes
+    self.pfm_header += struct.pack('<I', self.pfm_size)
+    self.pfm_unsigned = "{}-pfm.bin".format(self.platform_name)
+    with open(self.pfm_unsigned, "wb+") as f:
+      f.write(self.pfm_header)
+      f.write(self.pfm_body)
+      f.write(b'\xff' * padding_bytes)
+
+  def add_active_afm(self):
+    """ add active afm capsule to pfm area after signed pfm, also check AFM address is 4K aligned and 8K maximum"""
+    self.firmware_image_afm_in_pfm = os.path.splitext(self.firmware_file)[0]+'_afm.bin'
+    self.pfm_signed = "%s-pfm_signed.bin"%(self.platform_name)
+    self.pfm_region = "pfm_region_afm.bin"
+    pfm_signed_size = os.stat(self.pfm_signed).st_size
+    print("pfm_signed_size: {}, afm_addr: {}".format(hex(pfm_signed_size), hex(self.afm_addr)))
+    if pfm_signed_size < 0x1000:
+      padding_size_1 = self.afm_addr - self.pfm_offset - pfm_signed_size
+    else:
+      logger.critical('--Error: AFM address wrong')
+      STOP
+    read_afm_capsule_size = self.pfm_region_size - pfm_signed_size - padding_size_1
+    print('read_afm_capsule_size={}, pfm_region_size={}-pfm_signed_size={}-padding_size_1{}'.format(read_afm_capsule_size, self.pfm_region_size, pfm_signed_size, padding_size_1))
+    with open(self.pfm_signed, 'rb') as f1, open(self.afm_active_capsule, 'rb') as f2, open(self.pfm_region, 'wb') as f3:
+      f3.write(f1.read())
+      f3.write(b'\xff'*padding_size_1)
+      f3.write(f2.read(read_afm_capsule_size))
+    # update mtd file to build bmc recovery capsule
+    with open(self.firmware_file, 'rb') as f1, open(self.pfm_region, 'rb') as f2, \
+         open(self.firmware_image_afm_in_pfm, 'wb') as f3:
+      f3.write(f1.read(self.pfm_offset))
+      f3.write(f2.read())
+      f1.seek(self.pfm_offset + self.pfm_region_size)
+      f3.write(f1.read())
+
+  def build_update_capsule(self):
+    """ build unsigned bmc update capsule using PBC algorithm
+    """
+    # find skip ranges in page # in 'pfm' and 'rc-image' area
+    # The pages to be skipped for HASH and PBC
+    # Pages: 0x80 to 0x9f - starting PFM region until end of pfm
+    # Pages: 0x2a00 to 0x7FFF - starting RC-image until end of flash
+    # in reference design: EXCLUDE_PAGES =[[0x80, 0x9f],[0x2a00,0x7fff]]
     for d in self.dict_spi_parts:
       if d['name']=='pfm':
         idx = d['index']
@@ -553,29 +760,14 @@ class pfr_bmc_image(object):
         idx = d['index']
         rcimg_st = d['offset']
         rcimg_end= d['offset'] + d['size']
-      if d['name']== 'afm-active':
-        self.afm_active_st = d['offset']
-        self.afm_active_end =d['offset'] + d['size']
-      if d['name']== 'afm-recovery':
-        self.afm_recovery_st = d['offset']
-        self.afm_recovery_end = d['offset'] + d['size']
 
     self.pfr_pfm_offset = pfm_st
     self.pfr_capsule_offset = rcimg_st
-    exclude_pages =[[pfm_st//PAGE_SIZE, (pfm_end-PAGE_SIZE)//PAGE_SIZE],[rcimg_st//PAGE_SIZE, (rcimg_end-PAGE_SIZE)//PAGE_SIZE]]
+    exclude_pages =[[pfm_st//0x1000, (pfm_end-0x1000)//0x1000],[rcimg_st//0x1000, (rcimg_end-0x1000)//0x1000]]
     comp_payload = b''   # compression payload
-
-    self.build_pfm()
-    spfm = sign.Signing("{}-pfm.bin".format(self.platform_name), _PCTYPE_BMC_PFM, self.dict_build_image['csk_id'], self.rk_prv, self.csk_prv)
-    spfm.set_signed_image("%s-pfm_signed.bin"%(self.platform_name))
-    spfm.sign()
-
-    with open("%s-pfm_signed.bin"%(self.platform_name), 'rb') as f:
-      self.signed_pfm_bdata = f.read()
-
-
-    with open("%s-bmc_compressed_afm.bin" % self.platform_name, "wb+") as upd:
-      with open(self.firmware_file, "rb") as f:
+    with open("%s-bmc_compressed.bin" % self.platform_name, "wb+") as upd:
+      # use update pfm area mtd file, include afm in bmc recovery capsule
+      with open(self.firmware_image_afm_in_pfm, "rb") as f:
         # process all spi image parts
         for p in self.dict_spi_parts:
           image_name = p['name']
@@ -617,72 +809,129 @@ class pfr_bmc_image(object):
       # pbc header
       pbc_tag = struct.pack('<I', 0x5f504243)
       pbc_ver = struct.pack('<I', 0x2)
-      page_size = struct.pack('<I', PAGE_SIZE)  # page size 4*1024 = 0x1000
+      page_size = struct.pack('<I', 0x1000)  # page size 4*1024 = 0x1000
       patt_size = struct.pack('<I', 0x1)
       patt_comp = struct.pack('<I', 0xFF)
-      bmap_size = struct.pack('<I', self.pfr_bmc_image_size/PAGE_SIZE) # 4k granularity, 0x8000 is 128MB, 0x10000 is for 256MB
+      bmap_size = struct.pack('<I', int(self.pfr_bmc_image_size/PAGE_SIZE)) # 4k granularity, 0x8000 is 128MB, 0x10000 is for 256MB
       pload_len = struct.pack('<I', self.pbc_comp_payload)
       rsvd0     = b'\x00'*100
       erase_bitmap = bytes(self.pbc_erase_bitmap)
       comp_bitmap  = bytes(self.pbc_comp_bitmap)
       self.pbc_header = pbc_tag + pbc_ver + page_size + patt_size + \
                       patt_comp + bmap_size + pload_len + rsvd0 + erase_bitmap + comp_bitmap
+      with open("%s-pbc.bin" % self.platform_name, "wb+") as pbf:
+        pbf.write(self.pbc_header)
 
+  def build_pfm_afm_in_update_capsule(self):
+    """ build PFM area inside recovery update capsule
 
-      # write file and sign update capsule
-      upd.write(self.signed_pfm_bdata)
-      upd.write(self.pbc_header)
-
-
-
-# reference design namme and pfr bmc manifest file
-_DICT_REF_MANIFEST = {
-  'whitley'    : 'whitley_pfr_bmc_manifest.json',
-  'idaville'   : 'idaville_pfr_bmc_manifest.json',
-  'eaglestream': 'egs_pfr_bmc_manifest.json',
-  'birchstream': 'bhs_pfr_bmc_manifest.json',
-}
-
-_list_reference_project = ['idaville', 'whitley', 'eaglestream', 'egs', 'birchstream', 'bhs']
-
-
-class BMC_Build(object):
-  """ build PFR BMC image, this is a wrap class for commandline options
-
-  """
-  def __init__(self, reference_platform):
-    self.reference = reference_platform
-    self.dict_manifest = _DICT_REF_MANIFEST
-
-  def start_build(self):
-    """ Copy manifest json file and keys to a subdirectory inside work folder.
-        subfolder is names as the reference platform
-        User can modify the json file for customize needs
-        The 128MB or 256MB mtd_image should be saved in the work folder
+    It includes signed-PFM (with AFM address definition) and signed-afm defined in afm address header.
     """
-    refplat = self.reference
-    if refplat not in _list_reference_project:
-      logger.error("-- wrong reference name!")
-      return
-    refjson = self.dict_manifest[refplat]
-    pathlib.Path(os.path.join(os.getcwd(), refplat)).mkdir(parents=True, exist_ok=True)
-    lst_keys = ('key_root_prv.pem', 'key_csk_prv.pem')
-    for f in lst_keys:
-      src_f = os.path.join(os.path.dirname(__file__), 'keys', refplat, f)
-      dst_f = os.path.join(os.getcwd(), refplat, f)
-      shutil.copyfile(src_f, dst_f)
-    src_json_file = os.path.join(os.path.dirname(__file__), 'json', 'bmc', refjson)
-    dst_json_file = os.path.join(os.getcwd(), refplat, refjson)
-    shutil.copyfile(src_json_file, dst_json_file)
+    # create "pfm_afm_in_update_cap.bin" file included in recovery capsule
+    self.pfm_afm_in_update_cap = "{}-pfm_afm_in_update_cap.bin".format(self.platform_name)
+    if os.stat(self.pfm_unsigned).st_size < 0x1000:
+      read_afm_size = 0x1000
+      padding_size  = (self.afm_addr - self.pfm_offset) - (self.pfm_size + 0x400)
+    with open(self.pfm_afm_in_update_cap, 'wb') as f1, \
+         open(self.pfm_signed, 'rb') as f2, open(self.afm_active_capsule, 'rb') as f3:
+      f1.write(f2.read())
+      f1.write(b'\xff'*padding_size)  # padd 0xFF until afm address
+      f1.write(f3.read(read_afm_size))
 
-  def set_manifest(self, manifest):
-    print('-- set manifest')
-    self.manifest_f = manifest #os.path.join(os.getcwd(), self.reference, self.dict_manifest[self.reference])
+  def build_pfr_image(self):
+    """ build bmc pfr image """
+    print("\n-- 1. build pfm \n")
+    self.build_pfm()                 # build_pfm
 
-  def build_image(self):
-    """ build image """
-    mybmc = pfr_bmc_image(self.manifest_f)
-    mybmc.build_pfr_image()
+    print("\n-- 2. signPFM\n")
+    self.pfm_signed = "{}-pfm_signed.bin".format(self.platform_name)
+
+    print(self.pfm_unsigned, self.pfm_signed)
+
+    spfm = sign.Signing(self.pfm_unsigned, _PCTYPE_BMC_PFM, self.dict_build_image['csk_id'], self.rk_prv, self.csk_prv)
+    spfm.set_signed_image(self.pfm_signed)
+    spfm.sign()
+
+    print("\n-- 3. add afm_capsule to pfm area and update mtd_file to build update capsule\n")
+    self.add_active_afm()
+
+    print("\n-- 4. build_update_capsule\n")
+    # update mtd_firmware for update capsule
+    self.build_update_capsule()      # build_update_capsule
+
+
+    print ("\n-- 5. add the signed PFM to rom image\n")
+    #fname_a = "%s-image-pfm_signed.bin"%(self.platform_name)
+    fname_o = "%s-image-pfm_signed.bin"%(self.platform_name)
+
+    #print('pfr_pfm_offset = 0x%x'%self.pfr_pfm_offset)
+    with open(self.firmware_image_afm_in_pfm, 'rb') as fin, open(fname_o, 'wb') as fout:
+      fout.write(fin.read())
+    utility.bind_file_at_addr(self.pfm_region, fname_o, self.pfm_offset)
+
+    #  Create unsigned BMC update capsule - append with 1. pfm_signed_afm, 2. pbc, 3. bmc compressed;
+    print ("\n-- 6. Create unsigned BMC update capsule \n")
+    self.build_pfm_afm_in_update_capsule()
+    f1 = self.pfm_afm_in_update_cap      # self.pfm_region
+    f2 = "%s-pbc.bin"%(self.platform_name)
+    f3 = "%s-bmc_compressed.bin"%(self.platform_name)
+    f4 = "%s-bmc_unsigned_cap.bin"%(self.platform_name)
+
+    with open(f4, 'wb') as fd4, open(f1, 'rb') as fd1, open(f2, 'rb') as fd2, open(f3, 'rb') as fd3:
+      fd4.write(fd1.read())
+      fd4.write(fd2.read())
+      fd4.write(fd3.read())
+
+    print("-- sign update capsule")
+    scap = sign.Signing("{}-bmc_unsigned_cap.bin".format(self.platform_name), _PCTYPE_BMC_CAP,  self.dict_build_image['csk_id'], self.rk_prv, self.csk_prv)
+    scap.set_signed_image("%s-bmc_signed_cap.bin"%(self.platform_name))
+    scap.sign()
+
+    # 6) Add the signed bmc update capsule to full rom image @ rc-image offset
+    print ("\n-- 6. Add the signed bmc update capsule to full rom image @ rc-image offset, defined in json file (default 0x2f00000) \n")
+    fname_a   = "%s-bmc_signed_cap.bin"%(self.platform_name)
+    fname_o   = "%s-pfr-image-bmc-final_afm.bin"%(self.platform_name)
+    fname_src = "%s-image-pfm_signed.bin"%(self.platform_name)
+
+    shutil.copyfile(fname_src, fname_o)
+    print('pfr_capsule_offset = 0x%x'%self.pfr_capsule_offset)
+    utility.bind_file_at_addr(fname_a, fname_o, self.pfr_capsule_offset)
+
+    #fname_o_1   = "%s-pfr-image-bmc-final_afm_1.bin"%(self.platform_name)
+    #with open(fname_o_1, 'wb') as f1, open(fname_o, 'rb') as f2, open(fname_a, 'rb') as f3:
+    #  f1.write(f2.read(self.pfr_capsule_offset))
+    #  f1.write(f3.read())
+    #  f2.seek(self.pfr_capsule_offset+os.stat(fname_a).st_size)
+    #  f1.write(f2.read())
+
+    self.move_temp_file()
+
+  def move_temp_file(self):
+    """ Move output files and temporary files to Output and Temp subfolder.
+        Create subfolder if not exists
+    """
+    print("\n-- move temporary file")
+    pathlib.Path(os.path.join(os.getcwd(), 'Output')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(os.getcwd(), 'Temp')).mkdir(parents=True, exist_ok=True)
+
+    lst_temp_file = ["pfm.bin", "bmc_compressed.bin", "pbc.bin", "pfm_signed.bin", "bmc_unsigned_cap.bin", "pfm_afm_in_update_cap.bin"]
+    lst_out_file = ["bmc_signed_cap.bin", "pfr-image-bmc-final_afm.bin"]
+    lst_del_file = ["{}-image-pfm_signed.bin".format(self.platform_name), self.firmware_image_afm_in_pfm]
+    for f in lst_temp_file:
+      src_file = "%s-%s"%(self.platform_name, f)
+      dst_file = os.path.join(os.getcwd(), 'Temp', src_file)
+      shutil.move(src_file, dst_file)
+
+    src_file = 'pfm_region_afm.bin'
+    dst_file = os.path.join(os.getcwd(), 'Temp', src_file)
+    shutil.move(src_file, dst_file)
+
+    for f in lst_out_file:
+      src_file = "%s-%s"%(self.platform_name, f)
+      dst_file = os.path.join(os.getcwd(), 'Output', src_file)
+      shutil.move(src_file, dst_file)
+    for f in lst_del_file:
+      os.remove(f)
 
 
 class BMC_OOB_Mailbox(object):
@@ -707,7 +956,7 @@ class BMC_OOB_Mailbox(object):
       self.ipmitool = os.path.join(os.path.dirname(__file__), r'ipmitool\ipmitool.exe')
     elif platform.system() == 'Linux':
       self.ipmitool = 'ipmitool'
-    self.dict_mbox = sign.ConfigDict()  # dictory of CPLD Mailbox
+    self.dict_mbox = sign.ConfigDict()  # dictionary of CPLD mailbox
     self.dict_prov = sign.ConfigDict()  # dictionary of CPLD provisioning data
     #print(self.ipmitool)
 
@@ -735,7 +984,11 @@ class BMC_OOB_Mailbox(object):
   def read_ifwi_offset(self):
     cmdline = "{} -I lanplus -H {} -C 17 -U {} -P {} raw 0x3e 0x84 0x0C 12 1".format(self.ipmitool, \
                self.bmc_ip, self.user_name, self.passwd)
-    result = subprocess.getoutput(cmdline).split('\n')
+    # return below two lines. Ignore the first line, process the last line
+    # IANA PEN registry open failed: No such file or directory
+    #  00 00 fe 03 00 00 00 06 00 00 00 04
+    result = subprocess.getoutput(cmdline).split('\n')[-1]
+    #print("1-result={}".format(result))
     result = ''.join(result).split(' ')
     result = [x for x in result if x]
     a, r, s=result[0:4], result[4:8], result[8:12]
@@ -749,7 +1002,7 @@ class BMC_OOB_Mailbox(object):
   def read_bmc_offset(self):
     cmdline = "{} -I lanplus -H {} -C 17 -U {} -P {} raw 0x3e 0x84 0x0D 12 1".format(self.ipmitool, \
                self.bmc_ip, self.user_name, self.passwd)
-    result = subprocess.getoutput(cmdline).split('\n')
+    result = subprocess.getoutput(cmdline).split('\n')[-1] # get last line of return
     result = ''.join(result).split(' ')
     result = [x for x in result if x]
     a, r, s=result[0:4], result[4:8], result[8:12]
@@ -763,7 +1016,7 @@ class BMC_OOB_Mailbox(object):
   def read_deviceId_pubkey(self):
     cmdline = "{} -I lanplus -H {} -C 17 -U {} -P {} raw 0x3e 0x84 0x13 96 1".format(self.ipmitool, \
                self.bmc_ip, self.user_name, self.passwd)
-    result = subprocess.getoutput(cmdline).split('\n')
+    result = subprocess.getoutput(cmdline).split('\n')[-1] # get last line of return
     result = ''.join(result).split(' ')
     result = [x for x in result if x]
     self.dict_prov['DevIDPub0_X'] = ''.join(result[:48])
@@ -1253,12 +1506,15 @@ def main(args):
     return
   if (args.start_build == True) and (args.reference in _list_reference_project):
     if args.reference == "egs": args.reference = 'eaglestream'
+    if args.reference == "bhs-ap": args.reference = 'birchstream'
+    if args.reference == "bhs-sp": args.reference = 'birchstream'
     if args.reference == "bhs": args.reference = 'birchstream'
     print("-- generated pfr_bmc_manifest.json reference file for platform {}".format(args.reference))
     mybmc= BMC_Build(args.reference)
     mybmc.start_build()
     return
   if (args.manifest != None) and (args.start_build is False):
+    print("-- build bmc image using manifest file {}".format(args.manifest))
     mybmc= BMC_Build(args.reference)
     mybmc.set_manifest(args.manifest)
     mybmc.build_image()

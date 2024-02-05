@@ -97,6 +97,7 @@ class Verify_PFM(object):
     self.pfmobj.show_smb()
     # verify no undefined gap in PFM SPI region
     self.show_spi_lst = self.pfmobj.show_spi_lst
+    #print(self.pfmobj.show_spi_lst)
     lst_region= []
     for i in self.show_spi_lst:
        lst_region.append((int(i[3], 0), int(i[4], 0), i[-1]))
@@ -204,18 +205,31 @@ class PFR_IFWI(object):
 
     self.prov = ifwi.Agent(self.image)
     self.prov.get_prov_data()
-    act, rcv = int(self.prov._pfrs['ifwi_active'], 0), int(self.prov._pfrs['ifwi_recovery'], 0)
+    try:
+      act, rcv = int(self.prov._pfrs['ifwi_active'], 0), int(self.prov._pfrs['ifwi_recovery'], 0)
+    except KeyError as e:
+      logger.error("-- ERROR: No PFM offsets are found in image !")
+      rtn = False
+      return rtn
     logger.info("act = 0x{:08x}, rcv = 0x{:08x}".format(act, rcv))
-    with open(self.image, 'rb') as f:
-      f.seek(act)
-      pfm_act = f.read(64*1024)
-      f.seek(rcv)
-      pfm_rcv = f.read(16*1024*1024)
 
-    actpfmobj = Verify_PFM(pfm_act)
-    rcvpfmobj = Verify_PFM(pfm_rcv)
-    rtn  = actpfmobj.validate()
-    rtn &= rcvpfmobj.validate()
+    if rcv < os.stat(self.image).st_size:
+      with open(self.image, 'rb') as f:
+        f.seek(act)
+        pfm_act = f.read(64*1024)
+        f.seek(rcv)
+        pfm_rcv = f.read(16*1024*1024)
+
+      actpfmobj = Verify_PFM(pfm_act)
+      rcvpfmobj = Verify_PFM(pfm_rcv)
+      rtn  = actpfmobj.validate()
+      rtn &= rcvpfmobj.validate()
+    else:  # in BHS first 1x64MB flash, there is no recovery capsule
+      with open(self.image, 'rb') as f:
+        f.seek(act)
+        pfm_act = f.read(64*1024)
+      actpfmobj = Verify_PFM(pfm_act)
+      rtn  = actpfmobj.validate()
 
     # verify active pfm hash data
     lst_hash=[]
@@ -842,25 +856,35 @@ def main(args):
     if args.rk_key == None or args.csk_prv == None:
       print("-- To vaerify capsule, you would need inlcude RK and CSK private keys in pem format ")
       raise ValueError("-- Required to include signing keys to verify capsule")
-    BLOCK_1K_Signed(args.input_bin, args.rk_key, args.csk_prv).validate()
+    rtn = BLOCK_1K_Signed(args.input_bin, args.rk_key, args.csk_prv).validate()
+    result="PASS" if rtn==True else "FAILED"
+    logger.info("-- PFR capsule: {} validation result: {}".format(args.input_bin, result))
 
   if args.action == 'afm':
     if args.rk_key == None or args.csk_prv == None:
       raise ValueError("-- Required to include signing keys to verify AFM capsule")
     obj=Verify_AFM(args.input_bin, args.rk_key, args.csk_prv)
-    obj.validate()
+    rtn=obj.validate()
+    result="PASS" if rtn==True else "FAILED"
+    logger.info("-- PFR AFM: {} validation result: {}".format(args.input_bin, result))
 
   if args.action == 'pfm':
     obj=Verify_PFM(args.input_bin)
-    obj.validate()
+    rtn=obj.validate()
+    result="PASS" if rtn==True else "FAILED"
+    logger.info("-- PFR PFM: {} validation result: {}".format(args.input_bin, result))
 
   if args.action == 'ifwi':
     obj=PFR_IFWI(args.input_bin, args.rk_key, args.csk_prv, args.logfile)
-    obj.validate()
+    rtn = obj.validate()
+    result="PASS" if rtn==True else "FAILED"
+    logger.info("-- PFR IFWI: {} validation result: {}".format(args.input_bin, result))
 
   if args.action == 'bmc':
     obj=PFR_BMC(args.input_bin, args.rk_key, args.csk_prv, args.logfile)
-    obj.validate()
+    rtn=obj.validate()
+    result="PASS" if rtn==True else "FAILED"
+    logger.info("-- PFR BMC: {} validation result: {}".format(args.input_bin, result))
 
 if __name__ == '__main__':
   main(sys.argv[1:])

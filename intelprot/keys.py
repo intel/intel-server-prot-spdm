@@ -620,21 +620,6 @@ class OpenSpdm_Keys(object):
     template_json = os.path.join(os.path.dirname(__file__), 'json', 'afm_manifest.json')
     with open(template_json, 'r') as f:
       self.ospdm_manifest = json.load(f)
-    """
-    for k in self.ospdm_manifest['devices'][0]:
-      #print(k)
-      print("self.ospdm_manifest['devices'][0]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0][k]))
-    for k in self.ospdm_manifest['devices'][0]['measurement'][0]:
-      print("self.ospdm_manifest['devices'][0]['measurement'][0]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0]['measurement'][0][k]))
-    for k in self.ospdm_manifest['devices'][0]['measurement'][1]:
-      print("self.ospdm_manifest['devices'][0]['measurement'][1]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0]['measurement'][1][k]))
-    for k in self.ospdm_manifest['devices'][0]['measurement'][2]:
-      print("self.ospdm_manifest['devices'][0]['measurement'][2]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0]['measurement'][2][k]))
-    for k in self.ospdm_manifest['devices'][0]['measurement'][3]:
-      print("self.ospdm_manifest['devices'][0]['measurement'][3]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0]['measurement'][3][k]))
-    for k in self.ospdm_manifest['devices'][0]['measurement'][4]:
-      print("self.ospdm_manifest['devices'][0]['measurement'][4]['{}'] = {}".format(k, self.ospdm_manifest['devices'][0]['measurement'][4][k]))
-    """
     kk = PrivateKey().read_from_pem(r'EcP384\end_responder.key')
     self.ospdm_manifest['devices'][0]['public_key_X']=kk.x
     self.ospdm_manifest['devices'][0]['public_key_Y']=kk.y

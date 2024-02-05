@@ -175,7 +175,7 @@ def bin_hexdump(fbin, st_addr=None, end_addr=None, fout=None):
   with open(fbin, 'rb') as f1, open(fout, 'w') as f2:
     f1.seek(st_addr)
     for bdata in iter(partial(f1.read, 16), b''):
-       f2.write("0x%07X | "%addr)
+       f2.write("0x%08X | "%addr)
        for i in range(len(bdata)):
          f2.write(" %02x"%bdata[i])
        f2.write("\n")
@@ -323,6 +323,26 @@ def bind_file_at_addr(inf_n, outf_n, offset_addr):
     ofd.seek(offset_addr)
     ofd.write(ifd.read())
 
+def corrupt_bin_image(fbin, start_addr, end_addr, new_byte, fout=None):
+  """replace bytes from a start to end address for a binary image
+
+  This function is replace a static area of a binary image with a fix byte and save it as a new image
+
+  :param fbin: input image file
+  :param start_addr: start address to erase
+  :param end_addr: end address to erase
+  :param new_byte: new byte in hex format to replace the image
+  :param fout: output image filename, optional. Default is fbin_corrupted.bin
+  """
+  if fout is None:
+    fout = os.path.splitext(fbin)[0]+"_corrupted.bin"
+  new_byte_array = bytes.fromhex(new_byte) * (end_addr - start_addr + 1)
+  with open(fbin, 'rb') as f1, open(fout, 'wb') as f2:
+    f1.seek(0)
+    f2.write(f1.read(start_addr))
+    f2.write(new_byte_array)
+    f1.seek(end_addr + 1)
+    f2.write(f1.read())
 
 
 class OOB_Read_Mailbox(object):
@@ -602,6 +622,13 @@ def main(args):
   cmdget.add_argument('-e', '--end_addr',    metavar="[End Offset]",   dest='end_addr',   help='end address')
   cmdget.add_argument('-t', '--hash type',   metavar="[Hash Type hash256 or hash384]",   dest='hash_type',  default='hash384', help='hash type')
 
+  # corrupt an area for test
+  cmdget = subparser.add_parser('corrupt')
+  cmdget.add_argument('-i', '--bin_image',   metavar="[Binary image]", dest='bin_image',  help='binary image file')
+  cmdget.add_argument('-s', '--start_addr',  metavar="[Start Offset]", dest='start_addr', help='start address')
+  cmdget.add_argument('-e', '--end_addr',    metavar="[End Offset]",   dest='end_addr',   help='end address')
+  cmdget.add_argument('-d', '--data byte',   metavar="[data byte to use]",  dest='corrupt_byte',  default='0xFF', help='data byte to corrupt a static area')
+
   args = parser.parse_args(args)
   #print(args)
   if args.action == 'mailbox':
@@ -651,6 +678,14 @@ def main(args):
     if args.hash_type == "hash256":
       hashdata = get_hash256 (args.bin_image, int(args.start_addr, 0), int(args.end_addr, 0))
       print(hashdata)
+
+  if args.action == 'corrupt':
+    start_addr   = int(args.start_addr, 0)
+    end_addr     = int(args.end_addr, 0)
+    corrupt_hex  = hex(int(args.corrupt_byte, 0)).strip('0x')
+    print("-- corrupted area from 0x{:x} to 0x{:x} as data {} \n".format(start_addr, end_addr, args.corrupt_byte))
+    corrupt_bin_image(args.bin_image, start_addr, end_addr, corrupt_hex)
+
 
 if __name__ == '__main__':
   main(sys.argv[1:])

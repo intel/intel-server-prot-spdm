@@ -4,36 +4,37 @@
    :platform: Linux, Windows
    :synopsis: Python script to update CPLD unisgned capsule and sign it
 
-   cpld module includes function to sign cpld capsule using intelprot.sign module.
-   The unsigned recovery capsule is the pfr_cfm1_auto.rpd generated from Quartus.
-   Then use both RK and CSK private keys to sign it.
+   cpld module includes function to build cpld update capsule.
+   The unsigned recovery capsule is the pfr_cfm1_auto.rpd generated from Quartus. It requies swap bytes convertion and then sign it with block sign.
+   Then use both RK and CSK private keys to sign it. The RK/CSK default are reference platform keys.
 
-   Sign CPLD recovery/staging capsule
-   ==================================
-
-
-   Sign in python console and script
-   ---------------------------------
+   Build CPLD update capsule in Python console
+   ============================================
 
    code block::
 
      >>>from intelprot import cpld
-     >>>mycpld = cpld.CPLD(unsigned_cap, rk_prv, csk_prv, csk_id)
-     >>>mycpld.sign()
+     >>>mycpld = cpld.PFR_CPLD(pfr_cfm1_auto.rpd, platform, svn, csk_id)
+     >>>mycpld.build_update_capsule( )
 
-
-   Sign in command line
-   --------------------
+   command line
+   ------------
 
    python (or python3 for Linux) should be in system executable path.
    save the keys and unsigned capsule in work folder.
-   It requires Python 3.6 or later Python
+   It requires Python 3.8 or later Python
 
    command line::
 
-     >python -m intelprot.cpld -h   # help
-     >python -m intelprot.cpld -u <unsigned_capsule> -rk <root private key> -csk <csk private key> -cskid <csk id, optional> -o <output, optional>
+     >python -m intelprot.cpld -h                 # help
+     >python -m intelprot.cpld build_capsule  -h  # help menu to build  capsule from cfm1 rpd file
+     >python -m intelprot.cpld modify_capsule -h  # help menu to modify capsule from existing one (change cskid, svn)
 
+
+   Note
+   ====
+
+   RoT SVN number in mailbox 02h only get changed after successful recovery update with different SVN number
 
 """
 import os, sys, shutil, struct, argparse, pathlib
@@ -75,8 +76,7 @@ class PFR_CPLD(object):
   """ class for PFR cpld image operation and build and sign update capsule
 
   :param pfr_cfm1_rpd: pfr_cfm1_rpd file in compile output
-  :param platform: reference platform name : ['wht', 'egs', 'bhs'] or ['whitley', 'eaglestream', 'birchstream']
-                   remove space and convert to lower case, 'Birch Stream' is acceptable as "birchstream"
+  :param platform: reference platform name : ['wht', 'egs', 'bhs', 'idv', 'ksv'] or ['whitley', 'eaglestream', 'birchstream', 'idaville', 'kaseyville']
   :param svn: SVN number used in update capsule, default is 0
   :param csk_id: CSK ID, it is needed csk_id to do signature, default is 0
 
@@ -86,11 +86,13 @@ class PFR_CPLD(object):
     if platform == 'wht': plt = 'whitley'
     elif platform == 'egs': plt = 'eaglestream'
     elif platform == 'bhs': plt = 'birchstream'
+    elif platform == 'idv': plt = 'idaville'
+    elif platform == 'ksv': plt = 'kaseyville'
     else:
       plt = platform.replace(' ', '').lower()  # remove space and convert to lower case
     self.pltfrm = plt
     print("platform : ", self.pltfrm)
-    if self.pltfrm not in ['whitley', 'eaglestream', 'birchstream']:
+    if self.pltfrm not in ['whitley', 'eaglestream', 'birchstream', 'idaville', 'kaseyville']:
       raise ValueError
 
     self.rk_prv  = os.path.join(os.path.dirname(__file__), 'keys', self.pltfrm, 'key_root_prv.pem')
@@ -98,7 +100,7 @@ class PFR_CPLD(object):
     self.svn = svn
     self.csk_id = csk_id
     self.unsigned_cap = 'temp_unsigned_cpld_cap_svn{}_cskid{}.bin'.format(self.svn, self.csk_id)
-    self.signed_cap = 'cpld_signed_cap_svn{}_cskid{}.bin'.format(self.svn, self.csk_id)
+    self.signed_cap   = '{}_cpld_signed_cap_svn{}_cskid{}.bin'.format(self.pltfrm, self.svn, self.csk_id)
 
 
   def build_update_capsule(self):
@@ -162,6 +164,8 @@ class UpdateCapsule(object):
     if platform == 'wht': plt = 'whitley'
     elif platform == 'egs': plt = 'eaglestream'
     elif platform == 'bhs': plt = 'birchstream'
+    elif platform == 'idv': plt = 'idaville'
+    elif platform == 'ksv': plt = 'kaseyville'
     else:
       plt = platform.replace(' ', '').lower()  # remove space and convert to lower case
     self.pltfrm = plt
@@ -188,7 +192,10 @@ class UpdateCapsule(object):
       pc_content = f.read(pc_len)
       hash256 = utility.get_hash256(pc_content)
       hash384 = utility.get_hash384(pc_content)
-      if (bytes.fromhex(hash256) == self.cap_dict['hash256']) and \
+      print(hash256, '--', self.cap_dict['hash256'].hex())
+      print(hash384, '--', self.cap_dict['hash384'].hex())
+
+      if (bytes.fromhex(hash256) == self.cap_dict['hash256']) or \
       (bytes.fromhex(hash384) == self.cap_dict['hash384']):
         f1.write(pc_content)
         self.pc_content = pc_content
