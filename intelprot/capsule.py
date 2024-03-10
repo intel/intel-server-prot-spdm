@@ -886,6 +886,12 @@ class AFM_BHS(object):
     self.afm_recovery_image = os.path.join(self.work_path, "afm_recovery_capsule.bin")
     self.afm_staging_image  = os.path.join(self.work_path, "afm_staging_capsule.bin")
 
+    # initiate list of temporary files to be moved
+    self.lst_afm_files = [self.afm_image, self.afm_staging_image]  # initate list of afm file
+    self.lst_temp_files = [self.afm_header_addr, self.afm_struct, self.afm_struct_signed, \
+                          self.afm_image_presign, self.afm_recovery_image ]
+
+
   def set_signing_keys(self, root_prv_key, csk_prv_key):
     """ set signing keys
 
@@ -1032,6 +1038,10 @@ class AFM_BHS(object):
       x.sign()
       self.lst_signed_afm_addon_dev.append(fname_signed)
 
+    # add to output and temp files list
+    self.lst_temp_files += self.lst_afm_addon_dev
+    self.lst_afm_files  += self.lst_signed_afm_addon_dev
+
 
   def sign_afm_device(self):
     """ signing single device AFM using two private keys """
@@ -1043,7 +1053,10 @@ class AFM_BHS(object):
       x.set_signed_image(fname_signed)
       x.sign()
       self.lst_signed_afm_dev.append(fname_signed)
-      #os.remove(fname)
+
+    # add to temp files list
+    self.lst_temp_files += self.lst_signed_afm_dev
+    self.lst_temp_files += self.lst_afm_dev
 
 
   def build_afm_struct(self):
@@ -1073,7 +1086,6 @@ class AFM_BHS(object):
     x = sign.Signing(self.afm_struct, self.pc_type, self.csk_id, self.rk_prv, self.csk_prv)
     x.set_signed_image(self.afm_struct_signed)
     x.sign()
-    #os.remove(self.afm_struct)
 
 
   def build_afm(self):
@@ -1119,12 +1131,11 @@ class AFM_BHS(object):
     # build afm inside pfm area
     self.build_afm_in_pfm()
 
-    # clean immediate files:
-    #os.remove(self.afm_struct)
-    #os.remove(self.afm_struct_signed)
-    #os.remove(self.afm_image_presign)
-    #for i in self.lst_signed_afm_dev:
-    #  os.remove(i)
+    # build afm for add-on devices
+    self.build_afm_add_on_device()
+
+    # move files, save output afm
+    self.move_files_afm()
     logger.info("**** Done -- build afm capsule! ***")
     print("**** Done -- build afm capsule! ***")
 
@@ -1140,6 +1151,8 @@ class AFM_BHS(object):
           f.write(f1.read())
           f.write(b'\xff'*padding_size)
 
+    # add the file to lst_temp_files
+    self.lst_temp_files.append(self.afm_in_pfm)
 
   def build_staging_afm(self):
     """ build AFM staging capsule """
@@ -1168,6 +1181,29 @@ class AFM_BHS(object):
     os.remove(self.afm_image_presign)
     for i in self.lst_signed_afm_dev:
       os.remove(i)
+
+
+  def move_files_afm(self):
+    """ move files as AFM and Temp folder
+      Output afm capsules are saved in AFM folder
+      Temporary files are saved in Temp folder
+    """
+    print("-- Move temporary files, save output afm capsule in AFM folder...")
+    pathlib.Path(os.path.join(os.getcwd(), 'AFM')).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.path.join(os.getcwd(), 'Temp')).mkdir(parents=True, exist_ok=True)
+
+    # move temporary files to Temp folder
+    for f in self.lst_temp_files:
+      dst_file = os.path.join(os.getcwd(), 'Temp', f)
+      shutil.move(f, dst_file)
+
+    # move output file
+    for f in self.lst_afm_files:
+      dst_file = os.path.join(os.getcwd(), 'AFM', f)
+      shutil.move(f, dst_file)
+
+    print("\n-- done !")
+
 #--------------------------
 
 PBC_STRUCT_KEY = ('pbc_tag', 'pbc_ver', 'page_size', 'pattern_size', 'pattern', 'bmap_size', \
@@ -1719,12 +1755,7 @@ def main(args):
   subparser = parser.add_subparsers(dest='capsule')
   afmcap = subparser.add_parser('afm')
   afmcap.add_argument('-a', '--afm_manifest',  metavar="[AFM manifest]",  dest='afm_m', help='afm manifest json file')
-  afmcap.add_argument('-b', '--bmc_image',  metavar="[bmc_image]",  dest='bmc_image', help='bmc pfr image to add afm')
-  afmcap.add_argument('-p', '--platform',   metavar="[platform]", dest='platform', default='bhs', help="platform - either 'egs' or 'bhs'")
-
-  afmcap1 = subparser.add_parser('afm_addon')
-  afmcap1.add_argument('-a', '--afm_manifest',  metavar="[AFM manifest]",  dest='afm_m', help='afm manifest json file')
-  afmcap1.add_argument('-p', '--platform',   metavar="[platform]", dest='platform', default='bhs', help="platform - either 'bhs' or 'oks'")
+  afmcap.add_argument('-b', '--bmc_image',  metavar="[bmc_image]",  dest='bmc_image', help='bmc pfr image to add afm, only for eaglestream platform')
 
   decomm = subparser.add_parser('decomm')
   decomm.add_argument('-rk',  '--root_prv', metavar="[root private key]", dest='rk_prv',  help='Root Private Key in PEM format')
@@ -1773,29 +1804,25 @@ def main(args):
         dst_f = os.path.join(os.getcwd(), f)
         shutil.copyfile(src_f, dst_f)
 
-
   if args.capsule == 'afm':
-    if (args.afm_m != None) and (args.bmc_image == None):
-      print("-- build afm staging capsule only" )
-      if(args.platform == 'egs' or args.platform == 'eaglestream' or args.platform == 'eagle stream'):
-        print("platform".format(args.platform))
-        myafm=AFM(args.afm_m)
-        myafm.build_afm()
-      elif (args.platform == 'bhs' or args.platform == 'birchstream' or args.platform == 'birch stream'):
-        myafm=AFM_BHS(args.afm_m)
-        myafm.build_afm()
-        myafm.build_afm_add_on_device()
+    if args.afm_m != None:
+      with open(args.afm_m, 'r') as f:
+        afm_manifest = json.load(f)
+        afm_platform = afm_manifest["platform"]
+        print("platform:{}".format(afm_platform))
 
-    if (args.afm_m != None) and (args.bmc_image != None):
-      print("-- build new BMC image with afm integrated and also build afm staging capsule for {}".format(args.platform) )
-      if(args.platform == 'egs'):
-        myafm=AFM(args.afm_m)
-        myafm.build_afm()
+    if afm_platform == 'eagle_stream':
+      myafm = AFM(args.afm_m)
+      myafm.build_afm()
+      if args.bmc_image != None:
+        print("-- build new BMC image with afm integrated for {}".format(afm_platform))
         from intelprot import bmc
-        bmc.load_afm_capsule(args.bmc_image, myafm.afm_image, myafm.afm_recovery_image, args.platform)
-      elif (args.platform == 'bhs'):
-        myafm=AFM_BHS(args.afm_m)
-        myafm.build_afm()
+        bmc.load_afm_capsule(args.bmc_image, myafm.afm_image, myafm.afm_recovery_image, afm_platform)
+
+    elif afm_platform == 'birch_stream':
+      print("-- build all afm capsule defined in manifest: {} for platform: {}".format(args.afm_m, afm_platform))
+      myafm = AFM_BHS(args.afm_m)
+      myafm.build_afm()
 
   if args.capsule == 'decomm':
     print(args)

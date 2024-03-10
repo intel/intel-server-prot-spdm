@@ -1,4 +1,5 @@
 {
+    "platform":"eagle_stream",
     "root_private_key" : "key_root_prv.pem",
     "csk_private_key" : "key_csk_prv.pem",
     "svn" : "0x02",
