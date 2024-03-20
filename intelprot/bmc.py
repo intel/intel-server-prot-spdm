@@ -830,7 +830,7 @@ class BHS_PFR_BMC_AFM(object):
     # create "pfm_afm_in_update_cap.bin" file included in recovery capsule
     self.pfm_afm_in_update_cap = "{}-pfm_afm_in_update_cap.bin".format(self.platform_name)
     if os.stat(self.pfm_unsigned).st_size < 0x1000:
-      read_afm_size = 0x1000
+      read_afm_size = os.stat(self.afm_active_capsule).st_size
       padding_size  = (self.afm_addr - self.pfm_offset) - (self.pfm_size + 0x400)
     with open(self.pfm_afm_in_update_cap, 'wb') as f1, \
          open(self.pfm_signed, 'rb') as f2, open(self.afm_active_capsule, 'rb') as f3:

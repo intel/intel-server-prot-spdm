@@ -83,7 +83,7 @@ DECOMM_PCTYPE  = 0x200
 BLK0_MAGIC_TAG = 0xB6EAFD19
 
 AFM_CAP_SIZE   = 128*1024   # 128KB total size
-AFM_ALIGN_SIZE = 4*1024     # 4KB aligned for each device AFM
+AFM_ALIGN_SIZE = 8*1024     # 8KB aligned for each device AFM
 AFM_SIGN_SIZE  = 1024       # 1KB blocksign size
 AFM_CAP_TAG    = 0x8883CE1D # AFM Magic/TAG
 AFM_SPI_TYPE   = 0x3        # AFM SPI_TYPE
@@ -955,6 +955,8 @@ class AFM_BHS(object):
       lst_idx_meas_data = self.manifest['afm_data'][dev_name]["measurement"][idx]["measurement"]
       idx_meas_hexstr =''.join(lst_idx_meas_data)
       meas_size = int(self.manifest['afm_data'][dev_name]["measurement"][idx]["meas_value_size"], 0)
+      number_of_possible_measurement = int(self.manifest['afm_data'][dev_name]["measurement"][idx]["number_of_possible_measurement"], 0)
+      meas_size *= number_of_possible_measurement
       #print("\n**** idx={}, idx_meas_hexstr={} \n".format(idx, idx_meas_hexstr))
       #print("\n**** len(idx_meas_hexstr)={}, meas_size = {}".format(len(idx_meas_hexstr), meas_size))
       afm_dev_meas += struct.pack("%ds"%(meas_size), bytes.fromhex(idx_meas_hexstr))
