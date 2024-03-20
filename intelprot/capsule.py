@@ -83,7 +83,7 @@ DECOMM_PCTYPE  = 0x200
 BLK0_MAGIC_TAG = 0xB6EAFD19
 
 AFM_CAP_SIZE   = 128*1024   # 128KB total size
-AFM_ALIGN_SIZE = 4*1024     # 4KB aligned for each device AFM
+AFM_ALIGN_SIZE = 8*1024     # 8KB aligned for each device AFM
 AFM_SIGN_SIZE  = 1024       # 1KB blocksign size
 AFM_CAP_TAG    = 0x8883CE1D # AFM Magic/TAG
 AFM_SPI_TYPE   = 0x3        # AFM SPI_TYPE
