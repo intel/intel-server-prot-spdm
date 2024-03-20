@@ -955,6 +955,8 @@ class AFM_BHS(object):
       lst_idx_meas_data = self.manifest['afm_data'][dev_name]["measurement"][idx]["measurement"]
       idx_meas_hexstr =''.join(lst_idx_meas_data)
       meas_size = int(self.manifest['afm_data'][dev_name]["measurement"][idx]["meas_value_size"], 0)
+      number_of_possible_measurement = int(self.manifest['afm_data'][dev_name]["measurement"][idx]["number_of_possible_measurement"], 0)
+      meas_size *= number_of_possible_measurement
       #print("\n**** idx={}, idx_meas_hexstr={} \n".format(idx, idx_meas_hexstr))
       #print("\n**** len(idx_meas_hexstr)={}, meas_size = {}".format(len(idx_meas_hexstr), meas_size))
       afm_dev_meas += struct.pack("%ds"%(meas_size), bytes.fromhex(idx_meas_hexstr))
