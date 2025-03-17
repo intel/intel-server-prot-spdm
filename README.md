@@ -6,12 +6,14 @@
 spdm development. It is used for PRoT design of SPDM based device attestation. 
 This package is useful for both Intel PFR based PRoT and non-Intel PFR based PRoT system.
 
-This package has been used for SPDM based device attestation using SMBus tool (Aardvark) on Intel Eaglestream reference platform with
-open source project [spdm-emu](https://github.com/DMTF/spdm-emu).
-
 Intel® Platform Firmware Resilience (Intel® PFR) is a hardware-based
 cybersecurity solution for platform firmware resilience. It is Intel PRoT solution. About Intel®
 PFR: <https://www.intel.com/pfr>.
+
+This package has been used for SPDM based device attestation using SMBus tool (Aardvark) on Intel reference platform with
+open source project [spdm-emu](https://github.com/DMTF/spdm-emu).
+
+The package covers for Eaglestream, Birchstream platform, and Idaville, Kaseyville platforms.
 
 The tool package includes scripts to build Intel PRoT (PFR) compliant firmware and capsules for device attestation using DMTF SPDM_Emu open source project. 
 
