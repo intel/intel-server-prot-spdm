@@ -18,6 +18,8 @@ from collections import OrderedDict
 from operator import itemgetter
 from intelprot import keys, pfm, ifwi, bmc, utility
 
+
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -924,6 +926,7 @@ class Verify_KCC(object):
         rtn = obj.validate()
         rtn &= self.verify_payload_cskid()
         return rtn
+
 
 def main(args):
     """ verify PFR image or stgaing capsure"""
