@@ -3,7 +3,7 @@
 """
     CPU AFM anaysis and process module
 """
-import re, struct
+import os, sys, binascii, struct, codecs, base64, hashlib, string, argparse, io, re
 from collections import OrderedDict
 import tabulate
 import logging
@@ -11,11 +11,13 @@ logger = logging.getLogger(__name__)
 from intelprot import utility
 
 _PFM_MAGIC_TAG = 0x02b3ce1d
+#_AFM_MAGIC_TAG = 0x8883ce1d
+
 _FIT_TAG = b'_FIT_'
 
 RSVD_FF         = b'\xFF'  # reserved byte 0xff
 RSVD_00         = b'\x00'  # reserved byte 0x00
-
+BLOCK_SIGN_SIZE = 0x400    # block sign size
 
 # Index_Type, Description, Value_Type
 lst_AFM_Measurements = ( \
@@ -25,7 +27,8 @@ lst_AFM_Measurements = ( \
     ('0x4','uCode FIT Patch', '0x81'),
     ('0x5', 'Startup ACM', '0x81'),
     ('0x8', 'Boot Policy Manifest', '0x81'),
-    ('0x7', 'BIOS PFR Hash', '0x03')
+    ('0x7', 'BIOS PFR Hash', '0x03'),
+    ('0xff','TCBInfo', '0x84')
 )
 
 SPI_ADDR_PFM = 0x1
@@ -108,14 +111,15 @@ class cls_FIT_Table(cls_BHS_IFWI_FLASH):
             print('-- FIT Type: {}, {}'.format(dict_temp['type'], dict_temp))
             self.lst_fit_entry.append(dict_temp)
 
-        #for i in range(0, self.fit_size):
-        #    print("{}: {}".format(i, self.lst_fit_entry[i]))
+        for i in range(0, self.fit_size):
+            print("{}: {}".format(i, self.lst_fit_entry[i]))
 
 
 class cls_CPU_ID(object):
     """ class for cpu id operation """
     # constants
     MODEL_FUSE_GNR = 0xD
+    MODEL_FUSE_GNRD= 0xE
     MODEL_FUSE_SRF = 0xF
     CPU_ID_TAG     = b'cpu_id'
 
@@ -127,12 +131,13 @@ class cls_CPU_ID(object):
         with open(self.image, 'rb') as f:
             self.bdata= f.read()
         self.lst_cpuid_addr = [(hex(m.start(0))) for m in re.finditer(re.escape(self.CPU_ID_TAG), self.bdata)]
+        #print('-- lst_cpuid_addr: {}'.format(self.lst_cpuid_addr))
         self.lst_cpuid=[]
         for i in self.lst_cpuid_addr:
             i = int(i, 0)
             s = self.bdata[i+len(self.CPU_ID_TAG)]
             cpuid = int.from_bytes(self.bdata[(i+len(self.CPU_ID_TAG)+1):(i+len(self.CPU_ID_TAG)+1+s)], 'little')
-            print(cpuid, hex(cpuid))
+            #print(cpuid, hex(cpuid))
             self.lst_cpuid.append(hex(cpuid))
 
     def get_cpu_model(self):
@@ -143,11 +148,14 @@ class cls_CPU_ID(object):
         for cpuid in self.lst_cpuid:
             m=(int(cpuid, 16) & 0x00F0)>>4
             self.lst_cpu_model.append(m)
-            if m == self.MODEL_FUSE_GNR: self.cpu_model = 'GNR'
-            if m == self.MODEL_FUSE_SRF: self.cpu_model = 'SRF'
-        print(self.lst_cpu_model)
-        print(self.cpu_model)
-
+            if m == self.MODEL_FUSE_GNR:  self.cpu_model = 'GNR'
+            if m == self.MODEL_FUSE_GNRD: self.cpu_model = 'GNRD'
+            if m == self.MODEL_FUSE_SRF:  self.cpu_model = 'SRF'
+        #print(self.lst_cpu_model)
+        #print(self.cpu_model)
+        if self.cpu_model not in ['GNR', 'GNRD', 'SRF']:
+            sys.exit("-- Error: unable find CPU model !")
+        
 
 class IFWI_PFM_SPI(object):
     """ class process SPI rules in PFM
@@ -172,11 +180,13 @@ class IFWI_PFM_SPI(object):
         self.afm_bdata = self.pfm_spi_data[addr:addr+56]
 
 
-class BHS_CPU_AFM(object):
+class CPU_AFM(object):
     """
     class for analysis Birch Stream CPU AFM from ifwi image
     """
     # constants definition inside class, don't change it
+    OFFSET_P = 0x52  # offset of SIZE_OF_PUBKEY
+    OFFSET_C = 0x5A  # offset of SIZE_OF_TCBINFO + P
     BHS_AFM_HEAD_ADDR_FORMAT = "<BBH16sI8sH14sII"
     BHS_AFM_HEAD_ADDR_STRUCT = ('afm_spi_type', 'device_addr', 'rsvd1','uuid','platform_id', 'platform_model', 'platform_version', 'rsvd2', 'afm_length', 'afm_addr')
 
@@ -189,7 +199,7 @@ class BHS_CPU_AFM(object):
         'blk1_csk_magic', 'blk1_csk_curve', 'blk1_csk_permission', 'blk1_csk_keyid', 'blk1_csk_pubX', 'blk1_csk_pubY', 'blk1_csk_rsvd', 'blk1_csk_sig_magic', 'blk1_csk_sigR', 'blk1_csk_sigS', \
         'blk1_blk0_magic', 'blk1_blk0_sig_magic', 'blk1_blk0_sigR', 'blk1_blk0_sigS')
 
-    BHS_AFM_CPU_SRF_FORMAT = "<16sI8sH16sBBBHBBBHIHH18sH48s48sIHH132sB3sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48s"
+    BHS_AFM_CPU_SRF_FORMAT = "<16sI8sH16sBBBHBBBHIHH18sH{x}s{y}sIHH{c}sB3sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH{c}s"
     BHS_AFM_CPU_SRF_STRUCT = ('uuid', 'platform_id', 'platform_model', 'platform_version', 'rsvd1', 'bus_id', 'device_addr', 'bind_spec', 'bind_spec_version', 'policy', \
         'svn', 'rsvd2', 'afm_version', 'curve_magic', 'plat_manu_string', 'plat_manu_model', 'rsvd3', 'size_pub_key', 'pub_key_X', 'pub_key_Y', 'pub_key_exp', 'rsvd4', \
         'size_of_dice_tcbinfo', 'dice_tcbinfo', 'total_num_meas', 'rsvd5',\
@@ -199,9 +209,10 @@ class BHS_CPU_AFM(object):
         'num_meas_index3', 'rsvd8',  'meas_value_index_3', 'meas_value_type_3', 'meas_value_size_3', 'meas_value_3', \
         'num_meas_index4', 'rsvd10', 'meas_value_index_4', 'meas_value_type_4', 'meas_value_size_4', 'meas_value_4', \
         'num_meas_index5', 'rsvd11', 'meas_value_index_5', 'meas_value_type_5', 'meas_value_size_5', 'meas_value_5', \
-        'num_meas_index6', 'rsvd12', 'meas_value_index_6', 'meas_value_type_6', 'meas_value_size_6', 'meas_value_6')
+        'num_meas_index6', 'rsvd12', 'meas_value_index_6', 'meas_value_type_6', 'meas_value_size_6', 'meas_value_6', \
+        'num_meas_index7', 'rsvd13', 'meas_value_index_7', 'meas_value_type_7', 'meas_value_size_7', 'meas_value_7')
 
-    BHS_AFM_CPU_GNR_FORMAT = "<16sI8sH16sBBBHBBBHIHH18sH48s48sIHH132sB3sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH32sB3sBBH32sB3sBBH48sB3sBBH48s"
+    BHS_AFM_CPU_GNR_FORMAT = "<16sI8sH16sBBBHBBBHIHH18sH{x}s{y}sIHH{c}sB3sB3sBBH48sB3sBBH48sB3sBBH48sB3sBBH32sB3sBBH32sB3sBBH48sB3sBBH48sB3sBBH{c}s"
     BHS_AFM_CPU_GNR_STRUCT = ('uuid', 'platform_id', 'platform_model', 'platform_version', 'rsvd1', 'bus_id', 'device_addr', 'bind_spec', 'bind_spec_version', 'policy', \
         'svn', 'rsvd2', 'afm_version', 'curve_magic', 'plat_manu_string', 'plat_manu_model', 'rsvd3', 'size_pub_key', 'pub_key_X', 'pub_key_Y', 'pub_key_exp', 'rsvd4', \
         'size_of_dice_tcbinfo', 'dice_tcbinfo', 'total_num_meas', 'rsvd5',\
@@ -211,25 +222,30 @@ class BHS_CPU_AFM(object):
         'num_meas_index3', 'rsvd8',  'meas_value_index_3', 'meas_value_type_3', 'meas_value_size_3', 'meas_value_3', \
         'num_meas_index4', 'rsvd10', 'meas_value_index_4', 'meas_value_type_4', 'meas_value_size_4', 'meas_value_4', \
         'num_meas_index5', 'rsvd11', 'meas_value_index_5', 'meas_value_type_5', 'meas_value_size_5', 'meas_value_5', \
-        'num_meas_index6', 'rsvd12', 'meas_value_index_6', 'meas_value_type_6', 'meas_value_size_6', 'meas_value_6')
+        'num_meas_index6', 'rsvd12', 'meas_value_index_6', 'meas_value_type_6', 'meas_value_size_6', 'meas_value_6', \
+        'num_meas_index7', 'rsvd13', 'meas_value_index_7', 'meas_value_type_7', 'meas_value_size_7', 'meas_value_7')
 
-    def __init__(self, bin_image):
+    def __init__(self, bin_image, pltfrm='pfr4', verbose=False):
         """ constructor
 
+        :param pltfrm, PFR platform, default is 'pfr4' - BHS or KVL platform.
         :param bin_image, fisrt 64MB image or 128MB image
+
         """
-        self.img = bin_image
+        self.img = bin_image  # use the full 128MB image in case PFM is stored in the second half of IFWI image        
         obj = cls_CPU_ID(self.img)
+        self.extract_afm()
         obj.get_cpu_model()
         self.cpu_model = obj.cpu_model
-        if self.cpu_model == 'GNR':
-            self._AFM_CPU_FORMAT = self.BHS_AFM_CPU_GNR_FORMAT
+        if self.cpu_model == 'GNR' or self.cpu_model == 'GNRD':
+            self._AFM_CPU_FORMAT = self.BHS_AFM_CPU_GNR_FORMAT.format(x=self.size_pubx, y=self.size_puby, c=self.C)
             self._AFM_CPU_STRUCT = self.BHS_AFM_CPU_GNR_STRUCT
         if self.cpu_model == 'SRF':
-            self._AFM_CPU_FORMAT = self.BHS_AFM_CPU_SRF_FORMAT
+            self._AFM_CPU_FORMAT = self.BHS_AFM_CPU_SRF_FORMAT.format(x=self.size_pubx, y=self.size_puby, c=self.C)
             self._AFM_CPU_STRUCT = self.BHS_AFM_CPU_SRF_STRUCT
         self.lst_cpuid = obj.lst_cpuid
-        print(self.lst_cpuid)
+        #print(self.lst_cpuid)
+        #print("-- self._AFM_CPU_FORMAT={}".format(self._AFM_CPU_FORMAT))
 
     def extract_afm(self):
         """ Extract AFM from PFM """
@@ -237,28 +253,56 @@ class BHS_CPU_AFM(object):
         st_tag = st_tag.to_bytes((st_tag.bit_length()+7)//8, 'little')
         with open(self.img, 'rb') as f:
             self.bdata = f.read()
+
         lst_addr = [(hex(m.start(0))) for m in re.finditer(re.escape(st_tag), self.bdata)]
         #print("-- lst_addr={}, len(lst_addr)={}".format(lst_addr, len(lst_addr)))
 
         pfm_start = int(lst_addr[0], 0)
         #print('pfm_start=0x{:08x}'.format(pfm_start))
+
         pfm_len = struct.unpack('<I', self.bdata[pfm_start+0x1c:pfm_start+0x20])[0]
         self.pfm_bdata = self.bdata[pfm_start:pfm_start+pfm_len]
         self.pfmobj = IFWI_PFM_SPI(self.pfm_bdata)
+
         #print("-- afm_addr=0x{:x}".format(self.pfmobj.afm_addr))
         #print(self.pfmobj.afm_bdata.hex())
+
         lst_afm_head = struct.unpack(self.BHS_AFM_HEAD_ADDR_FORMAT, self.pfmobj.afm_bdata)
         #print("-- lst_afm_head={}".format(lst_afm_head))
+
         self.dict_afm_head = ConfigDict()
         for (key, val) in zip(self.BHS_AFM_HEAD_ADDR_STRUCT, lst_afm_head):
             self.dict_afm_head[key]=val
         #print(self.dict_afm_head)
         self.afm_len  = self.dict_afm_head['afm_length']
         self.afm_addr = self.dict_afm_head['afm_addr']
+        self.img_size=os.path.getsize(self.img)
+        print("-- afm_adr = 0x{:x}, afm_length = 0x{:x}, img_size = 0x{:x}".format(self.afm_addr, self.afm_len, self.img_size))
+
+        if (self.afm_addr > self.img_size):
+            # second half of ifwi image
+            logger.error("-- Please use the 1x128M IFWI !")
+            sys.exit("-- Error out: wrong input image, use the 128MB image !")
+            offset_p = (self.afm_addr - self.img_size) + BLOCK_SIGN_SIZE + self.OFFSET_P
+        else:
+            offset_p = self.afm_addr + BLOCK_SIGN_SIZE + self.OFFSET_P
+        print("-- offset_p = 0x{:x}".format(offset_p))
+
+        self.P = struct.unpack('<H', self.bdata[offset_p:(offset_p + 2)])[0]
+        self.size_pubx = int(self.P/2)
+        self.size_puby = int(self.P/2)
+        if (self.afm_addr > self.img_size):
+            # second half of ifwi image
+            offset_c = (self.afm_addr - self.img_size) + + BLOCK_SIGN_SIZE + self.OFFSET_C + self.P
+        else:
+            offset_c = self.afm_addr + BLOCK_SIGN_SIZE + self.OFFSET_C + self.P
+        print("-- offset_c = 0x{:x}".format(offset_c))
+
+        self.C = struct.unpack('<H', self.bdata[offset_c:offset_c+2])[0]
+        print("-- P = 0x{:x}, C = 0x{:x}, self.size_pubx={}, self.size_puby={}".format(self.P, self.C, self.size_pubx, self.size_puby) )
 
     def decomp_afm(self):
         """ decompose AFM capsule """
-        self.extract_afm()
         with open(self.img, 'rb') as f:
             f.seek(self.afm_addr)
             self.afm_cap_bdata=f.read(self.afm_len)
@@ -275,9 +319,15 @@ class BHS_CPU_AFM(object):
         lst_temp = struct.unpack(self.BHS_AFM_BLK_1_FORMAT, self.afm_cap_bdata[self.s0:self.s0+self.s1])
         for (k, v) in zip(self.BHS_AFM_BLK_1_STRUCT, lst_temp):
             self.dict_afm_blk[k] = v
-        #for k in self.dict_afm_blk:
-        #    print('-- {} = {}'.format(k, self.dict_afm_blk[k]))
-
+        """
+        for k in self.dict_afm_blk:
+            if isinstance(self.dict_afm_blk[k], int):
+                print('-- {} = 0x{:x}'.format(k, self.dict_afm_blk[k]))
+            elif isinstance(self.dict_afm_blk[k], bytes):
+                print('-- {} = {}'.format(k, self.dict_afm_blk[k].hex()))
+            else:
+                print('-- {} = {}'.format(k, self.dict_afm_blk[k]))
+        """
         self.dict_cpu_afm = ConfigDict()
         self.size_cpu_afm = struct.calcsize(self._AFM_CPU_FORMAT)
         #print('\n-- self.size_cpu_afm={}'.format(self.size_cpu_afm))
@@ -292,7 +342,7 @@ class BHS_CPU_AFM(object):
             self.dict_cpu_afm[k] = v
 
         #for k in self.dict_cpu_afm:
-                #print('-- {} = {}'.format(k, self.dict_cpu_afm[k]))
+        #    print('-- {} = {}'.format(k, self.dict_cpu_afm[k]))
         #print('-- root certificate hexstr : {}'.format(self.dict_cpu_afm['certificate'].hex()))
 
     def get_fit_entry(self):
@@ -306,81 +356,13 @@ class BHS_CPU_AFM(object):
         lst_addr = [(hex(m.start(0))) for m in re.finditer(re.escape(st_tag), self.bdata)]
         print(lst_addr)
 
-
-    def calc_meas_1(self):
-        """ calculate SoC Boot Time FW Hash Index 1
-            data[0x4196C4: 0x419914]
-        """
-        with open(self.img, 'rb') as f:
-            f.seek(0x4196C4)
-            self.meas_1_bdata = f.read(0x419994-0x4196C4)
-        self.calc_meas_1 = utility.get_measure_hash384(self.meas_1_bdata)
-        print('-- meas_hash384_1 = {}'.format(self.calc_meas_1))
-
-    def calc_meas_2(self):
-        """ calculate measure index 2 """
-        with open(self.img, 'rb') as f:
-            self.meas_2_bdata = f.read(0x1000)
-        self.calc_meas_2 = utility.get_measure_hash384(self.meas_2_bdata)
-        print('-- meas_hash384_2 = {}'.format(self.calc_meas_2))
-
-    def calc_meas_3(self):
-        """ calculate measure index 3 FIT4 hash """
-        self.fit4_offset = 0x010B2400
-        with open(self.img, 'rb') as f:
-            f.seek(self.fit4_offset)
-            self.meas_3_bdata = f.read(0x58)
-        self.calc_meas_3 = utility.get_measure_hash384(self.meas_3_bdata)
-        print('-- meas_hash384_3 = {}'.format(self.calc_meas_3))
-
-    def calc_meas_5(self):
-        """ calculate measure index 5 S_ACM hash
-            DATA_0 = data[0x018D2000: 0x018D2000 + 0x80]
-            DATA_1 = data[0x18d3c80: 0x18d3c80+0x3e380]
-            Sierra Forest sha384(DATA_0 + DATA_1)
-        """
-        self.fit2_offset = 0x018D2000
-        self.fit2_data1_offset = 0x18d3c80
-        self.fit_data1_len = 0x3e380
-        with open(self.img, 'rb') as f:
-            f.seek(self.fit2_offset)
-            self.meas_5_data0 = f.read(0x80)
-            f.seek(self.fit2_data1_offset)
-            self.meas_5_data1 = f.read(self.fit_data1_len)
-        self.calc_meas_5 = utility.get_measure_hash384(self.meas_5_data0 + self.meas_5_data1)
-        print('-- meas_hash384_5 = {}'.format(self.calc_meas_5))
-
-    def calc_meas_8(self):
-        """ calculate measurement index 8 BPM hash
-
-            data[0x0260AE80: 0x0260AE80+0x330]
-        """
-        self.fitc_offset = 0x0260AE80
-        self.key_sig_offset = 0x330
-        with open(self.img, 'rb') as f:
-            f.seek(self.fitc_offset)
-            self.meas_8_data = f.read(self.key_sig_offset)
-        self.calc_meas_8 = utility.get_measure_hash384(self.meas_8_data)
-        print('-- meas_hash384_8 = {}'.format(self.calc_meas_8))
-
-
-    def calc_meas(self):
-        """ calculate measurement hash"""
-        with open(self.img, 'rb') as f1, open(self.img2, 'rb') as f2:
-            self.img_bdata  = f1.read()
-            self.img_bdata += f2.read()
-
-        hash_1 = utility.get_hash384(self.img_bdata)
-        print('hash384_1 = {}'.format(hash_1))
-        hash_2 = utility.get_hash384(self.img, 0, 0x1000)
-        print('hash384_2 = {}'.format(hash_2))
-
-
     def show(self):
         """ show afm """
         self.decomp_afm()
         lst_key=('policy', 'pub_key_X', 'pub_key_Y', 'size_of_dice_tcbinfo', 'dice_tcbinfo', 'total_num_meas')
-        msg = '\n**** decomp AFM ****\n'
+        msg  = '\n**** decomp AFM ****\n'
+        msg += '-- {:20s}: {:50s} \n'.format('CPU Model', self.cpu_model)
+        msg += '-- {:20s}: {:50s} \n'.format('CPU ID', self.lst_cpuid[0])        
         for k in lst_key:
             if k == 'dice_tcbinfo':
                 v1=self.dict_cpu_afm[k][0:100]
@@ -401,7 +383,7 @@ class BHS_CPU_AFM(object):
         for lst in lst_AFM_Measurements:
             self.dict_AFM_Meas[lst[0]]=lst[1]
 
-        lst_meas_head  = ['Meas_Index', 'Description', 'Value_Type', 'Value_Size', 'Value']
+        lst_meas_head  = ['Index', 'Description', 'Type', 'Size', 'Value']
         lst_meas_data  = []
         total_meas = self.dict_cpu_afm['total_num_meas']
         for idx in range(0, int(total_meas, 0)):
@@ -410,10 +392,34 @@ class BHS_CPU_AFM(object):
             v_type = self.dict_cpu_afm['meas_value_type_{}'.format(idx)]
             v_size = self.dict_cpu_afm['meas_value_size_{}'.format(idx)]
             m_val  = self.dict_cpu_afm['meas_value_{}'.format(idx)]
+            #if len(m_val) > 96:
             lst_meas_data.append([m_idx, m_desp, v_type, v_size, m_val])
         msg = "-- CPU AFM Measuments: \n"
-        msg += tabulate.tabulate(lst_meas_data, lst_meas_head, tablefmt='orgtbl')
+        msg += tabulate.tabulate(lst_meas_data, lst_meas_head, tablefmt='orgtbl', maxcolwidths=[5, 35, 5, 5, 96])
         #print(msg)
         logging.basicConfig(level=logging.DEBUG, handlers= [logging.StreamHandler()])
         logger.info(msg)
 
+
+def main(args):
+    """ verify PFR image for CPU attestation """
+    parser = argparse.ArgumentParser(description="-- PFR AFM analysis module")
+    parser.add_argument('-i', '--fname_bdata',   metavar="[Input bin file or data bytes]", dest='input_bin', help='PFR image file or binary data containing AFM')
+    parser.add_argument('-log', '--logfile', metavar="[log file name]", dest='logfile', default=None, help="log file name, optional")
+    args = parser.parse_args(args)
+    #print(args)
+    if args.logfile != None:
+        logging.basicConfig(level=logging.DEBUG,
+                        handlers= [
+                          logging.FileHandler(args.logfile, mode='w'),
+                          logging.StreamHandler()
+                        ]
+                      )
+    else:
+        logging.basicConfig(level=logging.DEBUG, handlers= [ logging.StreamHandler()])
+
+    myafm = CPU_AFM(args.input_bin)
+    myafm.show()
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
