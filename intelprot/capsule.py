@@ -799,8 +799,7 @@ BHS_AFM_PER_DEVICE_MEAS_STRUCT = ( \
 # 11/20/23 Update: Total AFM PC Type is 6, per device AFM PC Type is 8, add-on device AFM PC Type is 0xa
 #-----------------------------
 class AFM_BHS(object):
-    """
-      class for Birch Stream AFM build
+    """ class for Birch Stream AFM build
 
     List of manifest json file and usage::
 
@@ -915,8 +914,7 @@ class AFM_BHS(object):
     def build_afm_single_device(self, dev_name):
         """ build AFM for single device
 
-        :param dict_input: dictionary variable of input.
-           This is an internal function
+        :param dict_input: dictionary variable of input. This is an internal function
 
         BHS_AFM_PER_DEVICE_FORMAT
         BHS_AFM_PER_DEVICE_STRUCT
@@ -1460,6 +1458,7 @@ class STG_Capsule(object):
 
         ..compress and signed format::
 
+
           Capsule_Signature(B0+B1) + {PFM_signature(B0+B1)+ {PFM} + Compression_Header + Compressed_Data}
           1024B: [B0 (128B)] + [B1_Head (16B) + B1_Root (132B) + B1_CSK(232B) + B1_B0 (104B) + B1_Pad(412B)]
 
@@ -1558,7 +1557,7 @@ class CPLD_Capsule(object):
 # definition for CPLD FW capsule
 CFM_ALIGN_SIZE = 4*1024     # 4KB aligned for each device CFM
 CFM_PC_TYPE    = 0x07       # CPLD online update (CPU/SCM/Debug CPLD) protect type
-CPLD_PFM_SPI_ADDR_TAG = 0x4 # CPLD FM definition type 0x4 – CPLD PFM SPI region address/offset definition
+CPLD_PFM_SPI_ADDR_TAG = 0x4 # CPLD FM definition type 0x4 -- CPLD PFM SPI region address/offset definition
 
 class CFM(object):
     """ Class for CPLD firmware manifest capsule operation
@@ -1731,6 +1730,11 @@ def main(args):
     cfmcap = subparser.add_parser('cfm')
     cfmcap.add_argument('-c', '--cfm_manifest', metavar="[CFM manifest]",  dest='cfm_m', help='cfm manifest json file')
 
+    ifwicap = subparser.add_parser('ifwicap')
+    ifwicap.add_argument('-i', '--ifwicap',  metavar="[BIOS update capsule]",  dest='ifwi_cap', help='ifwi capsule file to be processed')
+    ifwicap.add_argument('-d', action='store_true', help='decompression of a IFWI (BIOS) update capsule to its IFWI image')
+
+
     args = parser.parse_args(args)
     print("Platform: {}".format(args.platform))
     if args.start_afm:
@@ -1813,6 +1817,14 @@ def main(args):
         mycfm=CFM(args.cfm_m)
         mycfm.build_cfm_capsule()
         mycfm.move_files()
+
+    if args.capsule == 'ifwicap':
+        obj_ifwicap = IFWI_Capsule(args.ifwi_cap)
+        if args.d:
+            outimage = os.path.join(os.path.dirname(args.ifwi_cap), os.path.splitext(args.ifwi_cap)[0]+'_decomp.bin')
+            print("-- decompression of IFWI capsule: {} --> {}".format(args.ifwi_cap, outimage))
+            obj_ifwicap.decompression()
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])
