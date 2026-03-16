@@ -205,6 +205,27 @@ def bin_hexdump(fbin, st_addr=None, end_addr=None, fout=None):
             addr += 16
             if addr >= end_addr: break
 
+def bin_bindump(fbin, st_addr=None, end_addr=None, fout=None):
+    """ dump binary file as binary bytes and save to a file
+
+    This function dump partial or whole binary image to a binary file.
+    The binary file is binary bytes with address information in filename.
+
+    :param fbin: input image filename.
+    :param st_addr: start address, optional. Defaul is from beginning of the image
+    :param end_addr: end address, optionsl. Default is to the end of image
+    :param fout: output image filename, optional. Default is fbin_<st_addr>_<end_addr>_hexdump.bin
+    """
+    if st_addr is None: st_addr = 0
+    if end_addr is None: end_addr = os.stat(fbin).st_size
+    addr = st_addr
+    if fout is None:
+        fout = os.path.splitext(fbin)[0]+'_0x%x_0x%x_hexdump.bin'%(st_addr, end_addr)
+    with open(fbin, 'rb') as f1, open(fout, 'wb') as f2:
+        f1.seek(st_addr)
+        f2.write(f1.read(end_addr - st_addr))
+
+
 def bin_decomp(fbin, st_addr, end_addr, fout=None):
     """ decompost a region from a binary file
 
@@ -224,7 +245,7 @@ def bin_decomp(fbin, st_addr, end_addr, fout=None):
         f1.seek(st_addr)
         f2.write(f1.read(end_addr-st_addr))
 
-def bin_search_tag(fbin, st_tag):
+def bin_search_tag(fbin, st_tag, endiness='little'):
     """search a tag from a binary file
 
     The st_tag is either a double word little endian integer or bytes/bytearray format
@@ -233,8 +254,11 @@ def bin_search_tag(fbin, st_tag):
     :param dw_tag: double word tag, example 0x02B3CE1D
     :returns lst_addr: list of addresses of all occurances of the tag
     """
-    if not isinstance(st_tag, (bytes, bytearray)):
-        st_tag = st_tag.to_bytes((st_tag.bit_length()+7)//8, 'little')
+    if isinstance(st_tag, str):
+        st_tag = st_tag.encode('utf-8')
+    elif not isinstance(st_tag, (bytes, bytearray)):
+        st_tag = st_tag.to_bytes((st_tag.bit_length()+7)//8, endiness)
+
     with open(fbin, 'rb') as f:
         lst_addr = [(hex(m.start(0))) for m in re.finditer(re.escape(st_tag), f.read())]
     return lst_addr
@@ -651,11 +675,23 @@ def main(args):
     cmddmp.add_argument('-s', '--start_addr',  metavar="[Start Offset]", dest='start_addr', help='start address')
     cmddmp.add_argument('-e', '--end_addr',    metavar="[End Offset]",   dest='end_addr',   help='end address')
 
+    # bindump area
+    cmddmp1 = subparser.add_parser('bindump')
+    cmddmp1.add_argument('-i', '--bin_image',   metavar="[Binary image]", dest='bin_image',  help='binary image file')
+    cmddmp1.add_argument('-s', '--start_addr',  metavar="[Start Offset]", dest='start_addr', help='start address')
+    cmddmp1.add_argument('-e', '--end_addr',    metavar="[End Offset]",   dest='end_addr',   help='end address')
+
     # bindecomp area save to a binary file
     cmdbin = subparser.add_parser('bindecomp')
     cmdbin.add_argument('-i', '--bin_image',   metavar="[Binary image]", dest='bin_image',  help='binary image file')
     cmdbin.add_argument('-s', '--start_addr',  metavar="[Start Offset]", dest='start_addr', help='start address')
     cmdbin.add_argument('-e', '--end_addr',    metavar="[End Offset]",   dest='end_addr',   help='end address')
+
+    # process of a binary file
+    cmdbin = subparser.add_parser('bin')
+    cmdbin.add_argument('-i', '--bin_image',   metavar="[Binary image]",  dest='bin_image',  help='binary image file')
+    cmdbin.add_argument('-s', '--search_tag',  metavar="[Tag to search]", dest='search_tag', help='Tag to search, such as bytes')
+    cmdbin.add_argument('-e', '--endinness',   metavar="[Endinness]",     dest='endinness',  default='big', help='endiness, default is big')
 
     # calculate hash
     cmdget = subparser.add_parser('gethash')
@@ -705,12 +741,25 @@ def main(args):
         print(args.start_addr, args.end_addr)
         bin_hexdump(args.bin_image, int(args.start_addr, 0), int(args.end_addr, 0))
 
+    if args.action == 'bindump':
+        # if none, dump all binary image
+        if args.start_addr == None: args.start_addr = str(0)
+        if args.end_addr   == None: args.end_addr   = str(os.stat(args.bin_image).st_size)
+        print(args.start_addr, args.end_addr)
+        bin_bindump(args.bin_image, int(args.start_addr, 0), int(args.end_addr, 0))
+
     if args.action == 'bindecomp':
         # if none, dump all binary image
         if args.start_addr == None: args.start_addr = str(0)
         if args.end_addr   == None: args.end_addr   = str(os.stat(args.bin_image).st_size)
         print(args.start_addr, args.end_addr)
         bin_decomp(args.bin_image, int(args.start_addr, 0), int(args.end_addr, 0))
+
+    if args.action == 'bin':
+        #
+        print(args.search_tag, args.endinness)
+        bin_search_tag(args.bin_image, args.search_tag, args.endinness)
+
 
     if args.action == 'gethash':
         if args.hash_type == "hash384":

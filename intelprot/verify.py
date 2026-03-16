@@ -458,6 +458,30 @@ class PFR_BMC(object):
         logger.info("actpfmobj.validate:{}, rcvpfmobj.validate:{}".format(rtn1, rtn2))
         rtn = rtn1 & rtn2
 
+        # verify signature
+        if self.rk_key is not None and self.csk_prv is not None:
+            #verify_sign1 = BLOCK_1K_Signed(pfm_act, self.rk_key, self.csk_prv).validate()
+            #logger.info("**** verify BLOCK_1K_Signed:pfm_act signature:{}".format(verify_sign1))
+            #logger.info("--------------------------------------------------------")
+            with open(self.image, 'rb') as f:
+                f.seek(act_addr-BLOCK_SIZE)
+                self.signed_act_pfm = f.read(64*1024)
+                f.seek(rcv_addr-BLOCK_SIZE)
+                self.signed_rcv_pfm = f.read(64*1024)
+
+            verify_sign = BLOCK_1K_Signed(self.signed_act_pfm, self.rk_key, self.csk_prv).validate()
+            logger.info("**** verify BLOCK_1K_Signed:act_pfm signature:{}".format(verify_sign))
+            logger.info("--------------------------------------------------------")
+            rtn = verify_sign
+            logger.info("**** ACT_PFM: verify signature: {}, act_pfm verify_sign={}".format(rtn, verify_sign))
+
+            verify_sign = BLOCK_1K_Signed(self.signed_rcv_pfm, self.rk_key, self.csk_prv).validate()
+            logger.info("**** verify BLOCK_1K_Signed:rcv_pfm signature:{}".format(verify_sign))
+            logger.info("--------------------------------------------------------")
+            rtn = verify_sign
+            logger.info("**** RCV_PFM: verify signature: {}, rcv_pfm verify_sign={}".format(rtn, verify_sign))
+
+
         st_tag = AFM_MAGIC
         st_tag = st_tag.to_bytes((st_tag.bit_length()+7)//8, 'little')
         lst_addr = [(hex(m.start(0))) for m in re.finditer(re.escape(st_tag), self.bdata)]

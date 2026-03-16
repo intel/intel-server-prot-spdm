@@ -19,6 +19,7 @@
      >python -m intelprot.ifwi -i <pfr_ifwi_image> -bmc_pfm 0x1fc0000
 
 
+2/19/2026: added OKS_IFWI class for OKS IFWI image operation
 """
 from __future__ import print_function
 from __future__ import division
@@ -197,17 +198,28 @@ class IFWI(object):
         self.ifwi_image = ifwi_image
         obj=Agent(ifwi_image)
         obj.get_prov_data()
+        obj.show()
         self.pfrs = obj._pfrs
         self.keym = obj._keym
         self.pfrs_start = obj.pfrs_start # PFRS_ start offset
         self.pfr_rk_hash = obj._keyhash
         with open(self.ifwi_image, 'rb') as f:
             f.seek(int(self.pfrs['ifwi_active'], 0))
+            print(hex(int(self.pfrs['ifwi_active'], 0)))
+
             self.act_pfm = pfm.PFM(f.read(ACTV_PFM_SIZE))
+
             f.seek(int(self.pfrs['ifwi_recovery'],0))
             self.rcv_pfm = pfm.PFM(f.read(RECV_CAP_SIZE))
             f.seek(int(self.pfrs['ifwi_staging'], 0))
             self.stg_pfm = pfm.PFM(f.read(STAG_CAP_SIZE))
+            if self.act_pfm.no_pfm_tag:
+                logger.critical('-- Not found PFM TAG in ifwi_active')
+            if self.rcv_pfm.no_pfm_tag:
+                logger.critical('-- Not found PFM TAG in ifwi_recovery')
+            if self.stg_pfm.no_pfm_tag:
+                logger.info('-- Not found PFM TAG in ifwi_staging, staging capsule is optional...')
+
 
     def update_bmc_active(self, bmc_active_offset):
         """ update BMC active PFM offset
